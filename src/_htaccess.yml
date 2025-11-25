@@ -1,0 +1,105 @@
+# ---------------------------------------------------
+# Configuração geral
+# ---------------------------------------------------
+enabled: true
+
+# HTTPS não forçado porque o servidor já deve fazer isso
+forceHttps: false
+
+# Remove o "www" (mantém domínio limpo)
+forceWww: remove
+
+# Domínio principal (importante para redirects absolutos)
+domain: cajuinasaogeraldo.com.br
+
+# ---------------------------------------------------
+# Redirects WordPress → Astro
+# ---------------------------------------------------
+redirects:
+  # Redirecionar /noticias/ → /blog/
+  - from: /noticias/
+    to: /blog/
+    code: 301
+
+# ---------------------------------------------------
+# CORS (Cross-Origin Resource Sharing)
+# ---------------------------------------------------
+cors:
+  fonts: true # libera fontes
+  images: true # libera imagens
+  allowCredentials: true
+  allowedMethods: ['GET', 'POST', 'OPTIONS']
+  allowedHeaders: ['Content-Type', 'Accept', 'Authorization', 'Origin']
+  # origins:           # opcional: whitelist específica
+  #   - 'https://meu-outro-site.com'
+
+# ---------------------------------------------------
+# Compressão — melhora Core Web Vitals
+# ---------------------------------------------------
+compression:
+  gzip: true
+  brotli: true # se o servidor suportar, mantém Brotili prioridade
+
+# ---------------------------------------------------
+# Cache — máximo para estáticos, curto para HTML
+# ---------------------------------------------------
+caching:
+  enabled: true
+  rules:
+    # Imagens — 1 ano
+    - type: 'image/jpeg'
+      duration: 'access plus 1 year'
+    - type: 'image/png'
+      duration: 'access plus 1 year'
+    - type: 'image/webp'
+      duration: 'access plus 1 year'
+    - type: 'image/avif'
+      duration: 'access plus 1 year'
+    - type: 'image/svg+xml'
+      duration: 'access plus 1 year'
+
+    # Fontes — 1 ano
+    - type: 'font/woff2'
+      duration: 'access plus 1 year'
+    - type: 'font/woff'
+      duration: 'access plus 1 year'
+    - type: 'font/ttf'
+      duration: 'access plus 1 year'
+
+    # CSS e JS — 1 mês (não pode ser 1 ano por causa de dev builds)
+    - type: 'text/css'
+      duration: 'access plus 1 month'
+    - type: 'application/javascript'
+      duration: 'access plus 1 month'
+
+    # HTML — curto, para permitir atualizações rápidas
+    - type: 'text/html'
+      duration: 'access plus 1 hour'
+
+# ---------------------------------------------------
+# Astro SSG — não usar SPA fallback
+# ---------------------------------------------------
+spaFallback: false
+
+# ---------------------------------------------------
+# Regras extra (segurança + proteção de arquivos)
+# ---------------------------------------------------
+customRules: |
+  # Security headers essenciais
+  <IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  </IfModule>
+
+  # Bloquear arquivos sensíveis ocultos (ex: .env, .git)
+  <FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+  </FilesMatch>
+
+  # Bloqueia acesso a wp-admin antigos (quando migrado do WordPress)
+  RedirectMatch 403 ^/wp-admin
+  RedirectMatch 403 ^/wp-login\.php

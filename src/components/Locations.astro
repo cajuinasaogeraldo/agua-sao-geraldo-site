@@ -1,0 +1,32 @@
+---
+import type { Distribuidor } from '@/types';
+import { getCollection } from 'astro:content';
+import DistribuidoresGmaps from './react/widgets/DistribuidoresMap';
+import WidgetWrapper from './ui/WidgetWrapper.astro';
+
+const distribuidoresCollection = await getCollection('distribuidor');
+
+const distribuidores: Distribuidor[] = distribuidoresCollection
+  .filter((dist) => dist.data.active)
+  .map((dist, index) => ({
+    id: index + 1,
+    nome: dist.data.nome,
+    endereco: dist.data.endereco,
+    telefone: dist.data.telefone,
+    lat: dist.data.lat,
+    lng: dist.data.lng,
+  }));
+
+const apiKey =
+  import.meta.env.MODE === 'production'
+    ? import.meta.env.PUBLIC_GOOGLE_MAPS_KEY_PROD
+    : import.meta.env.PUBLIC_GOOGLE_MAPS_KEY_DEV;
+---
+
+<WidgetWrapper id="distribuidores-map">
+  <DistribuidoresGmaps
+    client:only="react"
+    distribuidores={distribuidores}
+    apiKey={apiKey}
+  />
+</WidgetWrapper>

@@ -1,0 +1,51 @@
+---
+import Image from './common/Image.astro';
+import Button from './ui/Button.astro';
+import teamImageDesktop from '@/assets/images/site/team.png';
+import teamImage from '@/assets/images/site/mobile/team.png';
+import WidgetWrapper from './ui/WidgetWrapper.astro';
+---
+
+<WidgetWrapper containerClass="px-0!">
+  <div
+    class="bg-caju-heading-primary relative my-12 h-fit max-h-[720px] min-h-[290px]"
+  >
+    <Image
+      src={teamImageDesktop}
+      class="absolute inset-0 hidden h-full w-full lg:block"
+      alt="Faça parte do time"
+    />
+    <Image
+      src={teamImage}
+      class="h-[147px] w-full lg:hidden"
+      alt="Faça parte do time"
+    />
+    <div
+      class="relative z-10 my-3 flex flex-col items-center gap-2 text-center text-white lg:max-w-[53%] lg:items-start lg:gap-6 lg:p-12 lg:text-left"
+    >
+      <h2
+        class="text-caju-heading-yellow scale-85 uppercase lg:scale-100 lg:text-4xl! lg:leading-[150%]"
+      >
+        Faça Parte Dessa Tradição!
+      </h2>
+      <p class="text-body font-inter mx-7 h-fit lg:ml-0">
+        Nossa história começou na década de 50, com uma pequena fábrica de
+        bebidas no centro de Juazeiro do Norte, com produção de vinhos à base de
+        frutas, como caju, jurubeba e jenipapo. Com o passar dos anos e a
+        chegada de energia elétrica na cidade, mais precisamente na década de
+        70, adquirimos nossos primeiros equipamentos semiautomáticos, que nos
+        ofereceram um novo impulso à produção.
+      </p>
+      <Button
+        href="https://cajuinasaogeraldo.gupy.io/"
+        target="_blank"
+        variant="yellow"
+        class="mb-7 h-7 w-40 py-3! md:h-14 md:w-[280px] lg:mb-0 lg:w-[320px] lg:px-6! lg:text-2xl"
+      >
+        <span class="font-inter font-medium md:text-xl lg:text-2xl"
+          >Página de Carreiras</span
+        >
+      </Button>
+    </div>
+  </div>
+</WidgetWrapper>

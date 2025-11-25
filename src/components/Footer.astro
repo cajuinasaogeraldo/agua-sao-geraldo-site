@@ -1,0 +1,132 @@
+---
+import { Icon } from 'astro-icon/components';
+import { findImage } from '@/utils/images';
+import {
+  astroAssetsOptimizer,
+  getImagesOptimized,
+} from '@/utils/images-optimization';
+import Image from './common/Image.astro';
+
+import footerBg from '@/assets/images/site/mobile/footer-no-border.png';
+import logoColorida from '@/assets/images/site/logo.png';
+import type { HTMLAttributes } from 'astro/types';
+
+// ✅ Forma correta no Astro
+interface Link extends HTMLAttributes<'a'> {
+  text?: string;
+  ariaLabel?: string;
+  icon?: string;
+}
+
+interface Links {
+  title?: string;
+  links: Array<Link>;
+}
+
+export interface Props {
+  links: Array<Links>;
+  secondaryLinks: Array<Link>;
+  socialLinks: Array<Link>;
+  footNote?: string;
+  theme?: string;
+}
+
+const _image = await findImage(footerBg);
+const image = await getImagesOptimized(_image!, {}, astroAssetsOptimizer);
+
+const { socialLinks = [], links = [], footNote = '' } = Astro.props;
+---
+
+<footer
+  style={`background-image: url(${image?.src});`}
+  class:list={[
+    'border-caju-heading-yellow relative min-h-[500px] w-full border-t-20',
+    'px-4 py-7 md:px-7',
+    'flex flex-col justify-evenly gap-2 lg:gap-6',
+  ]}
+>
+  <!-- Links, Sociais e Logo -->
+  <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
+    <!-- Links e Sociais -->
+    <div
+      class="grid h-full w-full grid-cols-[85px_1fr] md:grid-cols-1 md:grid-rows-[auto_auto] lg:gap-4"
+    >
+      <!-- Social -->
+      <div
+        class="relative order-1 grid place-items-center md:order-2 md:place-items-start"
+      >
+        <div class="social-wrapper grid place-items-center gap-2.5 md:flex">
+          {
+            socialLinks.map(({ ariaLabel, href, text, icon }) => (
+              <a
+                class="text-muted bg-caju-heading-yellow inline-flex items-center rounded-full p-1 text-sm"
+                aria-label={ariaLabel}
+                href={href}
+              >
+                {icon && <Icon name={icon} class="size-8 text-white" />}
+                <Fragment set:html={text} />
+              </a>
+            ))
+          }
+        </div>
+
+        <!-- Linha vertical -->
+        <div
+          class="bg-caju-heading-yellow absolute top-1/2 right-0 h-[235px] w-1 -translate-y-1/2 md:hidden"
+        >
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div class="order-2 grid pl-3 md:order-1!">
+        {
+          links.map(({ title, links: insideLinks }, index) => (
+            <div class="grid gap-1 pb-5 last:border-b-0">
+              <h5 class="text-caju-heading-yellow m-0 text-sm uppercase md:text-xl">
+                {title}
+              </h5>
+
+              <ul class="text-body font-inter grid grid-cols-2 grid-rows-3 gap-2 lg:flex lg:gap-6">
+                {insideLinks.map(({ href, text, ariaLabel, ...rest }) => (
+                  <li
+                    class:list={[
+                      { 'col-span-2': insideLinks.length <= 3 },
+                      { 'row-span-3': index === 1 },
+                    ]}
+                  >
+                    <a href={href} aria-label={ariaLabel} {...rest}>
+                      {text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Logo -->
+    <div
+      class="flex h-[94px] w-[157px] items-center justify-center md:order-first md:h-[200px]! md:w-[350px]! lg:h-[300px]! lg:w-[520px]!"
+    >
+      <Image
+        class="h-full w-full"
+        layout="responsive"
+        src={logoColorida}
+        alt="São geraldo"
+      />
+    </div>
+  </div>
+
+  <!-- Footnote -->
+  <div
+    class="mt-2 flex flex-col items-center justify-center gap-4 lg:mt-0 lg:flex-row"
+  >
+    <div
+      class="text-caption font-inter text-center leading-[140%] text-white lg:w-full"
+    >
+      <Fragment set:html={footNote} />
+    </div>
+  </div>
+</footer>
