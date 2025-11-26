@@ -40,10 +40,19 @@ jobs:
       - name: Deploy via SSH/rsync
         uses: burnett01/rsync-deployments@7.0.1
         with:
-          switches: -avzr --delete --exclude='.git*' --exclude='node_modules/' --exclude='.github/'
+          switches: >
+            -avzP
+            --delete
+            --checksum
+            --human-readable
+            --itemize-changes
+            --exclude='.git*'
+            --exclude='node_modules/'
+            --exclude='.github/'
           path: ./dist/
           remote_path: ${{ vars.SSH_REMOTE_PATH }}
           remote_host: ${{ vars.SSH_HOST }}
           remote_user: ${{ vars.SSH_USER }}
           remote_key: ${{ vars.SSH_PRIVATE_KEY }}
-          remote_port: ${{vars.SSH_PORT}}
+          remote_port: ${{ vars.SSH_PORT }}
+
