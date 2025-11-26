@@ -1,0 +1,170 @@
+---
+import Layout from '@/layouts/PageLayout.astro';
+
+import Timeline from '@/components/widgets/Timeline.astro';
+import AboutPhotoGallery from '@/components/react/widgets/AboutPhotoGallery';
+import Presentation from '@/components/widgets/Presentation.astro';
+
+import fabricaPng from '@/assets/images/site/about/fabrica.png';
+import businessPng from '@/assets/images/site/about/business.png';
+import mapaCeara from '@/assets/images/site/about/mapaCeara.png';
+import Image from '@/components/common/Image.astro';
+import SocialReponsability from '@/components/widgets/SocialReponsability.astro';
+import WidgetWrapper from '@/components/ui/WidgetWrapper.astro';
+
+const metadata = {
+  title: 'Conheça mais sobre a Cajuína São Geraldo, a tradição do Nordeste',
+};
+---
+
+<Layout metadata={metadata}>
+  <Presentation
+    tagline="Somos uma marca caririense"
+    wrapperClass="lg:flex lg:justify-center lg:gap-10"
+    imageWrapperClass="lg:order-last lg:mx-0"
+    image={{
+      src: fabricaPng,
+      alt: 'Fábrica São Geraldo',
+      fullSize: true,
+      class: 'w-[391px] h-[110px] lg:w-[900px] lg:h-[500px] object-fill',
+    }}
+  >
+    <Fragment slot="subtitle">
+      que oferece à sociedade refrigerantes com alto padrão de qualidade. Esse é
+      nosso principal objetivo e o que nos faz ser uma das maiores indústrias de
+      bebidas do Ceará. Com mais de 45 anos, atuamos em todos os estados do
+      Nordeste, possuímos um parque industrial com extensão de mais de 33 mil
+      metros quadrados e empregamos em torno de 700 pessoas diretamente e
+      milhares indiretamente.
+    </Fragment>
+  </Presentation>
+
+  <Timeline />
+
+  <WidgetWrapper>
+    <iframe
+      class="mx-auto mt-5 h-[315px] w-full max-w-[1200px] px-2 lg:h-[600px]"
+      src="https://www.youtube-nocookie.com/embed/DfuYfwmVYiE?si=tIq-3r-PHFE_wfot&controls=0"
+      title="No Correio Elegante da São Geraldo, você se declara pra quem mais ama!"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    >
+    </iframe>
+  </WidgetWrapper>
+
+  <WidgetWrapper>
+    <AboutPhotoGallery client:only="react" />
+  </WidgetWrapper>
+
+  <WidgetWrapper>
+    <Presentation
+      wrapperClass="py-0!"
+      imageWrapperClass=""
+      image={{
+        src: businessPng,
+        alt: 'Business image',
+        fullSize: true,
+        class: 'w-full! h-[110px] md:h-auto',
+      }}
+    >
+      <!-- Business -->
+      <Fragment slot="content">
+        <section
+          class="relative grid w-full grid-cols-3 grid-rows-4 gap-4 text-left lg:min-h-[540px] lg:grid-cols-2"
+        >
+          <!-- Mapa -->
+          <div
+            class:list={[
+              'relative h-full w-full overflow-visible',
+              'col-span-2 col-start-2 row-span-2 md:z-10 lg:col-span-1 lg:col-start-1 lg:row-span-4 lg:row-start-2',
+            ]}
+          >
+            <Image
+              alt="Mapa Ceará"
+              src={mapaCeara}
+              layout="responsive"
+              class="absolute h-full w-full -translate-y-6 scale-120 md:-translate-y-20 md:scale-95 lg:left-1/2 lg:-translate-x-2/3 lg:-translate-y-8 lg:scale-120"
+            />
+          </div>
+          <!-- Missão/Visão -->
+          <div
+            class="col-start-1 row-span-2 row-start-1 grid gap-4 lg:col-span-2 lg:row-span-1 lg:row-start-1 lg:grid-cols-2 lg:gap-0 [&>div>p]:md:text-xl! [&>div>p]:lg:text-3xl!"
+          >
+            <!-- Missão -->
+            <div class="space-y-2">
+              <h3 class="text-caju-heading-primary uppercase">Missão</h3>
+              <p class="font-inter">
+                Oferecer ao consumidor uma experiência de sabor, qualidade e
+                tradição do Nordeste.
+              </p>
+            </div>
+            <!-- Visão -->
+            <div class="space-y-2">
+              <h3 class="text-caju-heading-primary uppercase">Visão</h3>
+              <p class="font-inter">
+                Oferecer ao consumidor uma experiência de sabor, qualidade e
+                tradição do Nordeste.
+              </p>
+            </div>
+          </div>
+          <!-- Valores -->
+          <div
+            class="col-span-3 row-span-3 row-start-3 flex flex-col lg:row-span-4 lg:row-start-2 [&>div>dl>div]:md:text-xl! [&>div>dl>div]:lg:text-3xl!"
+          >
+            <h3 class="text-caju-heading-primary uppercase">Valores</h3>
+            <div class="font-inter text-xxs flex-1 [&_div>dt]:font-bold!">
+              <dl class="flex h-auto flex-col justify-evenly gap-4 lg:gap-5">
+                <div>
+                  <dt class="font-semibold">Ética Empresarial</dt>
+                  <dd>
+                    Atitudes e práticas reconhecidas por lei e a sociedade como
+                    justas e corretas.
+                  </dd>
+                </div>
+
+                <div>
+                  <dt class="font-semibold">Qualidade</dt>
+                  <dd>
+                    Produtos, serviços, processos e práticas com padrões de
+                    excelência.
+                  </dd>
+                </div>
+
+                <div>
+                  <dt class="font-semibold">Cultura de Resultado</dt>
+                  <dd>
+                    Busca contínua de ações conscientes com foco na agregação de
+                    valor.
+                  </dd>
+                </div>
+
+                <div>
+                  <dt class="font-semibold">Pessoas</dt>
+                  <dd>
+                    Valorizaremos sobremaneira pessoas éticas, competentes, com
+                    iniciativas, empreendedoras, determinadas e comprometidas
+                    com a nossa filosofia.
+                  </dd>
+                </div>
+
+                <div>
+                  <dt class="font-semibold">Produtividade</dt>
+                  <dd>
+                    Garantir que todas as atividades sejam planejadas,
+                    executadas e avaliadas, visando o menor gasto de energia e
+                    recursos.
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </section>
+      </Fragment>
+    </Presentation>
+  </WidgetWrapper>
+
+  <WidgetWrapper>
+    <SocialReponsability />
+  </WidgetWrapper>
+</Layout>

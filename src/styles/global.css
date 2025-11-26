@@ -1,0 +1,287 @@
+@import './tailwind.css';
+@import './pages.css';
+
+@theme inline {
+  --color-brand-green: #056b45;
+}
+
+#dropZone.drag-over {
+  @apply border-indigo-500 bg-indigo-500/10;
+}
+
+/* #sabosta > a {
+  @apply text-shadow-caju-secondary-yellow!;
+} */
+
+:root {
+  --black: 15, 18, 25;
+  --gray: 96, 115, 159;
+  --gray-light: 229, 233, 240;
+  --gray-dark: 34, 41, 57;
+  --gray-gradient: rgba(var(--gray-light), 50%), #fff;
+  --box-shadow:
+    0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
+    0 16px 32px rgba(var(--gray), 33%);
+
+  --font-din: 'DIN';
+  --font-bevan: 'Bevan';
+}
+@font-face {
+  font-family: 'DIN';
+  src: url('/fonts/DIN-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DIN';
+  src: url('/fonts/DIN-Bold.otf') format('otf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Bevan';
+  src: url('/fonts/Bevan.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+/* @font-face {
+  font-family: 'Bevan';
+  src: url('/fonts/Bevan-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+} */
+
+body {
+  font-family: 'Bevan', 'Inter', 'DIN';
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  overflow-wrap: break-word;
+  @apply text-caju-font!;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE e Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari e Opera */
+}
+
+.banner-skeleton-wrapper {
+  animation: fadeOut 0.4s ease-out 0.3s forwards;
+  pointer-events: none;
+}
+
+.banner-real-wrapper {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out 0.3s forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.5rem 0;
+  /* line-height: 1.2; */
+}
+
+a {
+  @apply font-inter;
+  @apply text-white;
+  text-decoration: none;
+}
+
+h4 {
+  @apply text-xl lg:text-4xl;
+}
+
+@media (max-width: 720px) {
+  body {
+    font-size: 14px;
+  }
+
+  /* main {
+    padding: 1em;
+  } */
+}
+
+.sr-only {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+  clip: rect(1px 1px 1px 1px);
+  /* maybe deprecated but we need to support legacy browsers */
+  clip: rect(1px, 1px, 1px, 1px);
+  /* modern browsers, clip-path works inwards from each corner */
+  clip-path: inset(50%);
+  /* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
+  white-space: nowrap;
+}
+
+/* Estilo
+  para
+  campos
+  obrigatórios
+  -
+  placeholder
+  com
+  indicador
+  vermelho
+  .required-field::placeholder {
+  color: inherit;
+}
+
+.required-field::after {
+  content: ' *';
+  color: #ef4444;
+} */
+
+/* YouTube Embed - Container responsivo para vídeos embeddados */
+.youtube-embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+  height: 0;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.youtube-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+/* Instagram Embed */
+.instagram-embed {
+  margin: 1.5rem auto;
+  width: 100%;
+  max-width: 540px;
+}
+
+.instagram-embed iframe {
+  width: 100%;
+  min-height: 420px;
+  border-radius: 0.5rem;
+  border: 1px solid #dbdbdb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+}
+
+.instagram-embed-error {
+  text-align: center;
+  color: #ef4444;
+  font-size: 0.9rem;
+}
+
+/* ===========================
+   Layout Shortcodes Styles
+   =========================== */
+
+/* Two Columns Layout */
+.layout-two-columns {
+  display: grid;
+  grid-template-columns: var(--col1, 50%) var(--col2, 50%);
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .layout-two-columns {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.layout-column-1,
+.layout-column-2 {
+  min-width: 0; /* Evita overflow */
+}
+
+/* Image Left/Right Layout */
+.layout-image-left,
+.layout-image-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.layout-image-left {
+  grid-template-areas: 'image text';
+}
+
+.layout-image-right {
+  grid-template-areas: 'text image';
+}
+
+.layout-image-left .layout-image-container {
+  grid-area: image;
+}
+
+.layout-image-right .layout-image-container {
+  grid-area: image;
+}
+
+.layout-text-content {
+  grid-area: text;
+}
+
+.layout-image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+@media (max-width: 768px) {
+  .layout-image-left,
+  .layout-image-right {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'image'
+      'text';
+  }
+}

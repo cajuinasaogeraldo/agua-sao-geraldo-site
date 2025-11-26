@@ -1,0 +1,31 @@
+---
+import { APP_BLOG } from 'astrowind:config';
+
+import { getRelatedPosts } from '@/utils/blog';
+import BlogHighlightedPosts from '../widgets/BlogHighlightedPosts.astro';
+import type { News } from '@/types';
+import { getBlogPermalink } from '@/utils/permalinks';
+
+export interface Props {
+  news: News;
+}
+
+const { news } = Astro.props;
+
+const relatedNews = news.tags ? await getRelatedPosts(news, 4) : [];
+---
+
+{
+  APP_BLOG.isRelatedPostsEnabled ? (
+    <BlogHighlightedPosts
+      classes={{
+        container:
+          'pt-0 lg:pt-0 md:pt-0 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+      }}
+      title="Veja também"
+      linkText="Ver todas as notícias"
+      linkUrl={getBlogPermalink()}
+      postIds={relatedNews.map((notice) => notice.id)}
+    />
+  ) : null
+}

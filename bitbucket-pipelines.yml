@@ -1,0 +1,26 @@
+image: node:20.18.0
+
+definitions:
+  scripts:
+    setup-pnpm: &setup-pnpm npm install --global corepack@latest
+      && corepack enable
+      && corepack prepare pnpm@9.12.3 --activate
+
+pipelines:
+  branches:
+    cms/push:
+      - step:
+          name: Build & Deploy
+          trigger: automatic
+          deployment: production
+          script:
+            - *setup-pnpm
+            - pnpm install
+            - pnpm build
+            - pipe: atlassian/ftp-deploy:0.7.1
+              variables:
+                USER: $USER
+                PASSWORD: $PASSWORD
+                SERVER: $SERVER
+                REMOTE_PATH: $REMOTE_PATH
+                LOCAL_PATH: '${BITBUCKET_CLONE_DIR}/dist'
