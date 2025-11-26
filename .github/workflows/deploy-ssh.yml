@@ -6,7 +6,7 @@ on:
   repository_dispatch:
     types: [cms-publish, rebuild]
   workflow_run:
-    workflows: ["Create and Auto-Merge PR"]
+    workflows: ['Create and Auto-Merge PR']
     types:
       - completed
   workflow_dispatch:
@@ -25,8 +25,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.18.0"
-          cache: "pnpm"
+          node-version: '20.18.0'
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -45,7 +45,7 @@ jobs:
       - name: Deploy via SSH/rsync
         uses: burnett01/rsync-deployments@7.0.1
         with:
-          switches: -avzr --checksum --delete --delete-before --exclude='.git*' --exclude='node_modules/' --exclude='.github/'
+          switches: -avzr --delete --exclude='.git*' --exclude='node_modules/' --exclude='.github/'
           path: ./dist/
           remote_path: ${{ vars.SSH_REMOTE_PATH }}
           remote_host: ${{ vars.SSH_HOST }}
