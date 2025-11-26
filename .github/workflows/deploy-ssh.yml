@@ -41,14 +41,27 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL }}
         run: pnpm build
 
-      - name: Deploy via SSH/rsync
-        uses: burnett01/rsync-deployments@7.0.1
-        with:
-          switches: -avzP --delete --checksum --human-readable --itemize-changes --exclude='.git*'
-          path: ./dist/
-          remote_path: ${{ vars.SSH_REMOTE_PATH }}
-          remote_host: ${{ vars.SSH_HOST }}
-          remote_user: ${{ vars.SSH_USER }}
-          remote_key: ${{ vars.SSH_PRIVATE_KEY }}
-          remote_port: ${{ vars.SSH_PORT }}
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p ${{ vars.SSH_PORT }} ${{ vars.SSH_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Deploy via rsync
+        run: |
+          rsync -avzP \
+            --delete \
+            --checksum \
+            --human-readable \
+            --itemize-changes \
+            --exclude='.git*' \
+            --exclude='node_modules/' \
+            --exclude='.DS_Store' \
+            -e "ssh -i ~/.ssh/deploy_key -p ${{ vars.SSH_PORT }}" \
+            ./dist/ \
+            ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_REMOTE_PATH }}
+
+      - name: Cleanup SSH Key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
