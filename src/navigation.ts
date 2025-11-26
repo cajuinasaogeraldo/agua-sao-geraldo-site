@@ -81,7 +81,7 @@ export const footerData = {
   ],
   footNote: `
     <span>
-      &copy; 2025 Todos os direitos reservados à Cajuína São Geraldo / Av. Padre Cícero, Km 02 - Juazeiro do Norte, CE - CEP: 63022-115
+      &copy; 2025 Todos os direitos reservados a São Geraldo Águas Minerais
     </span>
   `,
 };

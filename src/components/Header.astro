@@ -44,7 +44,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
     {
       sticky: isSticky && !isFixed,
       fixed: isFixed && !isSticky,
-      relative: !isSticky && !isFixed,
+      absolute: !isFixed && !isSticky,
     },
     'top-0 z-40 mx-auto w-full flex-none border-b border-gray-50/0 bg-none transition-opacity ease-in-out',
     'lg:px-5',
