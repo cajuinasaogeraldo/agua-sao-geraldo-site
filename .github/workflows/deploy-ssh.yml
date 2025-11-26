@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   repository_dispatch:
-    types: [cms-publish, rebuild]
+    types: [cms-publish]
   workflow_dispatch:  
 
 jobs:
