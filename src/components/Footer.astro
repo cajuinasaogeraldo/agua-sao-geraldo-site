@@ -2,8 +2,11 @@
 import { Icon } from 'astro-icon/components';
 import Image from './common/Image.astro';
 import logo from '@/assets/images/site/logo.webp';
+import whats from '@/assets/images/site/whats-icon.svg';
 
 import type { HTMLAttributes } from 'astro/types';
+import Button from './ui/Button.astro';
+import { Phone } from '@lucide/astro';
 
 interface Link extends HTMLAttributes<'a'> {
   text?: string;
@@ -44,18 +47,25 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
       class="grid h-full max-w-3xl flex-1 grid-cols-[85px_1fr] gap-5 md:grid-cols-1 md:grid-rows-[auto_auto]"
     >
       <!-- Links -->
-      <div class="order-2 grid items-center justify-center pl-3 md:order-1!">
+      <div
+        class="order-2 grid items-start justify-center gap-4 pl-3 md:order-1! md:grid-cols-2"
+      >
         {
           links.map(({ title, links: insideLinks }, index) => (
-            <div class="grid gap-1 pb-5 last:border-b-0">
+            <div class="grid gap-5 last:border-b-0">
               <h5 class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-xl">
                 {title}
               </h5>
 
-              <ul class="text-body font-inter flex flex-wrap gap-7">
+              <ul class="text-body font-inter flex flex-wrap gap-5">
                 {insideLinks.map(({ href, text, ariaLabel, ...rest }) => (
                   <li>
-                    <a href={href} aria-label={ariaLabel} {...rest}>
+                    <a
+                      href={href}
+                      class="text-agua-secondary-green!"
+                      aria-label={ariaLabel}
+                      {...rest}
+                    >
                       {text}
                     </a>
                   </li>
@@ -64,7 +74,8 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
             </div>
           ))
         }
-        <div class="grid h-fit! gap-1 pb-5 last:border-b-0">
+
+        <div class="grid h-fit! gap-5 last:border-b-0">
           <h5
             class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-xl"
           >
@@ -86,13 +97,31 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
               }
             </li>
           </ul>
+          <Button
+            variant="primary"
+            class="mt-0! flex max-w-[300px] items-center justify-center gap-2 text-lg"
+          >
+            <Phone /> Entre em Contato
+          </Button>
+          <a
+            href="tel://8821017654"
+            class="flex size-8 h-auto w-fit items-center gap-2"
+          >
+            <Image
+              class="size-8"
+              layout="contained"
+              src={whats}
+              alt="São geraldo"
+            />
+            <span class="text-2xl font-bold!">88 2101.7654</span>
+          </a>
         </div>
       </div>
     </div>
 
     <!-- Logo -->
     <div
-      class="flex h-[94px] w-[157px] items-center justify-center md:order-first md:h-[210px]! md:w-[280px]! lg:h-[290px]! lg:w-[388px]!"
+      class="flex h-[94px] w-[157px] items-center justify-center md:order-first md:h-[130px]! md:w-[200px]! lg:h-[290px]! lg:w-[388px]!"
     >
       <Image
         class="h-full w-full"
