@@ -43,7 +43,7 @@ export default defineConfig({
       'Cache-Control':
         import.meta.env.mode === 'production'
           ? 'public, max-age=31536000, s-maxage=31536000'
-          : 'public, max-age=0, s-maxage=0',
+          : 'no-cache revalidate=0',
     },
   },
 

@@ -1,14 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { findImage } from '@/utils/images';
-import {
-  astroAssetsOptimizer,
-  getImagesOptimized,
-} from '@/utils/images-optimization';
 import Image from './common/Image.astro';
+import logo from '@/assets/images/site/logo.webp';
 
-import footerBg from '@/assets/images/site/mobile/footer-no-border.png';
-import logoColorida from '@/assets/images/site/logo.png';
 import type { HTMLAttributes } from 'astro/types';
 
 interface Link extends HTMLAttributes<'a'> {
@@ -30,9 +24,6 @@ export interface Props {
   theme?: string;
 }
 
-const _image = await findImage(footerBg);
-const image = await getImagesOptimized(_image!, {}, astroAssetsOptimizer);
-
 const { socialLinks = [], links = [], footNote = '' } = Astro.props;
 ---
 
@@ -50,51 +41,20 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
   >
     <!-- Links e Sociais -->
     <div
-      class="grid h-full max-w-3xl flex-1 grid-cols-[85px_1fr] md:grid-cols-1 md:grid-rows-[auto_auto] lg:gap-4"
+      class="grid h-full max-w-3xl flex-1 grid-cols-[85px_1fr] gap-5 md:grid-cols-1 md:grid-rows-[auto_auto]"
     >
-      <!-- Social -->
-      <div
-        class="relative order-1 grid place-items-center md:order-2 md:place-items-start"
-      >
-        <div class="social-wrapper grid place-items-center gap-2.5 md:flex">
-          {
-            socialLinks.map(({ ariaLabel, href, text, icon }) => (
-              <a
-                class="text-muted bg-caju-heading-yellow inline-flex items-center rounded-full p-1 text-sm"
-                aria-label={ariaLabel}
-                href={href}
-              >
-                {icon && <Icon name={icon} class="size-8 text-white" />}
-                <Fragment set:html={text} />
-              </a>
-            ))
-          }
-        </div>
-
-        <!-- Linha vertical -->
-        <div
-          class="bg-caju-heading-yellow absolute top-1/2 right-0 h-[235px] w-1 -translate-y-1/2 md:hidden"
-        >
-        </div>
-      </div>
-
       <!-- Links -->
-      <div class="order-2 grid pl-3 md:order-1!">
+      <div class="order-2 grid items-center justify-center pl-3 md:order-1!">
         {
           links.map(({ title, links: insideLinks }, index) => (
             <div class="grid gap-1 pb-5 last:border-b-0">
-              <h5 class="text-caju-heading-yellow m-0 text-sm uppercase md:text-xl">
+              <h5 class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-xl">
                 {title}
               </h5>
 
-              <ul class="text-body font-inter grid grid-cols-2 grid-rows-3 gap-2 lg:flex lg:gap-6">
+              <ul class="text-body font-inter flex flex-wrap gap-7">
                 {insideLinks.map(({ href, text, ariaLabel, ...rest }) => (
-                  <li
-                    class:list={[
-                      { 'col-span-2': insideLinks.length <= 3 },
-                      { 'row-span-3': index === 1 },
-                    ]}
-                  >
+                  <li>
                     <a href={href} aria-label={ariaLabel} {...rest}>
                       {text}
                     </a>
@@ -104,17 +64,40 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
             </div>
           ))
         }
+        <div class="grid h-fit! gap-1 pb-5 last:border-b-0">
+          <h5
+            class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-xl"
+          >
+            Contato
+          </h5>
+          <ul class="text-body font-inter flex gap-6">
+            <li class="social-wrapper flex gap-4">
+              {
+                socialLinks.map(({ ariaLabel, href, text, icon }) => (
+                  <a
+                    class="text-muted bg-agua-primary-green inline-flex items-center rounded-full p-2 text-sm"
+                    aria-label={ariaLabel}
+                    href={href}
+                  >
+                    {icon && <Icon name={icon} class="size-8 text-white" />}
+                    <Fragment set:html={text} />
+                  </a>
+                ))
+              }
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <!-- Logo -->
     <div
-      class="flex h-[94px] w-[157px] items-center justify-center md:order-first md:h-[200px]! md:w-[350px]! lg:h-[300px]! lg:max-w-[520px]!"
+      class="flex h-[94px] w-[157px] items-center justify-center md:order-first md:h-[210px]! md:w-[280px]! lg:h-[290px]! lg:w-[388px]!"
     >
       <Image
         class="h-full w-full"
         layout="responsive"
-        src={logoColorida}
+        src={logo}
         alt="São geraldo"
       />
     </div>

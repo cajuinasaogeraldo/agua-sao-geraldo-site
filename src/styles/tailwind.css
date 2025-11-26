@@ -168,8 +168,12 @@ small {
   @apply button bg-agua-primary-blue text-white;
 }
 
-@utility btn-outlined {
+@utility btn-tertiary {
   @apply button border-caju-heading-yellow border bg-transparent;
+}
+
+@utility btn-action {
+  @apply button text-agua-primary-green! border-agua-primary-green border bg-transparent;
 }
 
 @utility bg-page {

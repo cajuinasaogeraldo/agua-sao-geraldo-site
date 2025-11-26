@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import type { CallToAction, CallToAction as Props } from '@/types';
 
 const {
-  variant = 'green',
+  variant = 'primary',
   target,
   text = await Astro.slots.render('default'),
   icon = '',
@@ -14,9 +14,10 @@ const {
 } = Astro.props as CallToAction;
 
 const variants = {
-  green: 'btn-primary',
-  yellow: 'btn-secondary',
-  outlined: 'btn-outlined',
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  tertiary: 'btn-tertiary',
+  action: 'btn-action',
 };
 ---
 

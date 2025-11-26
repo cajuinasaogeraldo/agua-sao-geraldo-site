@@ -13,14 +13,13 @@ export interface Props {
 }
 
 const { metadata } = Astro.props;
-const isHome = Astro.url.pathname === '/';
 ---
 
 <Layout metadata={metadata}>
   <slot name="header">
     <Header {...headerData} isFixed />
   </slot>
-  <main class={twMerge('mt-12', isHome && 'mt-0')}>
+  <main>
     <slot />
   </main>
   <slot name="footer">

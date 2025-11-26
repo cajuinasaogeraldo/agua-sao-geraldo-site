@@ -26,14 +26,8 @@ export const headerData = {
   ],
   actions: [
     {
-      text: 'Trabalhe Conosco',
-      variant: 'outlined',
-      target: '_blank',
-      href: 'https://cajuinasaogeraldo.gupy.io/',
-    },
-    {
-      text: 'Seja um distribuidor',
-      variant: 'yellow',
+      text: 'Seja um revendedor',
+      variant: 'action',
       href: '/solicite/seja-um-distribuidor',
     },
   ] as CallToAction[],
@@ -54,38 +48,9 @@ export const footerData = {
         },
       ],
     },
-    {
-      title: 'Contato',
-      links: [
-        { text: 'Solicite Parceria', href: '/solicite/parcerias/' },
-        {
-          text: 'Portal de boletos',
-          href: 'https://boletos.cajuinasaogeraldo.com.br/',
-          target: '_blank',
-          rel: 'noopener noreferrer',
-        },
-        { text: 'Seja distribuidor', href: '/solicite/seja-um-distribuidor' },
-        { text: 'Canal de denúncia', href: '/empresa/canal-de-denuncia/' },
-      ],
-    },
-    {
-      title: 'Informações',
-      links: [
-        {
-          text: 'Política Anticorrupção',
-          href: '/empresa/politica-anticorrupcao/',
-        },
-        {
-          text: 'Política recebimento de brinde',
-          href: '/empresa/politica-de-recebimento-e-oferecimento-de-presentes-brindes-hospitalidades-e-contrapartidas-de-patrocinio/',
-        },
-        { text: 'Código de Conduta', href: '/empresa/codigo-de-conduta/' },
-      ],
-    },
   ],
   secondaryLinks: [
     { text: 'Promoções', href: '/promocoes' },
-    // { text: 'Política de Privacidade', href: getPermalink('/privacy') },
     {
       text: 'Política de Privacidade',
       href: '/empresa/politica-de-privacidade/',
@@ -101,16 +66,6 @@ export const footerData = {
       ariaLabel: 'Facebook',
       icon: 'mdi:facebook',
       href: 'https://www.facebook.com/cajuinasaogeraldo',
-    },
-    {
-      ariaLabel: 'X',
-      icon: 'tabler:brand-x',
-      href: 'https://x.com/saogeraldocaju',
-    },
-    {
-      ariaLabel: 'Tiktok',
-      icon: 'tabler:brand-tiktok',
-      href: 'https://www.tiktok.com/@saogeraldocaju',
     },
     {
       ariaLabel: 'Linkedin',

@@ -4,7 +4,7 @@ site:
   base: '/'
   trailingSlash: true
 
-  googleSiteVerificationId: evbrXIdBUPoUf0D3tyc9quAlBu_ZDxp5FAIzsuglnBk
+  googleSiteVerificationId: null
 
 # Default SEO metadata
 metadata:
@@ -67,9 +67,9 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: 'G-TE40PVEW8E' # or "G-XXXXXXXXXX"
+      id: null # or "G-XXXXXXXXXX"
   gtm:
-    id: 'GTM-T6T7JJ54'
+    id: null
 
 ui:
   theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

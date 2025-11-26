@@ -34,7 +34,7 @@ body {
   padding: 0;
   text-align: left;
   overflow-wrap: break-word;
-  @apply font-normal text-white!;
+  @apply text-font! font-normal;
 }
 
 html {

@@ -1,16 +1,16 @@
 ---
-title: capa
-subtitle: ''
-description: ''
-image: /src/assets/images/banner/capa.webp
-imageMobile: ''
-cta: null
-textPosition: center
-textAlign: middle
-overlay: false
+title: head
+image: /src/assets/images/banner/head.webp
+cta: ''
 order: 1
 active: true
 publishDate: 2025-10-27T16:58:00
 expireDate: ''
+overlay: false
+imageMobile: ''
+description: ''
+subtitle: ''
+textPosition: center
+textAlign: middle
 ---
 
