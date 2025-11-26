@@ -1,4 +1,4 @@
-name: Create and Merge PR from CMS
+name: Create and Auto-Merge PR
 
 on:
   push:
