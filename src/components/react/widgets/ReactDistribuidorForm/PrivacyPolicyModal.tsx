@@ -86,7 +86,7 @@ export function PrivacyPolicyModal({ isOpen, onClose }: Props) {
         <div className="mt-8 flex justify-end">
           <button
             onClick={onClose}
-            className="btn-yellow rounded-lg px-6 py-2 font-semibold text-white transition-colors"
+            className="btn-secondary rounded-lg px-6 py-2 font-semibold text-white transition-colors"
           >
             Entendi
           </button>

@@ -35,6 +35,10 @@ export const colors = {
   agua: {
     primary: {
       blue: '#004F9F',
+      green: '#74BC1F',
+    },
+    secondary: {
+      green: '#19CF41',
     },
   },
 };

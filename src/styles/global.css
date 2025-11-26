@@ -34,7 +34,7 @@ body {
   padding: 0;
   text-align: left;
   overflow-wrap: break-word;
-  @apply text-caju-font!;
+  @apply font-normal text-white!;
 }
 
 html {
@@ -90,6 +90,7 @@ h4,
 h5,
 h6 {
   margin: 0 0 0.5rem 0;
+  @apply text-agua-primary-blue!;
 }
 
 /* YouTube Embed - Container responsivo para vídeos embeddados */

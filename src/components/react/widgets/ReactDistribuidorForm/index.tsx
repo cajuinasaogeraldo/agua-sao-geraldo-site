@@ -18,7 +18,9 @@ interface Props {
   apiUrl?: string;
 }
 
-const actions = { SOLICITACAO_DISTRIBUIDOR: 'SOLICITACAO_DISTRIBUIDOR' } as const;
+const actions = {
+  SOLICITACAO_DISTRIBUIDOR: 'SOLICITACAO_DISTRIBUIDOR',
+} as const;
 
 function Form({ onSubmitSuccess, apiUrl }: Props) {
   const [token, setToken] = useState<string | null>(null);
@@ -216,7 +218,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-yellow w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
+            className="btn-secondary w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
           >
             {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
           </button>
