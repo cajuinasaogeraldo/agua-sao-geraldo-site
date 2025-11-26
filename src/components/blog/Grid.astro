@@ -1,0 +1,14 @@
+---
+import Item from '@/components/blog/GridItem.astro';
+import type { News } from '@/types';
+
+export interface Props {
+  news: Array<News>;
+}
+
+const { news } = Astro.props;
+---
+
+<div class="row-gap-5 -mb-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+  {news.map((notice) => <Item news={notice} />)}
+</div>

@@ -1,0 +1,43 @@
+collections:
+  - name: 'pages'
+    label: 'Páginas'
+    icon: 'description'
+    folder: 'src/data/pages'
+    identifier_field: title
+    slug: '{{slug}}'
+    create: true
+    editor:
+      preview: true
+    fields:
+      - { label: 'Título', name: 'title', widget: 'string' }
+      - { label: 'Rascunho', name: 'draft', widget: 'boolean', default: false }
+      - {
+          label: 'Layout',
+          name: 'layout',
+          widget: 'hidden',
+          default: '@/layouts/StaticPageLayout.astro',
+        }
+      - { label: 'Conteúdo', name: 'body', widget: 'markdown' }
+
+  - name: 'socialResponsability'
+    label: 'Respons. Social'
+    icon: 'description'
+    folder: 'src/data/socialResponsability'
+    media_folder: '/src/assets/images/socialResponsability' # Location where files will be stored in the repo
+    public_folder: '/src/assets/images/socialResponsability' # The src attribute for uploaded media
+    slug: '{{slug}}'
+    identifier_field: title
+    create: true
+    editor:
+      preview: false
+    fields:
+      - { label: 'Título', name: 'title', widget: 'string' }
+      - { label: 'Imagem', name: 'image', widget: 'image' }
+      - { label: 'Conteúdo', name: 'body', widget: 'markdown' }
+      - { label: 'Ver mais', name: 'link', widget: 'string', required: false }
+      - {
+          label: 'Instagram',
+          name: 'instagram',
+          widget: 'string',
+          required: false,
+        }

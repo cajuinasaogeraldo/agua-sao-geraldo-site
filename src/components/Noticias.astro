@@ -1,0 +1,35 @@
+---
+import type { News } from '@/types';
+import { fetchPosts } from '@/utils/blog';
+import NewsSwiper from './react/widgets/NewsSwiper';
+
+import arrowNext from '@/assets/images/site/arrowNext.png';
+import arrowPrev from '@/assets/images/site/arrowPrev.png';
+import WidgetWrapper from './ui/WidgetWrapper.astro';
+
+const news = await fetchPosts();
+
+// Transformar dados para o componente React
+const newsForReact = news.map((news: News) => ({
+  id: news.id || news.slug || news.permalink,
+  title: news.title,
+  excerpt: news.excerpt,
+  content: news.content,
+  image: typeof news.image === 'string' ? news.image : news.image?.src,
+  permalink: news.permalink,
+}));
+---
+
+<WidgetWrapper
+  id="noticias"
+  containerClass="flex min-h-[340px] w-full flex-col text-center"
+>
+  <h2 class="text-caju-heading-primary uppercase">Notícias</h2>
+
+  <NewsSwiper
+    news={newsForReact}
+    arrowNext={arrowNext.src}
+    arrowPrev={arrowPrev.src}
+    client:load
+  />
+</WidgetWrapper>

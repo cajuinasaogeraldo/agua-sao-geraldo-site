@@ -1,0 +1,54 @@
+---
+import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+
+import Layout from '@/layouts/PageLayout.astro';
+import BlogList from '@/components/blog/List.astro';
+import Headline from '@/components/blog/Headline.astro';
+import Pagination from '@/components/blog/Pagination.astro';
+import {
+  blogListRobots,
+  fetchTags,
+  getStaticPathsBlogList,
+} from '@/utils/blog';
+import Tags from '@/components/blog/Tags.astro';
+import ToBlogLink from '@/components/blog/ToBlogLink.astro';
+import WidgetWrapper from '@/components/ui/WidgetWrapper.astro';
+
+export const prerender = true;
+
+export const getStaticPaths = (async ({ paginate }) => {
+  return await getStaticPathsBlogList({ paginate });
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { page } = Astro.props as Props;
+const currentPage = page.currentPage ?? 1;
+
+// const allCategories = await findCategories();
+const allTags = await fetchTags();
+
+const metadata = {
+  title: 'Notícias',
+  robots: {
+    index: blogListRobots?.index && currentPage === 1,
+    follow: blogListRobots?.follow,
+  },
+  openGraph: {
+    type: 'blog',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="mx-auto w-full px-6 py-12 sm:px-6 sm:py-16 lg:py-20">
+    <Headline class="mb-4!">Notícias </Headline>
+    <WidgetWrapper id="noticias-page">
+      <div class="flex">
+        <BlogList news={page.data} />
+        <Tags class="max-w-xs" tags={allTags} />
+      </div>
+      <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+    </WidgetWrapper>
+  </section>
+</Layout>

@@ -1,0 +1,140 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Icon } from 'astro-icon/components';
+import Image from '@/components/common/Image.astro';
+import PostTags from '@/components/blog/Tags.astro';
+
+import { APP_BLOG } from 'astrowind:config';
+import type { News } from '@/types';
+
+import { getPermalink } from '@/utils/permalinks';
+import { findImage } from '@/utils/images';
+import { getFormattedDate } from '@/utils/utils';
+
+export interface Props {
+  news: News;
+}
+
+const { news } = Astro.props;
+const image = (await findImage(news.image)) as ImageMetadata | undefined;
+
+const link = APP_BLOG?.post?.isEnabled
+  ? getPermalink(news.permalink, 'news')
+  : '';
+---
+
+<article
+  class={`*:font-inter max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade ${image ? 'md:grid-cols-2' : ''}`}
+>
+  {
+    image &&
+      (link ? (
+        <a class="group relative block" href={link ?? 'javascript:void(0)'}>
+          <div class="relative h-0 overflow-hidden rounded-sm bg-gray-400 pb-[56.25%] shadow-lg md:h-72 md:pb-[75%] lg:pb-[56.25%] dark:bg-slate-700">
+            {image && (
+              <Image
+                src={image}
+                class="absolute inset-0 mb-6 h-full w-full rounded-sm bg-gray-400 object-cover shadow-lg dark:bg-slate-700"
+                widths={[400, 900]}
+                width={900}
+                sizes="(max-width: 900px) 400px, 900px"
+                alt={news.title}
+                aspectRatio="16:9"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </div>
+        </a>
+      ) : (
+        <div class="relative h-0 overflow-hidden rounded-sm bg-gray-400 pb-[56.25%] shadow-lg md:h-72 md:pb-[75%] lg:pb-[56.25%] dark:bg-slate-700">
+          {image && (
+            <Image
+              src={image}
+              class="absolute inset-0 mb-6 h-full w-full rounded-sm bg-gray-400 object-cover shadow-lg dark:bg-slate-700"
+              widths={[400, 900]}
+              width={900}
+              sizes="(max-width: 900px) 400px, 900px"
+              alt={news.title}
+              aspectRatio="16:9"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+        </div>
+      ))
+  }
+  <div class="mt-2">
+    <header>
+      <div class="mb-1">
+        <span class="text-caption">
+          <Icon
+            name="tabler:clock"
+            class="-mt-0.5 inline-block h-3.5 w-3.5 dark:text-gray-400"
+          />
+          <time datetime={String(news.publishDate)} class="inline-block"
+            >{getFormattedDate(news.publishDate)}</time
+          >
+          {
+            news.author && (
+              <>
+                {' '}
+                ·{' '}
+                <Icon
+                  name="tabler:user"
+                  class="-mt-0.5 inline-block h-3.5 w-3.5 dark:text-gray-400"
+                />
+                <span>{news.author.replaceAll('-', ' ')}</span>
+              </>
+            )
+          }
+          {
+            news.category && (
+              <>
+                {' '}
+                ·{' '}
+                <a
+                  class="hover:underline"
+                  href={getPermalink(news.category.slug, 'category')}
+                >
+                  {news.category.title}
+                </a>
+              </>
+            )
+          }
+        </span>
+      </div>
+      <h2
+        class="font-heading mb-2 text-xl leading-tight font-bold sm:text-2xl dark:text-slate-300"
+      >
+        {
+          link ? (
+            <a
+              class="font-inter text-caju-heading-orange! inline-block transition duration-200 ease-in"
+              href={link}
+            >
+              {news.title}
+            </a>
+          ) : (
+            news.title
+          )
+        }
+      </h2>
+    </header>
+
+    {
+      news.excerpt && false && (
+        <p class="text-body text-muted font-inter grow">{news.excerpt}</p>
+      )
+    }
+    {
+      news.tags && Array.isArray(news.tags) ? (
+        <footer class="mt-5">
+          <PostTags tags={news.tags} />
+        </footer>
+      ) : (
+        <Fragment />
+      )
+    }
+  </div>
+</article>

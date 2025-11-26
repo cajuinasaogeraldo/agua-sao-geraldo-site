@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import type { ProductItem } from '@/types';
+import ProductCarousel from './react/widgets/ProductsCarrousel';
+import WidgetWrapper from './ui/WidgetWrapper.astro';
+
+// Busca todos os produtos da coleção
+const productsCollection = await getCollection('product');
+
+// Ordena por ID e mapeia para o formato esperado
+const products: ProductItem[] = productsCollection
+  .sort((a, b) => a.data.id - b.data.id)
+  .map((product) => ({
+    id: product.data.id,
+    slug: product.data.slug,
+    normal: product.data.normalImage,
+    hover: product.data.hoverImage,
+    details: product.data.details,
+    ingredients: product.data.ingredients,
+  }));
+---
+
+<WidgetWrapper id="products">
+  <div class="flex w-full flex-col items-center gap-8 overflow-hidden">
+    <h2 class="text-caju-heading-primary uppercase">Nossos Produtos</h2>
+    <ProductCarousel client:load products={products} />
+  </div>
+</WidgetWrapper>

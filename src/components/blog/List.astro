@@ -1,0 +1,20 @@
+---
+import Item from '@/components/blog/ListItem.astro';
+import type { News } from '@/types';
+
+export interface Props {
+  news: Array<News>;
+}
+
+const { news } = Astro.props;
+---
+
+<ul>
+  {
+    news.map((notice) => (
+      <li class="mb-12 md:mb-20">
+        <Item news={notice} />
+      </li>
+    ))
+  }
+</ul>
