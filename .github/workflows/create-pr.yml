@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   create-pr:
-    if: ${{ github.event_name == 'repository_dispatch' || contains(github.event.head_commit.message, '[cms]') || contains(github.event.head_commit.message, '[pr]') }}
+    if: ${{ github.event_name == 'repository_dispatch' || contains(github.event.head_commit.message, '[cms]') || contains(github.event.head_commit.message, '[ci]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
