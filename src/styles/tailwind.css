@@ -20,6 +20,29 @@
   }
 }
 
+:root {
+  --wave-mask:
+    radial-gradient(78.26px at 50% 105px, #000 99%, #0000 101%) calc(50% - 70px)
+      0/140px 100%,
+    radial-gradient(78.26px at 50% -70px, #0000 99%, #000 101%) 50% 35px/140px
+      100% repeat-x;
+}
+
+#footer::before {
+  -webkit-mask: var(--wave-mask);
+
+  mask: var(--wave-mask);
+
+  content: '';
+  position: absolute;
+  top: -45px;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: theme(--color-agua-primary-blue);
+  /* background: #202020; */
+}
+
 /* ============================================
    TIPOGRAFIA GLOBAL – RESPONSIVE SYSTEM
    ============================================ */
@@ -61,7 +84,8 @@ p {
 }
 
 a {
-  @apply hover:text-caju-heading-orange text-blue-400 underline-offset-2 hover:underline;
+  @apply font-inter text-blue-100;
+  text-decoration: none;
 }
 
 small {

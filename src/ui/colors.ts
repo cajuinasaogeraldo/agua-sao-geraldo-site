@@ -32,4 +32,9 @@ export const colors = {
     },
     info: '#632314',
   },
+  agua: {
+    primary: {
+      blue: '#004F9F',
+    },
+  },
 };

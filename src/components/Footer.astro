@@ -11,7 +11,6 @@ import footerBg from '@/assets/images/site/mobile/footer-no-border.png';
 import logoColorida from '@/assets/images/site/logo.png';
 import type { HTMLAttributes } from 'astro/types';
 
-// ✅ Forma correta no Astro
 interface Link extends HTMLAttributes<'a'> {
   text?: string;
   ariaLabel?: string;
@@ -38,11 +37,11 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
 ---
 
 <footer
-  style={`background-image: url(${image?.src});`}
+  id="footer"
   class:list={[
-    'border-caju-heading-yellow relative min-h-[500px] w-full border-t-20',
+    'relative flex min-h-[500px] w-full flex-col items-center justify-evenly gap-2 lg:gap-6',
     'px-4 py-7 md:px-7',
-    'flex flex-col items-center justify-evenly gap-2 lg:gap-6',
+    'bg-agua-primary-blue',
   ]}
 >
   <!-- Links, Sociais e Logo -->
