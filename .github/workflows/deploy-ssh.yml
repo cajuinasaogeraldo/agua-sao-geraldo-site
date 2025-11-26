@@ -56,7 +56,7 @@ jobs:
             --checksum \
             --exclude='.git*' \
             --exclude='node_modules/' \
-            --exclude='*'$'\r''*'
+            --exclude='*'$'\r''*' \
             -e "ssh -i ~/.ssh/deploy_key -p ${{ vars.SSH_PORT }}" \
             ./dist/ \
             ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_REMOTE_PATH }}
