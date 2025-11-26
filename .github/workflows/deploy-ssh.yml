@@ -4,12 +4,12 @@ on:
   push:
     branches: [main]
   repository_dispatch:
-    types: [cms-publish]
+    types: [cms-publish, rebuild]
   workflow_run:
     workflows: ["Create and Auto-Merge PR"]
     types:
       - completed
-  workflow_dispatch:  
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -36,31 +36,19 @@ jobs:
           NODE_ENV: production
           PUBLIC_GOOGLE_MAPS_KEY_PROD: ${{ secrets.PUBLIC_GOOGLE_MAPS_KEY_PROD }}
           PUBLIC_GOOGLE_CAPTCHA_SITEKEY: ${{ vars.PUBLIC_GOOGLE_CAPTCHA_SITEKEY }}
+          PUBLIC_API_BASE_URL: ${{ vars.API_BASE_URL }}
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
           GOOGLE_ANALYTICS_ID: ${{ vars.GOOGLE_ANALYTICS_ID }}
           SITE_URL: ${{ vars.SITE_URL }}
         run: pnpm build
 
-      - name: Setup SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p ${{ vars.SSH_PORT }} ${{ vars.SSH_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Deploy via rsync
-        run: |
-          rsync -avz \
-            --delete \
-            --delete-before \
-            --checksum \
-            --exclude='.git*' \
-            --exclude='node_modules/' \
-            --exclude='*'$'\r''*' \
-            -e "ssh -i ~/.ssh/deploy_key -p ${{ vars.SSH_PORT }}" \
-            ./dist/ \
-            ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_REMOTE_PATH }}
-
-      - name: Cleanup SSH Key
-        if: always()
-        run: rm -f ~/.ssh/deploy_key
+      - name: Deploy via SSH/rsync
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: -avzr --checksum --delete --delete-before --exclude='.git*' --exclude='node_modules/' --exclude='.github/'
+          path: ./dist/
+          remote_path: ${{ vars.SSH_REMOTE_PATH }}
+          remote_host: ${{ vars.SSH_HOST }}
+          remote_user: ${{ vars.SSH_USER }}
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          remote_port: ${{vars.SSH_PORT}}
