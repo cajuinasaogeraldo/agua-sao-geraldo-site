@@ -1,8 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode, Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/autoplay';
 import type { TimelineItem } from '@/types';
 import { twMerge } from 'tailwind-merge';
 
