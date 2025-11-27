@@ -11,9 +11,9 @@ const allBanners = (await getCollection('banner')) as Banner[];
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link
     rel="preload"
+    fetchpriority="high"
     as="image"
     href={allBanners[0].data.image.src}
-    fetchpriority="high"
   />
   <link
     rel="preload"
