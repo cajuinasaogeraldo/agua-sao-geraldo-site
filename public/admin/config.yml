@@ -189,7 +189,20 @@ collections:
 
       - name: htaccess
         label: Apache Settings
-        file: src/htaccess
+        file: public/_htaccess
+        fields:
+          - {
+              name: body,
+              label: HTAccess,
+              widget: code,
+              output_code_only: true,
+              allow_language_selection: false,
+              hint: Arquivo .htaccess NÃO MEXA SE NÃO SABE O QUE ESTÁ FAZENDO! Se precisar de ajuda entre em contato com o suporte,
+            }
+
+      - name: siteConfig
+        label: Configurações Gerais
+        file: public/_config
         fields:
           - {
               name: body,

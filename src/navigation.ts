@@ -1,5 +1,5 @@
 import type { CallToAction } from './types';
-import { getPermalink } from './utils/permalinks';
+import { getPermalink, getAsset } from './utils/permalinks';
 
 export const headerData = {
   links: [
@@ -60,24 +60,24 @@ export const footerData = {
     {
       ariaLabel: 'Instagram',
       icon: 'mdi:instagram',
-      href: 'https://www.instagram.com/cajuinasaogeraldo',
+      href: 'https://www.instagram.com/aguasaogeraldo/',
     },
     {
       ariaLabel: 'Facebook',
       icon: 'mdi:facebook',
-      href: 'https://www.facebook.com/cajuinasaogeraldo',
+      href: 'https://www.facebook.com/aguasaogeraldo',
     },
     {
       ariaLabel: 'Linkedin',
       icon: 'mdi:linkedin',
-      href: 'https://www.linkedin.com/company/cajuinasaogeraldo',
+      href: 'https://www.linkedin.com/company/aguasaogeraldo',
     },
     {
       ariaLabel: 'Youtube',
       icon: 'mdi:youtube',
-      href: 'https://www.youtube.com/c/cajuinasaogeraldo',
+      href: 'https://www.youtube.com/@aguasaogeraldo',
     },
-    // { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
+    { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
   footNote: `
     <span>

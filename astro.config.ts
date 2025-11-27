@@ -35,7 +35,7 @@ const whenExternalScripts = (
 
 // https://astro.build/config
 export default defineConfig({
-  site: import.meta.env.SITE_URL || 'https://cajuinasaogeraldo.com.br',
+  site: import.meta.env.SITE_URL || 'https://aguasaogeraldo.com.br',
   trailingSlash: 'always',
   output: 'static',
   server: {
@@ -84,7 +84,7 @@ export default defineConfig({
       Logger: 1,
     }),
     astrowind({
-      config: './src/config.yaml',
+      config: './public/_config',
     }),
     generateHtaccess({ config: './public/_htaccess' }),
     react(),
