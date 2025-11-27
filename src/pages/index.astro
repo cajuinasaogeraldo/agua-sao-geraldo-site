@@ -1,15 +1,13 @@
 ---
 import Layout from '@/layouts/PageLayout.astro';
 import BannerSlider from '@/components/BannerSlider.astro';
-import Products from '@/components/Products.astro';
 import About from '@/components/About.astro';
 import Banner from '@/components/MiddleBanner.astro';
 import Noticias from '@/components/Noticias.astro';
 import Locations from '@/components/Locations.astro';
-import Team from '@/components/Team.astro';
 
 const metadata = {
-  title: 'Cajuína São Geraldo - O tradicional refrigerante de Caju do Nordeste',
+  title: 'Água Mineral Natural - São Geraldo',
   ignoreTitleTemplate: true,
 };
 ---
@@ -17,9 +15,7 @@ const metadata = {
 <Layout metadata={metadata}>
   <BannerSlider />
   <About />
-  <Products />
-  <Banner />
   <Noticias />
+  <Banner />
   <Locations />
-  <Team />
 </Layout>

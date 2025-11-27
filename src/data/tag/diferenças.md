@@ -1,6 +1,0 @@
----
-title: Diferenças
-description: ''
-image: ''
----
-

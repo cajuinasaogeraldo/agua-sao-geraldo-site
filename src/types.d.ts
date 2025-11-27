@@ -240,7 +240,7 @@ export interface Disclaimer {
 
 // COMPONENTS
 export interface CallToAction extends Omit<HTMLAttributes<'a'>, 'slot'> {
-  variant?: 'green' | 'yellow' | 'outlined';
+  variant?: 'primary' | 'secondary' | 'tertiary';
   target?: string;
   text?: string;
   icon?: string;

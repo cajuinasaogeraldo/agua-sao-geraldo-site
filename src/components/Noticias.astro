@@ -15,6 +15,7 @@ const newsForReact = news.map((news: News) => ({
   title: news.title,
   excerpt: news.excerpt,
   content: news.content,
+  Content: news.Content,
   image: typeof news.image === 'string' ? news.image : news.image?.src,
   permalink: news.permalink,
 }));

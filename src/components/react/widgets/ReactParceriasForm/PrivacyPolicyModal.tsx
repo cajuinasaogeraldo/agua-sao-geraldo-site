@@ -30,7 +30,7 @@ export function PrivacyPolicyModal({ isOpen, onClose }: Props) {
           <X size={24} />
         </button>
 
-        <div className="prose prose-sm md:prose-base font-inter max-w-none">
+        <div className="prose prose-sm md:prose-base font-poppins max-w-none">
           <h2 className="text-caju-heading-primary mb-6 text-2xl font-bold">
             Política de Privacidade e Proteção de Dados
           </h2>
@@ -86,7 +86,7 @@ export function PrivacyPolicyModal({ isOpen, onClose }: Props) {
         <div className="mt-8 flex justify-end">
           <button
             onClick={onClose}
-            className="btn-yellow rounded-lg px-6 py-2 font-semibold text-white transition-colors"
+            className="btn-secondary rounded-lg px-6 py-2 font-semibold text-white transition-colors"
           >
             Entendi
           </button>

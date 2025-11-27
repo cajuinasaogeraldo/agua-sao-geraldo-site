@@ -6,21 +6,19 @@ import Footer from '@/components/Footer.astro';
 import { headerData, footerData } from '@/navigation';
 
 import type { MetaData } from '@/types';
-import { twMerge } from 'tailwind-merge';
 
 export interface Props {
   metadata?: MetaData;
 }
 
 const { metadata } = Astro.props;
-const isHome = Astro.url.pathname === '/';
 ---
 
 <Layout metadata={metadata}>
   <slot name="header">
-    <Header {...headerData} isFixed />
+    <Header {...headerData} />
   </slot>
-  <main class={twMerge('mt-12', isHome && 'mt-0')}>
+  <main>
     <slot />
   </main>
   <slot name="footer">

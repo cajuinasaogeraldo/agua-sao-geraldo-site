@@ -61,6 +61,7 @@ const getNormalizedPost = async (
     image,
     tags: rawTags = [],
     category: rawCategory,
+    content,
     author,
     draft = false,
     metadata = {},
@@ -108,6 +109,7 @@ const getNormalizedPost = async (
     metadata,
 
     Content: Content,
+    content: content,
     // or 'content' in case you consume from API
 
     readingTime: remarkPluginFrontmatter?.readingTime,

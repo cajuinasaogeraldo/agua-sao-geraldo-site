@@ -1,6 +1,0 @@
----
-title: Ceará
-description: ''
-image: ''
----
-

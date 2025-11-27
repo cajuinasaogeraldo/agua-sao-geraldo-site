@@ -1,6 +1,0 @@
----
-title: Estiloso
-description: ''
-image: ''
----
-

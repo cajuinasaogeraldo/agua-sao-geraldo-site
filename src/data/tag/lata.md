@@ -1,6 +1,0 @@
----
-title: Lata
-description: ''
-image: ''
----
-

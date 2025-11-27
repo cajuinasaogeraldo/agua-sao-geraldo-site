@@ -1,6 +1,0 @@
----
-title: Vaidarcerto
-description: ''
-image: ''
----
-

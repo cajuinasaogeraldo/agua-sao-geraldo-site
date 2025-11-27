@@ -1,6 +1,0 @@
----
-title: História
-description: ''
-image: ''
----
-

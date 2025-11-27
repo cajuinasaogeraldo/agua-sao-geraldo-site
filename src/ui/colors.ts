@@ -1,6 +1,5 @@
 export const colors = {
   caju: {
-    font: '#828282',
     primary: {
       light: '#005b3c',
       dark: '#00422a',
@@ -31,5 +30,16 @@ export const colors = {
       hover: '#f9b558',
     },
     info: '#632314',
+  },
+  font: '#828282',
+  agua: {
+    primary: {
+      blue: '#004F9F',
+      green: '#74BC1F',
+    },
+    secondary: {
+      green: '#19CF41',
+      blue: '#1BBAEE',
+    },
   },
 };

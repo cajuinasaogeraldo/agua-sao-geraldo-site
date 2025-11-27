@@ -9,9 +9,15 @@ const middleBanners = await getCollection(
   ({ data }) => data.active
 );
 const bannerData = middleBanners[0]?.data;
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
 ---
 
-<WidgetWrapper fullWidth>
+<WidgetWrapper containerClass={className} fullWidth>
   <div class="hidden md:block">
     <Image src={bannerData.image} alt={bannerData.title} />
   </div>

@@ -41,10 +41,10 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <section class="mx-auto w-full px-6 py-12 sm:px-6 sm:py-16 lg:py-20">
-    <Headline class="mb-4!">Notícias </Headline>
-    <WidgetWrapper id="noticias-page">
-      <div class="flex">
+  <section class="mx-auto w-full px-6 py-12 sm:px-6 sm:py-16 lg:py-32">
+    <Headline class="mb-0!">Notícias </Headline>
+    <WidgetWrapper containerClass="pt-4!" id="noticias-page">
+      <div class="flex gap-4">
         <BlogList news={page.data} />
         <Tags class="max-w-xs" tags={allTags} />
       </div>

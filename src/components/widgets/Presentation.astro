@@ -55,7 +55,7 @@ const {
       <!-- Conteúdo -->
       <div
         class:list={[
-          'mx-auto max-w-[1200px] pt-5 text-center lg:text-left',
+          'mx-auto flex max-w-[1200px] flex-col pt-5 text-center lg:text-left',
           contentWrapperClass,
         ]}
       >
@@ -76,7 +76,6 @@ const {
               class:list={[
                 'leading-tighter font-heading intersect-once intersect-quarter motion-safe:md:intersect:animate-fade mb-4 text-5xl font-bold tracking-tighter md:text-6xl motion-safe:md:opacity-0',
                 'hidden lg:block',
-                'text-caju-heading-primary',
               ]}
               set:html={title || tagline}
             />
@@ -86,7 +85,7 @@ const {
           {
             subtitle && (
               <p
-                class="text-lead font-inter mb-6 text-justify lg:text-[30px]"
+                class="text-lead font-poppins mb-6 text-justify lg:text-[30px]"
                 set:html={subtitle}
               />
             )
@@ -107,7 +106,13 @@ const {
             )
           }
         </div>
-        {content && <Fragment set:html={content} />}
+        {
+          content && (
+            <div class="flex h-full flex-1 flex-col">
+              <Fragment set:html={content} />
+            </div>
+          )
+        }
       </div>
     </div>
   </div>

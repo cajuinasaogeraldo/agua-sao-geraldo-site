@@ -90,17 +90,17 @@ export default function NewsSwiper({
               </a>
             )}
             <div className="flex h-full flex-col justify-evenly text-left">
-              <h5 className="text-caju-heading-primary mb-2 line-clamp-2 px-1 text-base md:text-lg">
+              <h5 className="text-agua-primary-blue wrap-break-words mb-2 line-clamp-2 px-1 text-base md:text-lg">
                 {post.title}
               </h5>
 
-              <p className="font-inter mb-3 line-clamp-3 h-24 grow px-1 text-sm">
-                {post.excerpt || post.content}
+              <p className="font-poppins mb-3 line-clamp-3 min-h-20 px-1 text-sm">
+                {post.content || post.title}
               </p>
 
               <a
                 href={post.permalink}
-                className="mx-1 inline-block h-fit w-fit rounded bg-green-600 px-4 py-1.5 text-sm font-medium text-white transition-all duration-300 hover:bg-green-700"
+                className="btn-primary inline-block h-fit w-fit rounded text-sm font-medium text-white transition-all duration-300"
               >
                 Leia Mais
               </a>

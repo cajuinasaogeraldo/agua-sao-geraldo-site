@@ -18,7 +18,9 @@ interface Props {
   apiUrl?: string;
 }
 
-const actions = { SOLICITACAO_DISTRIBUIDOR: 'SOLICITACAO_DISTRIBUIDOR' } as const;
+const actions = {
+  SOLICITACAO_DISTRIBUIDOR: 'SOLICITACAO_DISTRIBUIDOR',
+} as const;
 
 function Form({ onSubmitSuccess, apiUrl }: Props) {
   const [token, setToken] = useState<string | null>(null);
@@ -104,12 +106,12 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
   };
 
   return (
-    <div className="mx-auto w-full px-4 py-4 md:px-6 md:py-8">
-      <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl bg-white">
+    <div className="mx-auto w-full bg-white px-4 py-4 md:px-6 md:py-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl">
         <div className="mb-6 flex flex-col gap-8 md:mb-8 md:gap-12">
           {/* Informações da Empresa  */}
           <div>
-            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações da Empresa
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -142,7 +144,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           </div>
           {/* Informações de Contato  */}
           <div>
-            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações de Contato
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -174,7 +176,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
             </div>
           </div>
           {/* Termos */}
-          <div className="font-inter flex flex-col items-stretch gap-4 md:flex-row md:items-center">
+          <div className="font-poppins flex flex-col items-stretch gap-4 md:flex-row md:items-center">
             <FormField
               register={register}
               errors={errors}
@@ -189,7 +191,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
                       e.preventDefault();
                       setIsPrivacyModalOpen(true);
                     }}
-                    className="text-caju-heading-primary hover:text-caju-red-primary cursor-pointer font-semibold underline"
+                    className="text-agua-primary-blue! cursor-pointer font-semibold underline"
                   >
                     Política de Privacidade e Proteção de Dados
                   </button>
@@ -216,7 +218,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-yellow w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
+            className="btn-secondary w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
           >
             {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
           </button>

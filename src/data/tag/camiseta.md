@@ -1,6 +1,0 @@
----
-title: Camiseta
-description: ''
-image: ''
----
-
