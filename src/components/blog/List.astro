@@ -1,18 +1,20 @@
 ---
 import Item from '@/components/blog/ListItem.astro';
 import type { News } from '@/types';
+import { twMerge } from 'tailwind-merge';
 
 export interface Props {
   news: Array<News>;
+  class?: string;
 }
 
-const { news } = Astro.props;
+const { news, class: className } = Astro.props;
 ---
 
 <ul>
   {
     news.map((notice) => (
-      <li class="mb-12 md:mb-20">
+      <li class={twMerge('mb-12 md:mb-20', className)}>
         <Item news={notice} />
       </li>
     ))
