@@ -83,16 +83,16 @@ const items = [
           'text-agua-secondary-blue! font-medium! text-4xl! py-0! my-0!',
       }}
     />
-    <div class="mt-4 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-7">
+    <div class="mt-4 grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-7">
       {
         items.map((item) => (
           <div class="flex items-center justify-start gap-4">
             <Image src={folha} alt="Folha" class="size-30" />
             <div>
-              <h5 class="mb-0! text-5xl font-extrabold! text-white!">
+              <h3 class="mb-0! text-2xl! font-extrabold! text-white!">
                 {item.title}
-              </h5>
-              <p class="text-agua-primary-green text-2xl">{item.qtd}</p>
+              </h3>
+              <p class="text-agua-primary-green text-xl!">{item.qtd}</p>
             </div>
           </div>
         ))

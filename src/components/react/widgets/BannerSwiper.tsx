@@ -153,17 +153,15 @@ function BannerSlideContent({
   const hasCTA = !!cta;
 
   const content = (
-    <div className="bg-caju-heading-primary relative size-full">
+    <div className="relative size-full">
       <picture>
-        {imageMobile && (
-          <source media="(max-width: 768px)" srcSet={imageMobile} />
-        )}
         <ImageOptimized
           src={image}
           alt={title}
           width={1920}
           height={700}
           layout="cover"
+          decoding="auto"
           loading={index === 0 ? 'eager' : 'lazy'}
           fetchPriority={index === 0 ? 'high' : 'auto'}
           className={`absolute inset-0 size-full object-${objectFit} object-center`}

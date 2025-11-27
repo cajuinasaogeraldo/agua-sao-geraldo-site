@@ -69,6 +69,7 @@ export const DistribuidorMarker: React.FC<DistribuidorMarkerProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className="distribuidor-marker"
+        aria-label={`Abrir informações do local ${distribuidor.nome}`}
         style={{
           transform: `scale(${scale})`,
           transformOrigin: AdvancedMarkerAnchorPoint.BOTTOM.join(' '),
