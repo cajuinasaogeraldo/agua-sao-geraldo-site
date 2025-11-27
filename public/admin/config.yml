@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
 backend:
   name: 'github'
-  repo: 'psousajcajuina/cajuina-site'
+  repo: 'cajuinasaogeraldo/agua-sao-geraldo-site'
   branch: 'development'
   base_url: 'https://cajuina-cms-auth.cadastro-cajuina.workers.dev/'
   skip_ci: true
