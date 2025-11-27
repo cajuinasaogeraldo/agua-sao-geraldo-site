@@ -1,6 +1,0 @@
----
-title: Caju
-description: ''
-image: ''
----
-

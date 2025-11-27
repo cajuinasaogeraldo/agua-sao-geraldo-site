@@ -1,6 +1,0 @@
----
-title: Cariri
-description: ''
-image: ''
----
-

@@ -1,6 +1,0 @@
----
-title: Outubrorosa
-description: ''
-image: ''
----
-

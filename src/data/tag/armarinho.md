@@ -1,6 +1,0 @@
----
-title: Armarinho
-description: ''
-image: ''
----
-

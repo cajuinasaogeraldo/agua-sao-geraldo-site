@@ -1,6 +1,0 @@
----
-title: Colecionáveis
-description: ''
-image: ''
----
-

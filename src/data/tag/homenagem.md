@@ -1,6 +1,0 @@
----
-title: Homenagem
-description: ''
-image: ''
----
-
