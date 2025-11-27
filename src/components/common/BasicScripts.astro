@@ -297,9 +297,19 @@ import { UI } from 'astrowind:config';
     },
   };
 
-  Observer.start();
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      Observer.start();
+      manualInitialCheck();
+    });
+  });
 
   document.addEventListener('astro:after-swap', () => {
-    Observer.start();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        Observer.start();
+        manualInitialCheck();
+      });
+    });
   });
 </script>
