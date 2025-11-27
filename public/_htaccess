@@ -10,19 +10,24 @@ forceHttps: false
 forceWww: remove
 
 # Domínio principal (importante para redirects absolutos)
-domain: cajuinasaogeraldo.com.br
+domain: red-chamois-284776.hostingersite.com/blog/
 
 # ---------------------------------------------------
-# Redirects WordPress → Astro
+# Redirects
 # ---------------------------------------------------
 redirects:
-  # Redirecionar /noticias/ → /blog/
   - from: /noticias/
     to: /blog/
     code: 301
+  - from: /propriedades/
+    to: /
+    code: 302
+  - from: /revenda
+    to: /
+    code: 302
 
 # ---------------------------------------------------
-# CORS (Cross-Origin Resource Sharing)
+# CORS
 # ---------------------------------------------------
 cors:
   fonts: true # libera fontes
