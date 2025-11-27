@@ -106,12 +106,12 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
   };
 
   return (
-    <div className="mx-auto w-full px-4 py-4 md:px-6 md:py-8">
-      <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl bg-white">
+    <div className="mx-auto w-full bg-white px-4 py-4 md:px-6 md:py-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl">
         <div className="mb-6 flex flex-col gap-8 md:mb-8 md:gap-12">
           {/* Informações da Empresa  */}
           <div>
-            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações da Empresa
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -144,7 +144,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           </div>
           {/* Informações de Contato  */}
           <div>
-            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações de Contato
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -191,7 +191,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
                       e.preventDefault();
                       setIsPrivacyModalOpen(true);
                     }}
-                    className="text-caju-heading-primary hover:text-caju-red-primary cursor-pointer font-semibold underline"
+                    className="text-agua-primary-blue! cursor-pointer font-semibold underline"
                   >
                     Política de Privacidade e Proteção de Dados
                   </button>

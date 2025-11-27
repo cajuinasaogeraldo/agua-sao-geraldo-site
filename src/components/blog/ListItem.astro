@@ -24,7 +24,7 @@ const link = APP_BLOG?.post?.isEnabled
 ---
 
 <article
-  class={`*:font-poppins max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade ${image ? 'md:grid-cols-2' : ''}`}
+  class={`*:font-poppins max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade shadow-lg rounded-lg ${image ? 'md:grid-cols-2' : ''}`}
 >
   {
     image &&
@@ -105,12 +105,12 @@ const link = APP_BLOG?.post?.isEnabled
         </span>
       </div>
       <h2
-        class="font-heading mb-2 text-xl leading-tight font-bold sm:text-2xl dark:text-slate-300"
+        class="font-heading *:text-agua-primary-green! mb-2 text-xl! leading-tight! font-bold! md:text-2xl!"
       >
         {
           link ? (
             <a
-              class="font-poppins text-caju-heading-orange! inline-block transition duration-200 ease-in"
+              class="font-poppins inline-block transition duration-200 ease-in"
               href={link}
             >
               {news.title}
