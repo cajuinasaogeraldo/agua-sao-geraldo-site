@@ -4,7 +4,7 @@ import { getPermalink, getAsset } from './utils/permalinks';
 export const headerData = {
   links: [
     {
-      text: 'Home',
+      text: 'Início',
       href: '/',
     },
     {
@@ -12,23 +12,23 @@ export const headerData = {
       href: '/sobre',
     },
     {
-      text: 'Produtos',
-      href: '/produtos',
+      text: 'Propriedades',
+      href: '/propriedades',
+    },
+    {
+      text: 'Revenda',
+      href: '/revenda',
     },
     {
       text: 'Notícias',
       href: '/blog',
-    },
-    {
-      text: 'Nos Encontre',
-      href: '#nos-encontre',
     },
   ],
   actions: [
     {
       text: 'Seja um revendedor',
       variant: 'action',
-      href: '/solicite/seja-um-distribuidor',
+      href: '/solicite/seja-um-revendedor',
     },
   ] as CallToAction[],
 };
