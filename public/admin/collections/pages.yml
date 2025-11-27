@@ -18,3 +18,17 @@ collections:
           default: '@/layouts/StaticPageLayout.astro',
         }
       - { label: 'Conteúdo', name: 'body', widget: 'markdown' }
+
+  - name: about-gallery
+    icon: image
+    label: Galeria de Imagens
+    folder: src/data/about-gallery
+    create: true
+    slug: '{{slug}}'
+    media_folder: '/src/assets/images/about-gallery' # Location where files will be stored in the repo
+    public_folder: '/src/assets/images/about-gallery' # The src attribute for uploaded media
+    editor:
+      preview: false
+    fields:
+      - { name: image, label: 'Imagem', widget: image, required: true }
+      - { name: active, label: Ativo, widget: boolean, default: true }

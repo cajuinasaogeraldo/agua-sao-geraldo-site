@@ -2,11 +2,17 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode, Navigation } from 'swiper/modules';
 import ImageOptimized from '@/components/react/common/ImageOptimized';
 
-const items = Array.from({ length: 10 }).map((_, i) => ({
-  url: `https://swiperjs.com/demos/images/nature-${i + 1}.jpg`,
-}));
+interface ImageBannerType {
+  data: {
+    image: string;
+  };
+}
 
-export default function AboutPhotoGallery() {
+export default function AboutPhotoGallery({
+  images,
+}: {
+  images: ImageBannerType[];
+}) {
   return (
     <div className="relative w-full overflow-hidden">
       <div className="-mx-[calc(100vw-100%)] w-screen">
@@ -26,10 +32,10 @@ export default function AboutPhotoGallery() {
           grabCursor
           rewind
         >
-          {items.map((item, index) => (
-            <SwiperSlide key={item.url + index}>
+          {images.map((item, index) => (
+            <SwiperSlide key={item.data.image + index}>
               <ImageOptimized
-                src={item.url}
+                src={item.data.image}
                 alt={`Galeria de fotos ${index + 1}`}
                 width={300}
                 height={300}

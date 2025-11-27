@@ -87,25 +87,6 @@ const news = defineCollection({
     }),
 });
 
-// --- PRODUCTS ---
-const product = defineCollection({
-  loader: glob({ base: './src/data/product', pattern: '**/*.{md,mdx}' }),
-  schema: ({ image }) =>
-    z.object({
-      id: z.number(),
-      title: z.string(),
-      slug: z.string(),
-      normalImage: image(),
-      hoverImage: image().optional(),
-      details: z.object({
-        name: z.string(),
-        image: image(),
-        nutritionalInfo: image(),
-      }),
-      ingredients: z.string().optional(),
-    }),
-});
-
 // --- BANNER PRINCIPAL ---
 const banner = defineCollection({
   loader: glob({ base: './src/data/banner', pattern: '**/*.{md,mdx}' }),
@@ -157,6 +138,16 @@ const middleBanner = defineCollection({
     }),
 });
 
+// --- ABOUT GALLERY ---
+const aboutGallery = defineCollection({
+  loader: glob({ base: './src/data/about-gallery', pattern: '**/*.{md,mdx}' }),
+  schema: ({ image }) =>
+    z.object({
+      image: image(),
+      active: z.boolean().default(true),
+    }),
+});
+
 // --- DISTRIBUIDORES ---
 const distribuidor = defineCollection({
   loader: glob({ base: './src/data/distribuidor', pattern: '**/*.{md,mdx}' }),
@@ -168,21 +159,6 @@ const distribuidor = defineCollection({
     lng: z.number(),
     active: z.boolean().default(true),
   }),
-});
-
-// --- SOCIAL RESPONSABILITY ---
-const socialResponsability = defineCollection({
-  loader: glob({
-    base: './src/data/socialResponsability',
-    pattern: '**/*.{md,mdx}',
-  }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      image: image(),
-      link: z.string().optional(),
-      instagram: z.string().optional(),
-    }),
 });
 
 // --- PAGES ---
@@ -201,12 +177,11 @@ const pages = defineCollection({
 // --- EXPORT COLLECTIONS ---
 export const collections = {
   post: news,
-  product,
   tag,
   category,
   banner,
   middleBanner,
   distribuidor,
-  socialResponsability,
+  aboutGallery,
   pages,
 };
