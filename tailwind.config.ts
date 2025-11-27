@@ -12,32 +12,8 @@ export default {
         xxs: '10px',
         xsm: '12px',
       },
-      fontFamily: {
-        din: ['var(--font-din)', 'sans-serif'],
-        bevan: ['Bevan', 'cursive'],
-        sans: [
-          'var(--aw-font-sans, ui-sans-serif)',
-          ...defaultTheme.fontFamily.sans,
-        ],
-        serif: [
-          'var(--aw-font-serif, ui-serif)',
-          ...defaultTheme.fontFamily.serif,
-        ],
-        heading: [
-          'var(--aw-font-heading, ui-sans-serif)',
-          ...defaultTheme.fontFamily.sans,
-        ],
-      },
       colors: {
         ...colors,
-        blue: {
-          400: '#2589FE',
-          500: '#0070F3',
-          600: '#2F6FEB',
-        },
-        primary: 'var(--aw-color-primary)',
-        secondary: 'var(--aw-color-secondary)',
-        accent: 'var(--aw-color-accent)',
         default: 'var(--aw-color-text-default)',
         muted: 'var(--aw-color-text-muted)',
       },

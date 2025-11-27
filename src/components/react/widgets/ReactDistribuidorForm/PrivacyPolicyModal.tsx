@@ -30,7 +30,7 @@ export function PrivacyPolicyModal({ isOpen, onClose }: Props) {
           <X size={24} />
         </button>
 
-        <div className="prose prose-sm md:prose-base font-inter max-w-none">
+        <div className="prose prose-sm md:prose-base font-poppins max-w-none">
           <h2 className="text-caju-heading-primary mb-6 text-2xl font-bold">
             Política de Privacidade e Proteção de Dados
           </h2>

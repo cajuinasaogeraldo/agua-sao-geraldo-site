@@ -1,84 +1,99 @@
 ---
-import { findImage } from '@/utils/images';
-import {
-  astroAssetsOptimizer,
-  getImagesOptimized,
-  isUnpicCompatible,
-  unpicOptimizer,
-  type ImageProps,
-} from '@/utils/images-optimization';
-import type { ImageType } from './common/Image.astro';
-
-import aboutBgMobile from '@/assets/images/site/mobile/about-bg.png';
-import aboutBg from '@/assets/images/site/about/about-bg-desktop.png'; // Trocar depois para imagem desktop
-import HeroText from './widgets/HeroText.astro';
+import Image from '@/components/common/Image.astro';
 import WidgetWrapper from './ui/WidgetWrapper.astro';
+import Button from './ui/Button.astro';
+import Headline from './ui/Headline.astro';
 
-let imageMobile: ImageType | undefined = undefined;
-let imageDesktop: ImageType | undefined = undefined;
+import folha from '@/assets/images/site/folha.webp';
+import garrafao from '@/assets/images/site/garrafao.webp';
 
-// Processa imagem mobile
-imageMobile = await getImagesOptimized(aboutBgMobile, {}, astroAssetsOptimizer);
-// Processa imagem desktop
-imageDesktop = await getImagesOptimized(aboutBg, {}, astroAssetsOptimizer);
+const items = [
+  {
+    title: 'Potássio',
+    qtd: '14,430',
+  },
+  {
+    title: 'Magnésio',
+    qtd: '11,641',
+  },
+  {
+    title: 'Cálcio',
+    qtd: '11,037',
+  },
+  {
+    title: 'Sódio',
+    qtd: '5,218',
+  },
+  {
+    title: 'Fluoreto',
+    qtd: '0,04',
+  },
+  {
+    title: 'Sulfato',
+    qtd: '18,47',
+  },
+  {
+    title: 'Cloreto',
+    qtd: '17,76',
+  },
+  {
+    title: 'Bicarbonato',
+    qtd: '68,78',
+  },
+];
 ---
 
-<WidgetWrapper fullWidth>
-  <div
-    class:list={[
-      'about-bg min-h-[149px] w-full bg-cover bg-no-repeat py-2 md:py-6 lg:h-[550px] lg:bg-center',
-      'grid grid-cols-2 items-center',
-    ]}
+<WidgetWrapper containerClass="pt-5!" fullWidth>
+  <WidgetWrapper
+    containerClass="relative flex mt-0! py-0! items-center justify-evenly px-7"
   >
-    <!-- 
-    <h4
-    class="max-w-48 text-sm! leading-6 font-normal md:max-w-fit md:text-4xl md:leading-[auto] md:-tracking-[2%]"
-    >
-    NOSSO COMPROMISSO
-    <br />
-    É O QUE NOS MOVE!
-  </h4>
-    <p
-    class="text-xxs font-inter w-full max-w-[350px] md:max-w-[580px] md:text-2xl"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua.
-    </p>
-    <Button
-    variant="yellow"
-    class="md:max-h-16 md:max-w-44 md:px-6 md:py-3 md:text-xs"
-      href="/sobre">Saiba Mais</Button
+    <div class="flex max-w-xl flex-col gap-7 py-8">
+      <h1>São Geraldo Águas Minerais</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi mollitia
+        illum similique explicabo praesentium rerum! Rem, quis! Iste eos dolor
+        delectus corrupti, eum minima. Cumque at reprehenderit iste quisquam
+        inventore.
+      </p>
+      <Button class="max-w-[200px] text-2xl" variant="primary" href="/about"
+        >Ver Mais</Button
       >
-      -->
-    <div
-      class="col-span-2 flex flex-col items-center justify-evenly gap-2 text-white lg:col-span-1 lg:col-start-2 lg:items-start lg:gap-4"
-    >
-      <HeroText
-        title="O tradicional Refrigerante de Caju com sabor do Nordeste."
-        callToAction={{
-          text: 'Saiba Mais',
-          href: '/sobre',
-          variant: 'yellow',
-          class: 'md:max-h-24 md:max-w-50 md:px-6 md:py-3 md:text-xs',
-        }}
-      />
+    </div>
+    <Image
+      layout="contained"
+      class="relative -right-1 -bottom-7 h-[600px] w-[500px]"
+      src={garrafao}
+      alt="Garrafão"
+    />
+  </WidgetWrapper>
+  <div
+    id="about"
+    class="bg-agua-primary-blue relative min-h-[500px] w-full p-12"
+  >
+    <Headline
+      title="Água Não é Tudo Igual,"
+      subtitle="por isso conheça a nossa!"
+      classes={{
+        container: 'mb-4!',
+        title: 'text-white! mb-0!',
+        subtitle:
+          'text-agua-secondary-blue! font-medium! text-4xl! py-0! my-0!',
+      }}
+    />
+    <div class="mt-4 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-7">
+      {
+        items.map((item) => (
+          <div class="flex items-center justify-start gap-4">
+            <Image src={folha} alt="Folha" class="size-30" />
+            <div>
+              <h5 class="mb-0! text-5xl font-extrabold! text-white!">
+                {item.title}
+              </h5>
+              <p class="text-agua-primary-green text-2xl">{item.qtd}</p>
+            </div>
+          </div>
+        ))
+      }
     </div>
   </div>
 </WidgetWrapper>
-
-<style
-  define:vars={{
-    bgMobile: `url(${imageMobile?.src})`,
-    bgDesktop: `url(${imageDesktop?.src})`,
-  }}
->
-  .about-bg {
-    background-image: var(--bgMobile);
-  }
-
-  @media (min-width: 1024px) {
-    .about-bg {
-      background-image: var(--bgDesktop);
-    }
-  }
-</style>

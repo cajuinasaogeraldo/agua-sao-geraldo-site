@@ -129,7 +129,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
           {/* Informações pessoais  */}
           <div>
-            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações Pessoais
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -163,7 +163,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
           {/* Instituições */}
           <div>
-            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Instituições
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -199,7 +199,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
           {/* Evento */}
           <div>
-            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Evento/Projeto
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
@@ -333,7 +333,7 @@ esporte, meio ambiente ou social."
           </div>
 
           {/* Termos */}
-          <div className="font-inter flex flex-col items-stretch gap-4 md:flex-row md:items-center">
+          <div className="font-poppins flex flex-col items-stretch gap-4 md:flex-row md:items-center">
             <FormField
               register={register}
               errors={errors}

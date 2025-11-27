@@ -57,7 +57,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
                 {title}
               </h5>
 
-              <ul class="text-body font-inter flex flex-wrap gap-5">
+              <ul class="text-body font-poppins flex flex-wrap gap-5">
                 {insideLinks.map(({ href, text, ariaLabel, ...rest }) => (
                   <li>
                     <a
@@ -81,7 +81,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
           >
             Contato
           </h5>
-          <ul class="text-body font-inter flex gap-6">
+          <ul class="text-body font-poppins flex gap-6">
             <li class="social-wrapper flex gap-4">
               {
                 socialLinks.map(({ ariaLabel, href, text, icon }) => (
@@ -137,7 +137,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
     class="mt-2 flex flex-col items-center justify-center gap-4 lg:mt-0 lg:flex-row"
   >
     <div
-      class="text-caption font-inter text-center leading-[140%] text-white lg:w-full"
+      class="text-caption font-poppins text-center leading-[140%] text-white lg:w-full"
     >
       <Fragment set:html={footNote} />
     </div>

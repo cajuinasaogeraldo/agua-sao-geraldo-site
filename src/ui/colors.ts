@@ -39,6 +39,7 @@ export const colors = {
     },
     secondary: {
       green: '#19CF41',
+      blue: '#1BBAEE',
     },
   },
 };

@@ -43,18 +43,55 @@
   /* background: #202020; */
 }
 
+#about {
+  position: relative;
+  z-index: 100;
+}
+
+#about::before {
+  -webkit-mask: var(--wave-mask);
+
+  mask: var(--wave-mask);
+
+  content: '';
+  position: absolute;
+  z-index: 200;
+  top: -45px;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: theme(--color-agua-primary-blue);
+  /* background: #202020; */
+}
+
+#about::after {
+  -webkit-mask: var(--wave-mask);
+
+  mask: var(--wave-mask);
+
+  content: '';
+  position: absolute;
+  transform: rotate(180deg);
+  z-index: 200;
+  bottom: -45px;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: theme(--color-agua-primary-blue);
+}
+
 /* ============================================
    TIPOGRAFIA GLOBAL – RESPONSIVE SYSTEM
    ============================================ */
 
 /* Headings - Hierarquia semântica */
 h1 {
-  @apply text-2xl font-bold sm:text-3xl md:text-5xl lg:text-6xl;
+  @apply text-2xl font-extrabold sm:text-3xl md:text-5xl lg:text-6xl;
   @apply -tracking-[2%];
 }
 
 h2 {
-  @apply text-xl font-semibold sm:text-2xl md:text-4xl lg:text-5xl;
+  @apply text-xl font-extrabold sm:text-2xl md:text-4xl lg:text-5xl;
   @apply leading-[150%] -tracking-normal;
 }
 
@@ -84,7 +121,7 @@ p {
 }
 
 a {
-  @apply font-inter text-blue-100;
+  @apply font-poppins text-blue-100;
   text-decoration: none;
 }
 
@@ -146,8 +183,8 @@ small {
   @apply border border-green-400;
 }
 
-@utility font-inter {
-  @apply font-['Inter'] font-normal;
+@utility font-poppins {
+  @apply font-['Poppins'] font-normal;
 }
 
 @utility button {
@@ -155,7 +192,7 @@ small {
   @apply shadow-sm hover:shadow-md;
   @apply mt-3 min-h-[29px] min-w-[82px];
   @apply cursor-pointer uppercase;
-  @apply font-inter! font-medium! text-white!;
+  @apply font-poppins! font-medium! text-white!;
 }
 
 /* Botão verde */

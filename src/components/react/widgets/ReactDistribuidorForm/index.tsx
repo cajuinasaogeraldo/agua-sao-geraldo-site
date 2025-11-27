@@ -111,7 +111,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
         <div className="mb-6 flex flex-col gap-8 md:mb-8 md:gap-12">
           {/* Informações da Empresa  */}
           <div>
-            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações da Empresa
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -144,7 +144,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           </div>
           {/* Informações de Contato  */}
           <div>
-            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações de Contato
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -176,7 +176,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
             </div>
           </div>
           {/* Termos */}
-          <div className="font-inter flex flex-col items-stretch gap-4 md:flex-row md:items-center">
+          <div className="font-poppins flex flex-col items-stretch gap-4 md:flex-row md:items-center">
             <FormField
               register={register}
               errors={errors}
