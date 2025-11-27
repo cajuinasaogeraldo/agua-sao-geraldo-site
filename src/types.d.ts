@@ -274,6 +274,35 @@ export interface Form {
 }
 
 // WIDGETS
+export interface BannerData {
+  title: string;
+  subtitle?: string;
+  description?: string;
+  image: ImageMetadata;
+  imageMobile?: ImageMetadata;
+  cta?: string;
+  textPosition: 'left' | 'center' | 'right';
+  textAlign: 'top' | 'middle' | 'bottom';
+  overlay: boolean;
+  order: number;
+  active: boolean;
+}
+
+export interface Banner {
+  data: BannerData;
+  id: string;
+}
+
+export interface GalleryImageData {
+  image: ImageMetadata;
+  active: boolean;
+}
+
+export interface GalleryImage {
+  data: GalleryImageData;
+  id: string;
+}
+
 export interface Hero
   extends Omit<Headline, 'classes'>,
     Omit<Widget, 'isDark' | 'classes'> {

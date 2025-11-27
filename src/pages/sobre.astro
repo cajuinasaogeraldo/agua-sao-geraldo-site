@@ -6,8 +6,25 @@ import AboutPhotoGallery from '@/components/react/widgets/AboutPhotoGallery';
 import Presentation from '@/components/widgets/Presentation.astro';
 import WidgetWrapper from '@/components/ui/WidgetWrapper.astro';
 import Banner from '@/components/MiddleBanner.astro';
+import { getCollection } from 'astro:content';
+import type { GalleryImage } from '@/types';
 
 import sobreImg from '@/assets/images/site/about/sobre.webp';
+
+const allBanners = (await getCollection('aboutGallery')) as GalleryImage[];
+
+const images = allBanners.filter((image): image is GalleryImage => {
+  if (!image.data.active) return false;
+  return true;
+});
+
+const formattedImages = images.map((image) => ({
+  ...image,
+  data: {
+    ...image.data,
+    image: image.data.image.src,
+  },
+}));
 
 const metadata = {
   title: 'Conheça mais sobre a Água Natural São Geraldo',
@@ -60,7 +77,7 @@ const metadata = {
   </WidgetWrapper>
 
   <WidgetWrapper>
-    <AboutPhotoGallery client:only="react" />
+    <AboutPhotoGallery client:only="react" images={formattedImages} />
   </WidgetWrapper>
 
   <Banner class="mb-20" />

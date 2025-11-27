@@ -3,27 +3,7 @@ import { getCollection } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 import BannerSwiper from './react/widgets/BannerSwiper';
 import BannerSliderSkeleton from './BannerSliderSkeleton.astro';
-
-interface BannerData {
-  title: string;
-  subtitle?: string;
-  description?: string;
-  image: ImageMetadata;
-  imageMobile?: ImageMetadata;
-  cta?: string;
-  textPosition: 'left' | 'center' | 'right';
-  textAlign: 'top' | 'middle' | 'bottom';
-  overlay: boolean;
-  order: number;
-  active: boolean;
-  publishDate?: Date;
-  expireDate?: Date;
-}
-
-interface Banner {
-  data: BannerData;
-  id: string;
-}
+import type { Banner } from '@/types';
 
 const now = new Date();
 const allBanners = (await getCollection('banner')) as Banner[];
@@ -31,8 +11,6 @@ const allBanners = (await getCollection('banner')) as Banner[];
 const banners = allBanners
   .filter((banner): banner is Banner => {
     if (!banner.data.active) return false;
-    if (banner.data.publishDate && banner.data.publishDate > now) return false;
-    if (banner.data.expireDate && banner.data.expireDate < now) return false;
     return true;
   })
   .sort((a, b) => a.data.order - b.data.order);
