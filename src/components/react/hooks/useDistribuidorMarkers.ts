@@ -25,12 +25,12 @@ export function useDistribuidorMarkers() {
 
   const isMarkerHovered = useCallback(
     (id: number) => markerState.hoveredId === id,
-    [markerState.hoveredId]
+    [markerState.hoveredId],
   );
 
   const isMarkerSelected = useCallback(
     (id: number) => markerState.selectedId === id,
-    [markerState.selectedId]
+    [markerState.selectedId],
   );
 
   return {

@@ -13,4 +13,3 @@ subtitle: ''
 textPosition: center
 textAlign: middle
 ---
-

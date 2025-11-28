@@ -1,7 +1,4 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
 import plugin from 'tailwindcss/plugin';
-// @ts-ignore
-import typographyPlugin from '@tailwindcss/typography';
 import { colors } from './src/ui/colors';
 
 export default {

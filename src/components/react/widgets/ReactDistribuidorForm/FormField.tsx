@@ -1,9 +1,4 @@
-import type {
-  UseFormRegister,
-  FieldErrors,
-  Path,
-  Control,
-} from 'react-hook-form';
+import type { UseFormRegister, FieldErrors, Path, Control } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
@@ -21,16 +16,7 @@ interface FormFieldProps<TFormData extends Record<string, any>> {
   errors: FieldErrors<TFormData>;
   name: Path<TFormData>;
   label?: React.ReactNode | null;
-  type?:
-    | 'text'
-    | 'email'
-    | 'tel'
-    | 'textarea'
-    | 'select'
-    | 'file'
-    | 'checkbox'
-    | 'date'
-    | 'time';
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'file' | 'checkbox' | 'date' | 'time';
   placeholder?: string;
   options?: Option[];
   required?: boolean;
@@ -62,8 +48,7 @@ export function FormField<TFormData extends Record<string, any>>({
 
   // Adiciona asterisco vermelho no placeholder se obrigatório e sem label
   // Usamos um caractere especial para indicar obrigatoriedade
-  const finalPlaceholder =
-    !label && required && placeholder ? `${placeholder} *` : placeholder;
+  const finalPlaceholder = !label && required && placeholder ? `${placeholder} *` : placeholder;
 
   const baseInputClasses =
     'w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base font-semibold text-agua-primary-blue placeholder-gray-400 transition-all duration-200 focus:border-caju-heading-primary focus:outline-none focus:ring-2 focus:ring-caju-heading-primary/20 md:px-4 md:py-3 md:text-lg';
@@ -77,16 +62,10 @@ export function FormField<TFormData extends Record<string, any>>({
             {...register(name)}
             className="text-agua-primary-blue focus:ring-caju-heading-primary/20 mt-1 h-5 w-5 rounded border-gray-300 focus:ring-2"
           />
-          {label && (
-            <span className="text-agua-primary-blue text-sm select-none">
-              {label}
-            </span>
-          )}
+          {label && <span className="text-agua-primary-blue text-sm select-none">{label}</span>}
         </label>
         {errorMessage && (
-          <p className="font-poppins mt-1 text-sm text-red-600/75">
-            {errorMessage}
-          </p>
+          <p className="font-poppins mt-1 text-sm text-red-600/75">{errorMessage}</p>
         )}
       </div>
     );
@@ -113,10 +92,7 @@ export function FormField<TFormData extends Record<string, any>>({
         <div className="relative">
           <select
             {...register(name)}
-            className={twMerge(
-              baseInputClasses,
-              'font-poppins appearance-none'
-            )}
+            className={twMerge(baseInputClasses, 'font-poppins appearance-none')}
           >
             {options?.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -142,7 +118,7 @@ export function FormField<TFormData extends Record<string, any>>({
           accept={accept}
           className={twMerge(
             baseInputClasses,
-            'font-poppins file:mr-4 file:rounded-md file:border-0 file:bg-gray-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-gray-700'
+            'font-poppins file:mr-4 file:rounded-md file:border-0 file:bg-gray-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-gray-700',
           )}
         />
       ) : type === 'date' ? (
@@ -166,8 +142,7 @@ export function FormField<TFormData extends Record<string, any>>({
                         'text-agua-primary-blue font-poppins! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
                     },
                     InputLabelProps: {
-                      className:
-                        'text-gray-500! font-poppins! text-base! md:text-lg!',
+                      className: 'text-gray-500! font-poppins! text-base! md:text-lg!',
                     },
                   },
                 }}
@@ -203,8 +178,7 @@ export function FormField<TFormData extends Record<string, any>>({
                         'text-agua-primary-blue font-poppins! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
                     },
                     InputLabelProps: {
-                      className:
-                        'text-gray-500! font-poppins! text-base! md:text-lg!',
+                      className: 'text-gray-500! font-poppins! text-base! md:text-lg!',
                     },
                   },
                 }}
@@ -229,9 +203,7 @@ export function FormField<TFormData extends Record<string, any>>({
       )}
 
       {errorMessage && type !== 'date' && type !== 'time' && (
-        <p className="font-poppins mt-1 text-sm text-red-600/75">
-          {errorMessage}
-        </p>
+        <p className="font-poppins mt-1 text-sm text-red-600/75">{errorMessage}</p>
       )}
     </div>
   );

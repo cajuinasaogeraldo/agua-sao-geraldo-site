@@ -1,5 +1,5 @@
 import type { CallToAction } from './types';
-import { getPermalink, getAsset } from './utils/permalinks';
+import { getPermalink as _getPermalink, getAsset } from './utils/permalinks';
 
 export const headerData = {
   links: [
@@ -27,7 +27,7 @@ export const headerData = {
   actions: [
     {
       text: 'Seja um revendedor',
-      variant: 'action',
+      variant: 'tertiary',
       href: '/solicite/seja-um-revendedor/',
     },
   ] as CallToAction[],

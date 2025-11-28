@@ -32,7 +32,7 @@ export type ImagesOptimizer = (
   breakpoints: number[],
   width?: number,
   height?: number,
-  format?: string
+  format?: string,
 ) => Promise<Array<{ src: string; width: number }>>;
 
 /* ******* */
@@ -165,45 +165,31 @@ export const getImageStyles = ({
   if (layout === 'constrained') {
     styleEntries.push(['maxWidth', pixelate(width)]);
     styleEntries.push(['maxHeight', pixelate(height)]);
-    styleEntries.push([
-      'aspectRatio',
-      parsedAspectRatio ? `${parsedAspectRatio}` : undefined,
-    ]);
+    styleEntries.push(['aspectRatio', parsedAspectRatio ? `${parsedAspectRatio}` : undefined]);
     styleEntries.push(['width', '100%']);
   }
   if (layout === 'fullWidth') {
     styleEntries.push(['width', '100%']);
-    styleEntries.push([
-      'aspectRatio',
-      parsedAspectRatio ? `${parsedAspectRatio}` : undefined,
-    ]);
+    styleEntries.push(['aspectRatio', parsedAspectRatio ? `${parsedAspectRatio}` : undefined]);
     styleEntries.push(['height', pixelate(height)]);
   }
   if (layout === 'responsive') {
     styleEntries.push(['width', '100%']);
     styleEntries.push(['height', 'auto']);
-    styleEntries.push([
-      'aspectRatio',
-      parsedAspectRatio ? `${parsedAspectRatio}` : undefined,
-    ]);
+    styleEntries.push(['aspectRatio', parsedAspectRatio ? `${parsedAspectRatio}` : undefined]);
   }
   if (layout === 'contained') {
     styleEntries.push(['maxWidth', '100%']);
     styleEntries.push(['maxHeight', '100%']);
     styleEntries.push(['objectFit', 'contain']);
-    styleEntries.push([
-      'aspectRatio',
-      parsedAspectRatio ? `${parsedAspectRatio}` : undefined,
-    ]);
+    styleEntries.push(['aspectRatio', parsedAspectRatio ? `${parsedAspectRatio}` : undefined]);
   }
   if (layout === 'cover') {
     styleEntries.push(['maxWidth', '100%']);
     styleEntries.push(['maxHeight', '100%']);
   }
 
-  return Object.fromEntries(
-    styleEntries.filter(([, value]) => value)
-  ) as React.CSSProperties;
+  return Object.fromEntries(styleEntries.filter(([, value]) => value)) as React.CSSProperties;
 };
 
 const getStyle = ({
@@ -229,7 +215,11 @@ const getStyle = ({
   ];
 
   // If background is a URL, set it to cover the image and not repeat
-  if (background?.startsWith('https:') || background?.startsWith('http:') || background?.startsWith('data:')) {
+  if (
+    background?.startsWith('https:') ||
+    background?.startsWith('http:') ||
+    background?.startsWith('data:')
+  ) {
     styleEntries.push(['background-image', `url(${background})`]);
     styleEntries.push(['background-size', 'cover']);
     styleEntries.push(['background-repeat', 'no-repeat']);
@@ -318,7 +308,7 @@ export const astroAssetsOptimizer: ImagesOptimizer = async (
   breakpoints,
   _width,
   _height,
-  format = undefined
+  format = undefined,
 ) => {
   if (!image) {
     return [];
@@ -326,14 +316,19 @@ export const astroAssetsOptimizer: ImagesOptimizer = async (
 
   return Promise.all(
     breakpoints.map(async (w: number) => {
-      const result = await getImage({ src: image, width: w, inferSize: true, ...(format ? { format: format } : {}) });
+      const result = await getImage({
+        src: image,
+        width: w,
+        inferSize: true,
+        ...(format ? { format: format } : {}),
+      });
 
       return {
         src: result?.src,
         width: result?.attributes?.width ?? w,
         height: result?.attributes?.height,
       };
-    })
+    }),
   );
 };
 
@@ -342,7 +337,13 @@ export const isUnpicCompatible = (image: string) => {
 };
 
 /* ** */
-export const unpicOptimizer: ImagesOptimizer = async (image, breakpoints, width, height, format = undefined) => {
+export const unpicOptimizer: ImagesOptimizer = async (
+  image,
+  breakpoints,
+  width,
+  height,
+  format = undefined,
+) => {
   if (!image || typeof image !== 'string') {
     return [];
   }
@@ -368,7 +369,7 @@ export const unpicOptimizer: ImagesOptimizer = async (image, breakpoints, width,
         width: w,
         height: _height,
       };
-    })
+    }),
   );
 };
 
@@ -388,11 +389,12 @@ export async function getImagesOptimized(
     format,
     ...rest
   }: ImageProps,
-  transform: ImagesOptimizer = () => Promise.resolve([])
+  transform: ImagesOptimizer = () => Promise.resolve([]),
 ): Promise<{ src: string; attributes: HTMLAttributes<'img'> }> {
   if (typeof image !== 'string') {
     width ||= Number(image.width) || undefined;
-    height ||= typeof width === 'number' ? computeHeight(width, image.width / image.height) : undefined;
+    height ||=
+      typeof width === 'number' ? computeHeight(width, image.width / image.height) : undefined;
   }
 
   width = (width && Number(width)) || undefined;
@@ -428,7 +430,15 @@ export async function getImagesOptimized(
   let breakpoints = getBreakpoints({ width: width, breakpoints: widths, layout: layout });
   breakpoints = [...new Set(breakpoints)].sort((a, b) => a - b);
 
-  const srcset = (await transform(image, breakpoints, Number(width) || undefined, Number(height) || undefined, format))
+  const srcset = (
+    await transform(
+      image,
+      breakpoints,
+      Number(width) || undefined,
+      Number(height) || undefined,
+      format,
+    )
+  )
     .map(({ src, width }) => `${encodeSrcSetUrl(src)} ${width}w`)
     .join(', ');
 

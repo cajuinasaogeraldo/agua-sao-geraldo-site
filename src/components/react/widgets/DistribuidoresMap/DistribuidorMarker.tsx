@@ -22,10 +22,7 @@ interface DistribuidorMarkerProps {
   isHovered: boolean;
   isSelected: boolean;
   onHover: (id: number | null) => void;
-  onSelect: (
-    id: number,
-    marker: google.maps.marker.AdvancedMarkerElement
-  ) => void;
+  onSelect: (id: number, marker: google.maps.marker.AdvancedMarkerElement) => void;
   showInfoWindow: boolean;
   onInfoWindowClose: () => void;
 }
@@ -84,11 +81,7 @@ export const DistribuidorMarker: React.FC<DistribuidorMarkerProps> = ({
       </AdvancedMarker>
 
       {showInfoWindow && marker && isSelected && (
-        <InfoWindow
-          anchor={marker}
-          onCloseClick={onInfoWindowClose}
-          headerDisabled={false}
-        >
+        <InfoWindow anchor={marker} onCloseClick={onInfoWindowClose} headerDisabled={false}>
           <div className="p-2">
             <h3 className="text-caju-heading-primary mb-2 text-base font-bold">
               {distribuidor.nome}

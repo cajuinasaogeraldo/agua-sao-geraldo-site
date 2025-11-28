@@ -49,12 +49,7 @@ collections:
           required: false,
           default: '{{now}}',
         }
-      - {
-          label: 'Autor',
-          name: 'author',
-          widget: 'string',
-          default: 'Redação São Geraldo',
-        }
+      - { label: 'Autor', name: 'author', widget: 'string', default: 'Redação São Geraldo' }
       - { label: 'Conteúdo', name: 'body', widget: 'markdown' }
 
   - name: categories

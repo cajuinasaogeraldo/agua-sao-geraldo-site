@@ -46,7 +46,7 @@ interface RenderMarkdownOptions {
 async function renderMarkdownBase(
   markdown: string,
   filePath?: string,
-  options: RenderMarkdownOptions = {}
+  options: RenderMarkdownOptions = {},
 ): Promise<string> {
   const trimmed = markdown.trim();
   if (!trimmed) return '';
@@ -62,7 +62,7 @@ async function renderMarkdownBlock(
   text: string,
   processNested: (input: string) => Promise<string>,
   filePath?: string,
-  options: RenderMarkdownOptions = {}
+  options: RenderMarkdownOptions = {},
 ): Promise<string> {
   const processed = await processNested(text);
   if (!processed.trim()) return '';
@@ -73,10 +73,7 @@ async function renderMarkdownBlock(
   return unwrapParagraphsAroundMedia(html);
 }
 
-async function renderInlineMarkdown(
-  text: string,
-  filePath?: string
-): Promise<string> {
+async function renderInlineMarkdown(text: string, filePath?: string): Promise<string> {
   const trimmed = text.trim();
   if (!trimmed) return '';
 
@@ -122,7 +119,7 @@ function buildInstagramEmbedUrl(input: string): string | null {
     }
 
     return `${url.origin}/${resource}/${identifier}/embed/captioned/`;
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }
@@ -136,7 +133,7 @@ function rewriteAssetUrls(html: string, filePath?: string): string {
       (_match: string, prefix: string, url: string) => {
         const resolved = resolveAssetUrl(url, filePath);
         return `${prefix}${resolved}"`;
-      }
+      },
     );
 
   let output = updateSrcAttribute(html, 'src');
@@ -158,7 +155,7 @@ function rewriteAssetUrls(html: string, filePath?: string): string {
         .join(', ');
 
       return `${prefix}${rewritten}"`;
-    }
+    },
   );
 
   return output;
@@ -186,12 +183,8 @@ function stripOuterParagraph(html: string): string {
   return match[1].trim();
 }
 
-async function processListShortcodes(
-  content: string,
-  filePath?: string
-): Promise<string> {
-  const regex =
-    /\[\[\s*list(?::([^\]]*))?\s*\]\]([\s\S]*?)\[\[\s*\/\s*list\s*\]\]/gi;
+async function processListShortcodes(content: string, filePath?: string): Promise<string> {
+  const regex = /\[\[\s*list(?::([^\]]*))?\s*\]\]([\s\S]*?)\[\[\s*\/\s*list\s*\]\]/gi;
 
   let result = content;
   const matches: Array<{
@@ -265,8 +258,7 @@ async function processListShortcodes(
 
     html += '</li></ul>';
 
-    result =
-      result.slice(0, index) + html + result.slice(index + fullMatch.length);
+    result = result.slice(0, index) + html + result.slice(index + fullMatch.length);
   }
 
   return result;
@@ -274,50 +266,41 @@ async function processListShortcodes(
 
 function getListStyleClass(param: string): string {
   switch (param) {
-    case '>':
-      return 'list-style-arrow';
-    case '-':
-      return 'list-style-dash';
-    case '•':
-    case 'disc':
-      return 'list-style-disc';
-    case '○':
-    case 'circle':
-      return 'list-style-circle';
-    case '▪':
-    case 'square':
-      return 'list-style-square';
-    default:
-      return 'list-style-disc';
+  case '>':
+    return 'list-style-arrow';
+  case '-':
+    return 'list-style-dash';
+  case '•':
+  case 'disc':
+    return 'list-style-disc';
+  case '○':
+  case 'circle':
+    return 'list-style-circle';
+  case '▪':
+  case 'square':
+    return 'list-style-square';
+  default:
+    return 'list-style-disc';
   }
 }
 
-async function processInlineShortcodesInText(
-  text: string,
-  filePath?: string
-): Promise<string> {
+async function processInlineShortcodesInText(text: string, _filePath?: string): Promise<string> {
   let output = text;
 
-  output = output.replace(
-    /\[\[\s*youtube:(.*?)\s*\]\]/gi,
-    (_match: string, rawId: string) => {
-      const videoId = String(rawId || '').trim();
-      if (!videoId) return _match;
-      return `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
-    }
-  );
+  output = output.replace(/\[\[\s*youtube:(.*?)\s*\]\]/gi, (_match: string, rawId: string) => {
+    const videoId = String(rawId || '').trim();
+    if (!videoId) return _match;
+    return `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+  });
 
-  output = output.replace(
-    /\[\[\s*instagram:(.*?)\s*\]\]/gi,
-    (_match: string, rawUrl: string) => {
-      const permalink = String(rawUrl || '').trim();
-      if (!permalink) return _match;
-      const embedUrl = buildInstagramEmbedUrl(permalink);
-      if (!embedUrl) return _match;
-      const escapedUrl = escapeHtmlAttribute(embedUrl);
-      return `<div class="instagram-embed"><iframe src="${escapedUrl}" loading="lazy" allowtransparency="true" allowfullscreen="true" frameborder="0" scrolling="no"></iframe></div>`;
-    }
-  );
+  output = output.replace(/\[\[\s*instagram:(.*?)\s*\]\]/gi, (_match: string, rawUrl: string) => {
+    const permalink = String(rawUrl || '').trim();
+    if (!permalink) return _match;
+    const embedUrl = buildInstagramEmbedUrl(permalink);
+    if (!embedUrl) return _match;
+    const escapedUrl = escapeHtmlAttribute(embedUrl);
+    return `<div class="instagram-embed"><iframe src="${escapedUrl}" loading="lazy" allowtransparency="true" allowfullscreen="true" frameborder="0" scrolling="no"></iframe></div>`;
+  });
 
   return output;
 }
@@ -332,8 +315,7 @@ function normalizeShortcodeSyntax(text: string): string {
 }
 
 function sanitizeTwoColumnsBlocks(text: string): string {
-  const blockRegex =
-    /\[\[\s*two-columns[^\]]*\]\][\s\S]*?\[\[\s*\/\s*two-columns\s*\]\]/gi;
+  const blockRegex = /\[\[\s*two-columns[^\]]*\]\][\s\S]*?\[\[\s*\/\s*two-columns\s*\]\]/gi;
 
   return text.replace(blockRegex, (block: string) => {
     let sanitized = block;
@@ -343,11 +325,11 @@ function sanitizeTwoColumnsBlocks(text: string): string {
     sanitized = sanitized.replace(/(\s+)\]/g, ']');
     sanitized = sanitized.replace(
       /\[col([12])\]\s*\n+/gi,
-      (_m: string, col: string) => `[col${col}]`
+      (_m: string, col: string) => `[col${col}]`,
     );
     sanitized = sanitized.replace(
       /\n+\s*\[\/col([12])\]/gi,
-      (_m: string, col: string) => `[/col${col}]`
+      (_m: string, col: string) => `[/col${col}]`,
     );
     return sanitized;
   });
@@ -370,23 +352,23 @@ function extractParagraphText(node: any): string {
   return node.children
     .map((child: any) => {
       switch (child.type) {
-        case 'text':
-          return child.value || '';
-        case 'strong':
-          return `**${extractParagraphText(child)}**`;
-        case 'emphasis':
-          return `*${extractParagraphText(child)}*`;
-        case 'link': {
-          const url = child.url || '';
-          return `[${extractParagraphText(child)}](${url})`;
-        }
-        case 'image': {
-          const alt = child.alt || '';
-          const title = child.title ? ` "${child.title}"` : '';
-          return `![${alt}](${child.url || ''}${title})`;
-        }
-        default:
-          return child.children ? extractParagraphText(child) : '';
+      case 'text':
+        return child.value || '';
+      case 'strong':
+        return `**${extractParagraphText(child)}**`;
+      case 'emphasis':
+        return `*${extractParagraphText(child)}*`;
+      case 'link': {
+        const url = child.url || '';
+        return `[${extractParagraphText(child)}](${url})`;
+      }
+      case 'image': {
+        const alt = child.alt || '';
+        const title = child.title ? ` "${child.title}"` : '';
+        return `![${alt}](${child.url || ''}${title})`;
+      }
+      default:
+        return child.children ? extractParagraphText(child) : '';
       }
     })
     .join('');
@@ -394,7 +376,7 @@ function extractParagraphText(node: any): string {
 
 function collectShortcodeRange(
   parent: ParentNode,
-  startIndex: number
+  startIndex: number,
 ): { combinedText: string; endIndex: number } {
   let combined = '';
   let endIndex = startIndex;
@@ -508,10 +490,7 @@ function containsShortcode(text: string): boolean {
   return /\[\[.+?\]\]/.test(text);
 }
 
-async function transformShortcodes(
-  raw: string,
-  filePath?: string
-): Promise<string> {
+async function transformShortcodes(raw: string, filePath?: string): Promise<string> {
   const normalized = normalizeShortcodeSyntax(raw);
   const sanitizedBlocks = sanitizeTwoColumnsBlocks(normalized);
 
@@ -522,37 +501,28 @@ async function transformShortcodes(
   return processShortcodesRecursive(inlineHandled, filePath);
 }
 
-function processInlineShortcodes(text: string, filePath?: string): string {
+function processInlineShortcodes(text: string, _filePath?: string): string {
   let output = text;
 
-  output = output.replace(
-    /\[\[\s*youtube:(.*?)\s*\]\]/gi,
-    (_match: string, rawId: string) => {
-      const videoId = String(rawId || '').trim();
-      if (!videoId) return _match;
-      return `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
-    }
-  );
+  output = output.replace(/\[\[\s*youtube:(.*?)\s*\]\]/gi, (_match: string, rawId: string) => {
+    const videoId = String(rawId || '').trim();
+    if (!videoId) return _match;
+    return `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+  });
 
-  output = output.replace(
-    /\[\[\s*instagram:(.*?)\s*\]\]/gi,
-    (_match: string, rawUrl: string) => {
-      const permalink = String(rawUrl || '').trim();
-      if (!permalink) return _match;
-      const embedUrl = buildInstagramEmbedUrl(permalink);
-      if (!embedUrl) return _match;
-      const escapedUrl = escapeHtmlAttribute(embedUrl);
-      return `<div class="instagram-embed"><iframe src="${escapedUrl}" loading="lazy" allowtransparency="true" allowfullscreen="true" frameborder="0" scrolling="no"></iframe></div>`;
-    }
-  );
+  output = output.replace(/\[\[\s*instagram:(.*?)\s*\]\]/gi, (_match: string, rawUrl: string) => {
+    const permalink = String(rawUrl || '').trim();
+    if (!permalink) return _match;
+    const embedUrl = buildInstagramEmbedUrl(permalink);
+    if (!embedUrl) return _match;
+    const escapedUrl = escapeHtmlAttribute(embedUrl);
+    return `<div class="instagram-embed"><iframe src="${escapedUrl}" loading="lazy" allowtransparency="true" allowfullscreen="true" frameborder="0" scrolling="no"></iframe></div>`;
+  });
 
   return output;
 }
 
-async function processShortcodesRecursive(
-  source: string,
-  filePath?: string
-): Promise<string> {
+async function processShortcodesRecursive(source: string, filePath?: string): Promise<string> {
   const text = normalizeShortcodeSyntax(source);
   const tokens = parseShortcodes(text);
 
@@ -598,7 +568,7 @@ async function processShortcodesRecursive(
           opening.params,
           processedInner,
           (nested) => processShortcodesRecursive(nested, filePath),
-          filePath
+          filePath,
         );
       }
 
@@ -619,74 +589,63 @@ async function generateHTML(
   params: string | undefined,
   content: string,
   processNested: (text: string) => Promise<string>,
-  filePath?: string
+  filePath?: string,
 ): Promise<string> {
   switch (name) {
-    case 'link': {
-      if (!params) return content;
-      const [urlRaw, targetRaw] = params.split('|').map((item) => item.trim());
-      const href = urlRaw || '#';
-      const targetAttr =
-        targetRaw === '_blank'
-          ? ' target="_blank" rel="noopener noreferrer"'
-          : '';
-      const inner = await renderInlineMarkdown(content, filePath);
-      return `<a href="${href}"${targetAttr} class="text-blue-600 hover:text-blue-800 underline">${inner}</a>`;
-    }
+  case 'link': {
+    if (!params) return content;
+    const [urlRaw, targetRaw] = params.split('|').map((item) => item.trim());
+    const href = urlRaw || '#';
+    const targetAttr = targetRaw === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '';
+    const inner = await renderInlineMarkdown(content, filePath);
+    return `<a href="${href}"${targetAttr} class="text-blue-600 hover:text-blue-800 underline">${inner}</a>`;
+  }
 
-    case 'two-columns': {
-      const ratio = (params || '50/50').replace(/\s+/g, '');
-      const [leftRaw, rightRaw] = ratio.split('/');
-      const left = leftRaw || '50';
-      const right = rightRaw || '50';
+  case 'two-columns': {
+    const ratio = (params || '50/50').replace(/\s+/g, '');
+    const [leftRaw, rightRaw] = ratio.split('/');
+    const left = leftRaw || '50';
+    const right = rightRaw || '50';
 
-      const col1Match = content.match(/\[col1\]([\s\S]*?)\[\/col1\]/i);
-      const col2Match = content.match(/\[col2\]([\s\S]*?)\[\/col2\]/i);
+    const col1Match = content.match(/\[col1\]([\s\S]*?)\[\/col1\]/i);
+    const col2Match = content.match(/\[col2\]([\s\S]*?)\[\/col2\]/i);
 
-      const col1Raw = col1Match ? col1Match[1].trim() : '';
-      const col2Raw = col2Match ? col2Match[1].trim() : '';
+    const col1Raw = col1Match ? col1Match[1].trim() : '';
+    const col2Raw = col2Match ? col2Match[1].trim() : '';
 
-      const col1Content = await renderMarkdownBlock(
-        col1Raw,
-        processNested,
-        filePath,
-        { rewriteAssets: false }
-      );
-      const col2Content = await renderMarkdownBlock(
-        col2Raw,
-        processNested,
-        filePath,
-        { rewriteAssets: false }
-      );
+    const col1Content = await renderMarkdownBlock(col1Raw, processNested, filePath, {
+      rewriteAssets: false,
+    });
+    const col2Content = await renderMarkdownBlock(col2Raw, processNested, filePath, {
+      rewriteAssets: false,
+    });
 
-      return `<div class="layout-two-columns" style="--col1:${left}%;--col2:${right}%"><div class="layout-column-1">${col1Content}</div><div class="layout-column-2">${col2Content}</div></div>`;
-    }
+    return `<div class="layout-two-columns" style="--col1:${left}%;--col2:${right}%"><div class="layout-column-1">${col1Content}</div><div class="layout-column-2">${col2Content}</div></div>`;
+  }
 
-    case 'image-left':
-    case 'image-right': {
-      const [urlRaw, altRaw] = (params || '')
-        .split('|')
-        .map((item) => item.trim());
-      const alt = altRaw || '';
-      const url = urlRaw || '';
-      const position = name === 'image-left' ? 'left' : 'right';
-      const inner = await renderMarkdownBlock(content, processNested, filePath);
+  case 'image-left':
+  case 'image-right': {
+    const [urlRaw, altRaw] = (params || '').split('|').map((item) => item.trim());
+    const alt = altRaw || '';
+    const url = urlRaw || '';
+    const position = name === 'image-left' ? 'left' : 'right';
+    const inner = await renderMarkdownBlock(content, processNested, filePath);
 
-      return `<div class="layout-image-${position}"><div class="layout-image-container"><img src="${url}" alt="${alt}" loading="lazy" class="w-full" /></div><div class="layout-text-content">${inner}</div></div>`;
-    }
+    return `<div class="layout-image-${position}"><div class="layout-image-container"><img src="${url}" alt="${alt}" loading="lazy" class="w-full" /></div><div class="layout-text-content">${inner}</div></div>`;
+  }
 
-    case 'card': {
-      const inner = await renderMarkdownBlock(content, processNested, filePath);
-      return `<div class="layout-card">${inner}</div>`;
-    }
+  case 'card': {
+    const inner = await renderMarkdownBlock(content, processNested, filePath);
+    return `<div class="layout-card">${inner}</div>`;
+  }
 
-    case 'list': {
-      // Se cair aqui, já foi processado antes
-      return content;
-    }
+  case 'list': {
+    // Se cair aqui, já foi processado antes
+    return content;
+  }
 
-    default:
-      return content;
+  default:
+    return content;
   }
 }
 
@@ -694,7 +653,7 @@ function unwrapParagraphsAroundMedia(html: string): string {
   return html
     .replace(
       /<p>\s*(<(?:img|picture|video|iframe)[^>]*?\/?>(?:\s*<source[^>]*?\/?>)*)\s*<\/p>/gi,
-      '$1'
+      '$1',
     )
     .replace(/<p>\s*(<figure[^>]*>[\s\S]*?<\/figure>)\s*<\/p>/gi, '$1');
 }
@@ -745,46 +704,37 @@ function resolveAssetUrl(url: string, filePath?: string): string {
 
 export const remarkShortcodes: RemarkPlugin = () => {
   return async (tree: any, file: any) => {
-    const filePath =
-      typeof file?.history?.[0] === 'string' ? file.history[0] : undefined;
+    const filePath = typeof file?.history?.[0] === 'string' ? file.history[0] : undefined;
 
     const replacements: ShortcodeReplacement[] = [];
 
-    visit(
-      tree,
-      (node: any, index: number | undefined, parent: ParentNode | null) => {
-        if (!parent || typeof index !== 'number') return;
-        if (node.type !== 'text' && node.type !== 'paragraph') return;
+    visit(tree, (node: any, index: number | undefined, parent: ParentNode | null) => {
+      if (!parent || typeof index !== 'number') return;
+      if (node.type !== 'text' && node.type !== 'paragraph') return;
 
-        const initialText =
-          node.type === 'text'
-            ? String(node.value ?? '')
-            : extractParagraphText(node);
+      const initialText =
+        node.type === 'text' ? String(node.value ?? '') : extractParagraphText(node);
 
-        if (!containsShortcode(initialText)) return;
+      if (!containsShortcode(initialText)) return;
 
-        const { combinedText, endIndex } = collectShortcodeRange(parent, index);
-        replacements.push({
-          parent,
-          startIndex: index,
-          endIndex,
-          combinedText,
-        });
+      const { combinedText, endIndex } = collectShortcodeRange(parent, index);
+      replacements.push({
+        parent,
+        startIndex: index,
+        endIndex,
+        combinedText,
+      });
 
-        return SKIP;
-      }
-    );
+      return SKIP;
+    });
 
     if (replacements.length === 0) return;
 
     const resolved: ResolvedReplacement[] = await Promise.all(
       replacements.map(async (item) => {
-        const processed = await transformShortcodes(
-          item.combinedText,
-          filePath
-        );
+        const processed = await transformShortcodes(item.combinedText, filePath);
         return { ...item, processed };
-      })
+      }),
     );
 
     const grouped = new Map<ParentNode, ResolvedReplacement[]>();

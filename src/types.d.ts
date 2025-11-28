@@ -303,9 +303,7 @@ export interface GalleryImage {
   id: string;
 }
 
-export interface Hero
-  extends Omit<Headline, 'classes'>,
-    Omit<Widget, 'isDark' | 'classes'> {
+export interface Hero extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' | 'classes'> {
   content?: string;
   actions?: string | CallToAction[];
   wrapperClass?: string;
@@ -394,5 +392,3 @@ export interface Content extends Omit<Headline, 'classes'>, Widget {
   isAfterContent?: boolean;
   callToAction?: CallToAction;
 }
-
-export interface Contact extends Omit<Headline, 'classes'>, Form, Widget {}

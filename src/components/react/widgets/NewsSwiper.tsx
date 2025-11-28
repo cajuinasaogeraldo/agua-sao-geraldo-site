@@ -12,11 +12,7 @@ interface NewsSwiperProps {
   arrowPrev: string;
 }
 
-export default function NewsSwiper({
-  news,
-  arrowNext,
-  arrowPrev,
-}: NewsSwiperProps) {
+export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperProps) {
   if (!news || news.length === 0) return null;
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const isMobile = useIsMobile();

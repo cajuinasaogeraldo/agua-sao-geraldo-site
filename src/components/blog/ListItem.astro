@@ -18,9 +18,7 @@ export interface Props {
 const { news } = Astro.props;
 const image = (await findImage(news.image)) as ImageMetadata | undefined;
 
-const link = APP_BLOG?.post?.isEnabled
-  ? getPermalink(news.permalink, 'news')
-  : '';
+const link = APP_BLOG?.post?.isEnabled ? getPermalink(news.permalink, 'news') : '';
 ---
 
 <article
@@ -68,12 +66,9 @@ const link = APP_BLOG?.post?.isEnabled
     <header>
       <div class="mb-1">
         <span class="text-caption">
-          <Icon
-            name="tabler:clock"
-            class="-mt-0.5 inline-block h-3.5 w-3.5 dark:text-gray-400"
-          />
+          <Icon name="tabler:clock" class="-mt-0.5 inline-block h-3.5 w-3.5 dark:text-gray-400" />
           <time datetime={String(news.publishDate)} class="inline-block"
-            >{getFormattedDate(news.publishDate)}</time
+          >{getFormattedDate(news.publishDate)}</time
           >
           {
             news.author && (
@@ -93,10 +88,7 @@ const link = APP_BLOG?.post?.isEnabled
               <>
                 {' '}
                 ·{' '}
-                <a
-                  class="hover:underline"
-                  href={getPermalink(news.category.slug, 'category')}
-                >
+                <a class="hover:underline" href={getPermalink(news.category.slug, 'category')}>
                   {news.category.title}
                 </a>
               </>
@@ -109,10 +101,7 @@ const link = APP_BLOG?.post?.isEnabled
       >
         {
           link ? (
-            <a
-              class="font-poppins inline-block transition duration-200 ease-in"
-              href={link}
-            >
+            <a class="font-poppins inline-block transition duration-200 ease-in" href={link}>
               {news.title}
             </a>
           ) : (
@@ -122,11 +111,7 @@ const link = APP_BLOG?.post?.isEnabled
       </h2>
     </header>
 
-    {
-      news.excerpt && false && (
-        <p class="text-body text-muted font-poppins grow">{news.excerpt}</p>
-      )
-    }
+    {news.excerpt && <p class="text-body text-muted font-poppins grow">{news.excerpt}</p>}
     {
       news.tags && Array.isArray(news.tags) ? (
         <footer class="mt-5">

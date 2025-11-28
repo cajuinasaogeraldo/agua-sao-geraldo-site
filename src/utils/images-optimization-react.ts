@@ -54,9 +54,7 @@ const config = {
   formats: ['image/webp'],
 };
 
-const parseAspectRatio = (
-  aspectRatio: number | string | null | undefined
-): number | undefined => {
+const parseAspectRatio = (aspectRatio: number | string | null | undefined): number | undefined => {
   if (typeof aspectRatio === 'number') return aspectRatio;
 
   if (typeof aspectRatio === 'string') {
@@ -77,34 +75,30 @@ const parseAspectRatio = (
 /**
  * Gets the `sizes` attribute for an image, based on the layout and width
  */
-export const getSizes = (
-  width?: number,
-  layout?: ImageLayout
-): string | undefined => {
+export const getSizes = (width?: number, layout?: ImageLayout): string | undefined => {
   if (!width || !layout) {
     return undefined;
   }
   switch (layout) {
-    // If screen is wider than the max size, image width is the max size,
-    // otherwise it's the width of the screen
-    case `constrained`:
-      return `(min-width: ${width}px) ${width}px, 100vw`;
+  // If screen is wider than the max size, image width is the max size,
+  // otherwise it's the width of the screen
+  case `constrained`:
+    return `(min-width: ${width}px) ${width}px, 100vw`;
 
     // Image is always the same width, whatever the size of the screen
-    case `fixed`:
-      return `${width}px`;
+  case `fixed`:
+    return `${width}px`;
 
     // Image is always the width of the screen
-    case `fullWidth`:
-      return `100vw`;
+  case `fullWidth`:
+    return `100vw`;
 
-    default:
-      return undefined;
+  default:
+    return undefined;
   }
 };
 
-const pixelate = (value?: number) =>
-  value || value === 0 ? `${value}px` : undefined;
+const pixelate = (value?: number) => (value || value === 0 ? `${value}px` : undefined);
 
 export const getImageStyles = ({
   width,
@@ -150,45 +144,31 @@ export const getImageStyles = ({
   if (layout === 'constrained') {
     styleEntries.push(['maxWidth', pixelate(width)]);
     styleEntries.push(['maxHeight', pixelate(height)]);
-    styleEntries.push([
-      'aspectRatio',
-      parsedAspectRatio ? `${parsedAspectRatio}` : undefined,
-    ]);
+    styleEntries.push(['aspectRatio', parsedAspectRatio ? `${parsedAspectRatio}` : undefined]);
     styleEntries.push(['width', '100%']);
   }
   if (layout === 'fullWidth') {
     styleEntries.push(['width', '100%']);
-    styleEntries.push([
-      'aspectRatio',
-      parsedAspectRatio ? `${parsedAspectRatio}` : undefined,
-    ]);
+    styleEntries.push(['aspectRatio', parsedAspectRatio ? `${parsedAspectRatio}` : undefined]);
     styleEntries.push(['height', pixelate(height)]);
   }
   if (layout === 'responsive') {
     styleEntries.push(['width', '100%']);
     styleEntries.push(['height', 'auto']);
-    styleEntries.push([
-      'aspectRatio',
-      parsedAspectRatio ? `${parsedAspectRatio}` : undefined,
-    ]);
+    styleEntries.push(['aspectRatio', parsedAspectRatio ? `${parsedAspectRatio}` : undefined]);
   }
   if (layout === 'contained') {
     styleEntries.push(['maxWidth', '100%']);
     styleEntries.push(['maxHeight', '100%']);
     styleEntries.push(['objectFit', 'contain']);
-    styleEntries.push([
-      'aspectRatio',
-      parsedAspectRatio ? `${parsedAspectRatio}` : undefined,
-    ]);
+    styleEntries.push(['aspectRatio', parsedAspectRatio ? `${parsedAspectRatio}` : undefined]);
   }
   if (layout === 'cover') {
     styleEntries.push(['maxWidth', '100%']);
     styleEntries.push(['maxHeight', '100%']);
   }
 
-  return Object.fromEntries(
-    styleEntries.filter(([, value]) => value)
-  ) as React.CSSProperties;
+  return Object.fromEntries(styleEntries.filter(([, value]) => value)) as React.CSSProperties;
 };
 
 export const getBreakpoints = ({
@@ -249,7 +229,7 @@ export const unpicOptimizer = async (
   breakpoints: number[],
   width?: number,
   height?: number,
-  format?: string
+  format?: string,
 ): Promise<Array<{ src: string; width: number; height?: number }>> => {
   if (!image || typeof image !== 'string') {
     return [];
@@ -262,8 +242,7 @@ export const unpicOptimizer = async (
 
   return Promise.all(
     breakpoints.map(async (w: number) => {
-      const _height =
-        width && height ? computeHeight(w, width / height) : height;
+      const _height = width && height ? computeHeight(w, width / height) : height;
       const url =
         transformUrl({
           url: image,
@@ -277,6 +256,6 @@ export const unpicOptimizer = async (
         width: w,
         height: _height,
       };
-    })
+    }),
   );
 };

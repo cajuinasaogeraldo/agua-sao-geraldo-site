@@ -4,10 +4,7 @@ import { useState } from 'react';
 import { ESTADOS_BRASIL } from './constants';
 import { FormField } from './FormField';
 import { parceriasSchema, type ParceriasFormData } from './validators';
-import {
-  GoogleReCaptchaProvider,
-  GoogleReCaptchaCheckbox,
-} from '@google-recaptcha/react';
+import { GoogleReCaptchaProvider, GoogleReCaptchaCheckbox } from '@google-recaptcha/react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/pt-br';
@@ -48,9 +45,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
     });
 
     if (!req.ok) {
-      setRecaptchaError(
-        'Falha ao validar reCAPTCHA. Por favor, tente novamente.'
-      );
+      setRecaptchaError('Falha ao validar reCAPTCHA. Por favor, tente novamente.');
       return false;
     }
 
@@ -65,9 +60,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
       if (captchaIsValid) {
         Object.entries(data).forEach(([key, val]) => {
           if (key === 'files' && val && val instanceof FileList) {
-            Array.from(val).forEach((file: File) =>
-              formData.append('files', file)
-            );
+            Array.from(val).forEach((file: File) => formData.append('files', file));
           } else if (val !== null && typeof val !== 'boolean') {
             formData.append(key, String(val));
           } else if (typeof val === 'boolean') {
@@ -75,24 +68,18 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           }
         });
 
-        const response = await fetch(
-          `${apiUrl}/shared/brevo-mail/submit-form`,
-          {
-            method: 'POST',
-            body: formData,
-          }
-        );
+        const response = await fetch(`${apiUrl}/shared/brevo-mail/submit-form`, {
+          method: 'POST',
+          body: formData,
+        });
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           if (
             errorData.message &&
-            (errorData.message.includes('reCAPTCHA') ||
-              errorData.message.includes('token'))
+            (errorData.message.includes('reCAPTCHA') || errorData.message.includes('token'))
           ) {
-            setRecaptchaError(
-              'Falha na validação do reCAPTCHA. Por favor, tente novamente.'
-            );
+            setRecaptchaError('Falha na validação do reCAPTCHA. Por favor, tente novamente.');
             return;
           }
           throw new Error('Falha ao enviar formulário');
@@ -367,9 +354,7 @@ esporte, meio ambiente ou social."
               action={actions.SOLICITACAO_PARCERIAS}
               id="PARCERIA_FORM"
             />
-            {recaptchaError && (
-              <span className="text-[#d32f2f]/70">{recaptchaError}</span>
-            )}
+            {recaptchaError && <span className="text-[#d32f2f]/70">{recaptchaError}</span>}
           </div>
           {/* Submit */}
           <button
@@ -390,16 +375,9 @@ esporte, meio ambiente ou social."
   );
 }
 
-export default function ReactParceriasForm({
-  recaptchaSiteKey,
-  apiUrl,
-}: Props) {
+export default function ReactParceriasForm({ recaptchaSiteKey, apiUrl }: Props) {
   return (
-    <GoogleReCaptchaProvider
-      type="v2-checkbox"
-      siteKey={recaptchaSiteKey!}
-      isEnterprise
-    >
+    <GoogleReCaptchaProvider type="v2-checkbox" siteKey={recaptchaSiteKey!} isEnterprise>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
         <Form apiUrl={apiUrl} />
       </LocalizationProvider>

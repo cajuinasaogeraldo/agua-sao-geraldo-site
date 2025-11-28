@@ -1,5 +1,4 @@
 ---
-//@ts-nocheck
 import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
 
 import merge from 'lodash.merge';
@@ -45,14 +44,14 @@ const defaultMetadata = {
     locale: 'pt_BR',
     ...(image
       ? {
-          images: [
-            {
-              url: image,
-              width: (image as ImageMetadata)?.width,
-              height: (image as ImageMetadata)?.height,
-            },
-          ],
-        }
+        images: [
+          {
+            url: image,
+            width: (image as ImageMetadata)?.width,
+            height: (image as ImageMetadata)?.height,
+          },
+        ],
+      }
       : {}),
   },
   twitter: {

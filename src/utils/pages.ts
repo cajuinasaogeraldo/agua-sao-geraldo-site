@@ -1,40 +1,20 @@
 import type { Page } from '@/types';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import {
-  cleanSlug,
-  trimSlash,
-  BLOG_BASE,
-  POST_PERMALINK_PATTERN,
-  CATEGORY_BASE,
-  TAG_BASE,
-} from './permalinks';
+import { cleanSlug, trimSlash, POST_PERMALINK_PATTERN } from './permalinks';
 
 let _pages: Array<Page> | null = null;
 
 const load = async function (): Promise<Array<Page>> {
   const pages = await getCollection('pages');
-  const normalizedPosts = pages.map(
-    async (page) => await getNormalizedPage(page)
-  );
+  const normalizedPosts = pages.map(async (page) => await getNormalizedPage(page));
 
-  const results = (await Promise.all(normalizedPosts)).filter(
-    (page) => !page.draft
-  );
+  const results = (await Promise.all(normalizedPosts)).filter((page) => !page.draft);
 
   return results;
 };
 
-const generatePermalink = async ({
-  id,
-  slug,
-}: {
-  id: string;
-  slug: string;
-}) => {
-  const permalink = POST_PERMALINK_PATTERN.replace('%slug%', slug).replace(
-    '%id%',
-    id
-  );
+const generatePermalink = async ({ id, slug }: { id: string; slug: string }) => {
+  const permalink = POST_PERMALINK_PATTERN.replace('%slug%', slug).replace('%id%', id);
 
   return permalink
     .split('/')
@@ -43,11 +23,9 @@ const generatePermalink = async ({
     .join('/');
 };
 
-const getNormalizedPage = async (
-  page: CollectionEntry<'pages'>
-): Promise<Page> => {
+const getNormalizedPage = async (page: CollectionEntry<'pages'>): Promise<Page> => {
   const { id, data } = page;
-  const { Content, remarkPluginFrontmatter } = await render(page);
+  const { Content } = await render(page);
 
   const { title, draft = false, metadata = {} } = data;
 

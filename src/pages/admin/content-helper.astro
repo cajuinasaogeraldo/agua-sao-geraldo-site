@@ -214,19 +214,6 @@ const metadata = {
       // UTILITÁRIOS
       // ============================================
 
-      function normalizeShortcodeSpacing(block: string): string {
-        return block
-          .replace(/\r\n/g, '\n')
-          .replace(/\[\[\s+/g, '[[')
-          .replace(/\s+\]\]/g, ']]')
-          .replace(/\[\s+\/\s+/g, '[/')
-          .replace(/\[\s*(col[12])\s*\]/gi, (_match, name) => `[${name}]`)
-          .replace(
-            /\[\s*\/\s*(col[12])\s*\]/gi,
-            (_match, name) => `[/${name}]`
-          );
-      }
-
       function extractInstagramPermalink(rawInput: string): string | null {
         if (!rawInput) return null;
 
@@ -275,7 +262,7 @@ const metadata = {
           }
 
           return `https://www.instagram.com/${resource}/${identifier}/`;
-        } catch (error) {
+        } catch (_error) {
           return null;
         }
       }
@@ -292,7 +279,7 @@ const metadata = {
           const resource = segments[0];
           const identifier = segments[1];
           return `${url.origin}/${resource}/${identifier}/embed/captioned/`;
-        } catch (error) {
+        } catch (_error) {
           return null;
         }
       }

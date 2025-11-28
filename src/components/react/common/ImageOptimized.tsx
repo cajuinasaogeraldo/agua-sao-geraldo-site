@@ -9,8 +9,7 @@ import {
 } from '@/utils/images-optimization-react';
 import type { ImageLayout } from '@/types';
 
-interface ImageOptimizedProps
-  extends Omit<HTMLAttributes<HTMLImageElement>, 'src' | 'style'> {
+interface ImageOptimizedProps extends Omit<HTMLAttributes<HTMLImageElement>, 'src' | 'style'> {
   src: string;
   alt: string;
   width?: number;
@@ -75,16 +74,7 @@ export default function ImageOptimized({
       style: styles,
       breakpoints,
     };
-  }, [
-    src,
-    width,
-    height,
-    layout,
-    aspectRatio,
-    objectFit,
-    objectPosition,
-    customSizes,
-  ]);
+  }, [src, width, height, layout, aspectRatio, objectFit, objectPosition, customSizes]);
 
   // Try to use unpic optimizer for CDN images
   useEffect(() => {
@@ -94,12 +84,7 @@ export default function ImageOptimized({
       // Check if the image is from a supported CDN
       if (isUnpicCompatible(src)) {
         try {
-          const optimized = await unpicOptimizer(
-            src,
-            baseConfig.breakpoints,
-            width,
-            height
-          );
+          const optimized = await unpicOptimizer(src, baseConfig.breakpoints, width, height);
 
           if (optimized.length > 0) {
             const generatedSrcSet = optimized

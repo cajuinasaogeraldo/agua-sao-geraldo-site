@@ -22,10 +22,8 @@
 
 :root {
   --wave-mask:
-    radial-gradient(78.26px at 50% 105px, #000 99%, #0000 101%) calc(50% - 70px)
-      0/140px 100%,
-    radial-gradient(78.26px at 50% -70px, #0000 99%, #000 101%) 50% 35px/140px
-      100% repeat-x;
+    radial-gradient(78.26px at 50% 105px, #000 99%, #0000 101%) calc(50% - 70px) 0/140px 100%,
+    radial-gradient(78.26px at 50% -70px, #0000 99%, #000 101%) 50% 35px/140px 100% repeat-x;
 }
 
 #footer::before {
@@ -206,7 +204,7 @@ small {
 }
 
 @utility btn-tertiary {
-  @apply button border-caju-heading-yellow border bg-transparent;
+  @apply button border-agua-primary-green border-2 bg-transparent;
 }
 
 @utility btn-action {

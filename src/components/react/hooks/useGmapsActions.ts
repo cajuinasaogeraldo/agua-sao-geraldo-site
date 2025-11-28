@@ -22,9 +22,7 @@ export default function useGmapsActions({
   onSelectMarker,
 }: hookProps) {
   const [isSearchLoading, setIsLoading] = useState(false);
-  const currentReferencePoint = useRef<{ lat: number; lng: number } | null>(
-    null
-  ); // Rastreia a referência atual (localização ou busca)
+  const currentReferencePoint = useRef<{ lat: number; lng: number } | null>(null); // Rastreia a referência atual (localização ou busca)
 
   const handleCardClick = (dist: Distribuidor) => {
     if (map) {
@@ -40,9 +38,7 @@ export default function useGmapsActions({
     const nearby = distribuidores
       .map((dist) => ({
         ...dist,
-        distance: Math.sqrt(
-          Math.pow(dist.lat - searchLat, 2) + Math.pow(dist.lng - searchLng, 2)
-        ),
+        distance: Math.sqrt(Math.pow(dist.lat - searchLat, 2) + Math.pow(dist.lng - searchLng, 2)),
       }))
       .filter((dist) => dist.distance <= SEARCH_RADIUS)
       .sort((a, b) => a.distance - b.distance);
@@ -95,14 +91,12 @@ export default function useGmapsActions({
 
       if (permission.state === 'denied') {
         alert(
-          'Você negou o acesso à localização. Por favor, habilite nas configurações do navegador.'
+          'Você negou o acesso à localização. Por favor, habilite nas configurações do navegador.',
         );
         return;
       }
-    } catch (error) {
-      console.log(
-        'Permissions API não disponível, tentando obter localização diretamente'
-      );
+    } catch (_error) {
+      console.log('Permissions API não disponível, tentando obter localização diretamente');
     }
 
     setIsLoading(true);
@@ -122,26 +116,26 @@ export default function useGmapsActions({
         setIsLoading(false);
 
         switch (error.code) {
-          case error.PERMISSION_DENIED:
-            alert(
-              'Você negou o acesso à localização. Por favor, habilite nas configurações do navegador.'
-            );
-            break;
-          case error.POSITION_UNAVAILABLE:
-            alert('Localização indisponível no momento.');
-            break;
-          case error.TIMEOUT:
-            alert('Tempo esgotado ao obter localização.');
-            break;
-          default:
-            alert('Não foi possível obter sua localização: ' + error.message);
+        case error.PERMISSION_DENIED:
+          alert(
+            'Você negou o acesso à localização. Por favor, habilite nas configurações do navegador.',
+          );
+          break;
+        case error.POSITION_UNAVAILABLE:
+          alert('Localização indisponível no momento.');
+          break;
+        case error.TIMEOUT:
+          alert('Tempo esgotado ao obter localização.');
+          break;
+        default:
+          alert('Não foi possível obter sua localização: ' + error.message);
         }
       },
       {
         enableHighAccuracy: true,
         timeout: 10000,
         maximumAge: 0,
-      }
+      },
     );
   };
 

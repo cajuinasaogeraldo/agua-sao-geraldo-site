@@ -8,11 +8,7 @@ interface ImageBannerType {
   };
 }
 
-export default function AboutPhotoGallery({
-  images,
-}: {
-  images: ImageBannerType[];
-}) {
+export default function AboutPhotoGallery({ images }: { images: ImageBannerType[] }) {
   return (
     <div className="relative w-full overflow-hidden">
       <div className="-mx-[calc(100vw-100%)] w-screen">
