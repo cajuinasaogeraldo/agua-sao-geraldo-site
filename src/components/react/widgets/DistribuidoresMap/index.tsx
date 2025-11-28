@@ -184,11 +184,11 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
                     key={dist.id + dist.lat + dist.nome}
                     onClick={() => handleCardClick(dist)}
                   >
-                    <h6 className="text-caju-heading-primary mb-0! text-base font-bold">
+                    <span className="text-caju-heading-primary mb-0! text-base! font-bold!">
                       {dist.nome}
-                    </h6>
-                    <p>{dist.endereco}</p>
-                    <p>{dist.telefone}</p>
+                    </span>
+                    <span>{dist.endereco}</span>
+                    <span>{dist.telefone}</span>
                   </div>
                 ))}
               </div>

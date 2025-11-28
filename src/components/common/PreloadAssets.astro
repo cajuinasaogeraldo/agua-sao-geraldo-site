@@ -14,6 +14,7 @@ const allBanners = (await getCollection('banner')) as Banner[];
     fetchpriority="high"
     as="image"
     href={allBanners[0].data.image.src}
+    crossorigin="anonymous"
   />
   <link
     rel="preload"

@@ -50,6 +50,20 @@ export const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
   const scale = isHovered ? 1.2 : 1;
   const pinBackground = isHovered ? PIN_COLORS.hover : PIN_COLORS.default;
 
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const markers = document.querySelectorAll('gmp-advanced-marker');
+
+      markers.forEach((m) =>
+        m.setAttribute('aria-label', 'Localização no mapa')
+      );
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <AdvancedMarker
@@ -59,7 +73,7 @@ export const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className="default-location-marker"
-        aria-label="Abrir informações do local"
+        ariaLabel="Localização da fábrica no mapa"
         style={{
           transform: `scale(${scale})`,
           transformOrigin: AdvancedMarkerAnchorPoint.BOTTOM.join(' '),
@@ -75,17 +89,17 @@ export const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
 
       {showInfoWindow && marker && (
         <InfoWindow
+          id="default-location-marker-info-window"
           anchor={marker}
           onCloseClick={handleInfoWindowClose}
           headerDisabled={false}
-          aria-label="Informações sobre o local"
+          ariaLabel="Informações sobre o local"
           title="Informações sobre o local"
         >
           <PlaceOverview
             place={placeId}
             size="medium"
             googleLogoAlreadyDisplayed
-            aria-label="Informações curtas sobre o local"
             className="min-w-[300px]"
           />
         </InfoWindow>
