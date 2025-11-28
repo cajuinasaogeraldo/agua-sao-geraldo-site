@@ -9,26 +9,26 @@ export const headerData = {
     },
     {
       text: 'Sobre',
-      href: '/sobre',
+      href: '/sobre/',
     },
     {
       text: 'Propriedades',
-      href: '/propriedades',
+      href: '/propriedades/',
     },
     {
       text: 'Revenda',
-      href: '/revenda',
+      href: '/revenda/',
     },
     {
       text: 'Notícias',
-      href: '/blog',
+      href: '/blog/',
     },
   ],
   actions: [
     {
       text: 'Seja um revendedor',
       variant: 'action',
-      href: '/solicite/seja-um-revendedor',
+      href: '/solicite/seja-um-revendedor/',
     },
   ] as CallToAction[],
 };
@@ -38,19 +38,28 @@ export const footerData = {
     {
       title: 'Institucional',
       links: [
-        { text: 'Sobre', href: '/sobre' },
-        { text: 'Produtos', href: '/produtos' },
-        { text: 'Notícias', href: '/blog' },
-        { text: 'Nos encontre', href: '/#nos-encontre' },
+        { text: 'Sobre', href: '/sobre/' },
+        { text: 'Propriedades', href: '/propriedades/' },
+        { text: 'Notícias', href: '/blog/' },
+        { text: 'Revenda', href: '/revenda/' },
         {
           text: 'Trabalhe Conosco',
           href: 'https://cajuinasaogeraldo.gupy.io/',
+        },
+        {
+          text: 'Portal de Boletos',
+          href: 'https://boletos.cajuinasaogeraldo.com.br/',
+          target: '_blank',
+        },
+        {
+          text: 'Agendar Visita',
+          href: 'https://forms.office.com/r/W1KXF7sqcV',
+          target: '_blank',
         },
       ],
     },
   ],
   secondaryLinks: [
-    { text: 'Promoções', href: '/promocoes' },
     {
       text: 'Política de Privacidade',
       href: '/empresa/politica-de-privacidade/',

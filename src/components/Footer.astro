@@ -53,9 +53,9 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
         {
           links.map(({ title, links: insideLinks }, index) => (
             <div class="grid gap-5 last:border-b-0">
-              <h5 class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-xl">
+              <span class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-lg">
                 {title}
-              </h5>
+              </span>
 
               <ul class="text-body font-poppins flex flex-wrap gap-5">
                 {insideLinks.map(({ href, text, ariaLabel, ...rest }) => (
@@ -76,11 +76,11 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
         }
 
         <div class="grid h-fit! gap-5 last:border-b-0">
-          <h5
-            class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-xl"
+          <span
+            class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-lg"
           >
             Contato
-          </h5>
+          </span>
           <ul class="text-body font-poppins flex gap-6">
             <li class="social-wrapper flex gap-4">
               {
@@ -99,22 +99,27 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
           </ul>
           <Button
             variant="primary"
-            href="tel://8821017654"
+            href="https://web.whatsapp.com/send?phone=558892527344&text=Oi,%20vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
             aria-label="Entre em contato"
             class="mt-0! flex max-w-[300px] items-center justify-center gap-2 text-lg"
           >
-            <Phone /> Entre em Contato
+            <Image
+              class="size-6"
+              layout="contained"
+              src={whats}
+              alt="São geraldo"
+            />
+            |
+            <span>Entre em Contato</span>
           </Button>
           <a
             href="tel://8821017654"
             aria-label="Entre em contato"
             class="flex size-8 h-auto w-fit items-center gap-2"
           >
-            <Image
-              class="size-8"
-              layout="contained"
-              src={whats}
-              alt="São geraldo"
+            <Phone
+              fill="#FFF"
+              class="bg-agua-primary-green size-8 rounded-full p-2"
             />
             <span class="text-2xl font-bold!">88 2101.7654</span>
           </a>
