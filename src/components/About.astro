@@ -45,34 +45,35 @@ const items = [
 
 <WidgetWrapper fullWidth>
   <WidgetWrapper
-    containerClass="relative mt-0! pt-0! flex items-center justify-evenly px-7"
+    containerClass="mt-0! pt-0! grid grid-cols-[minmax(80px,210px)_minmax(0,80px)] md:grid-cols-[1fr_minmax(80px,1fr)] place-items-center p-2 md:p-7"
   >
-    <div class="flex max-w-xl flex-col gap-7 py-8">
+    <div class="flex min-w-[104px] max-w-xl flex-col gap-1 md:gap-7 py-6 md:py-8">
       <h1>São Geraldo Águas Minerais</h1>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi mollitia
-        illum similique explicabo praesentium rerum! Rem, quis! Iste eos dolor
-        delectus corrupti, eum minima. Cumque at reprehenderit iste quisquam
-        inventore.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed dvo eiusmod tempor incididunt
+        ut labore lacus vel facilisis.
       </p>
-      <Button class="max-w-[200px] text-2xl" variant="primary" href="/sobre/"
-      >Ver Mais</Button
+      <Button
+        class="max-w-2/5 md:max-w-[200px] text-xs md:text-2xl py-2"
+        variant="primary"
+        href="/sobre/"
       >
+        Ver Mais
+      </Button>
     </div>
-    <Image
-      layout="contained"
-      class="relative -right-1 -bottom-7 h-[600px] w-[500px]"
-      loading="eager"
-      fetchpriority="high"
-      decoding="auto"
-      src={garrafao}
-      alt="Garrafão"
-    />
+    <div class="relative h-[199px] w-[200px] -right-15 md:h-[600px] md:w-[500px]">
+      <Image
+        layout="responsive"
+        class="absolute -bottom-10 md:-bottom-9"
+        loading="eager"
+        fetchpriority="high"
+        decoding="auto"
+        src={garrafao}
+        alt="Garrafão"
+      />
+    </div>
   </WidgetWrapper>
-  <div
-    id="about"
-    class="bg-agua-primary-blue relative min-h-[500px] w-full p-12"
-  >
+  <div id="about" class="bg-agua-primary-blue relative min-h-[250px] w-full p-3 pt-8 md:p-12">
     <Headline
       title="Água Não é Tudo Igual,"
       subtitle="por isso conheça a nossa!"
@@ -80,19 +81,17 @@ const items = [
         container: 'mb-4!',
         title: 'text-white! mb-0!',
         subtitle:
-          'text-agua-secondary-blue! font-medium! text-4xl! py-0! my-0!',
+          'text-agua-secondary-blue! mx-auto! w-fit! font-medium! text-sm! md:text-4xl! py-0! my-0!',
       }}
     />
-    <div class="mt-4 grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-7">
+    <div class="mt-4 grid grid-cols-3 md:grid-cols-4 items-center justify-center gap-2 md:gap-8">
       {
         items.map((item) => (
-          <div class="flex items-center justify-start gap-4">
-            <Image src={folha} alt="Folha" class="size-30" />
-            <div>
-              <h3 class="mb-0! text-2xl! font-extrabold! text-white!">
-                {item.title}
-              </h3>
-              <p class="text-agua-primary-green text-xl!">{item.qtd}</p>
+          <div class="flex items-center justify-start gap-2 md:gap-4">
+            <Image src={folha} alt="Folha" layout="constrained" class="size-7! md:size-30!" />
+            <div class="flex-1">
+              <h3 class="mb-0! text-xs! md:text-2xl! font-extrabold! text-white!">{item.title}</h3>
+              <p class="text-agua-primary-green text-xs! md:text-xl!">{item.qtd}</p>
             </div>
           </div>
         ))
