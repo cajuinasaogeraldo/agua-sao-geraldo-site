@@ -54,9 +54,7 @@ export const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
     const observer = new MutationObserver(() => {
       const markers = document.querySelectorAll('gmp-advanced-marker');
 
-      markers.forEach((m) =>
-        m.setAttribute('aria-label', 'Localização no mapa')
-      );
+      markers.forEach((m) => m.setAttribute('aria-label', 'Localização no mapa'));
     });
 
     observer.observe(document.body, { childList: true, subtree: true });

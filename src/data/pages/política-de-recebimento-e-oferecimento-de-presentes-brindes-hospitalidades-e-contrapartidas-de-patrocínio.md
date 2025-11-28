@@ -3,6 +3,7 @@ title: Política de recebimento e oferecimento de presentes, brindes, hospitalid
 draft: false
 layout: '@/layouts/StaticPageLayout.astro'
 ---
+
 ### 1. OBJETIVO
 
 - 1.1 O Objetivo desta Política é o estabelecimento de regras e diretrizes sobre ações concernentes ao recebimento ou oferecimento de presentes, brindes, hospitalidades, doações e contrapartidas de patrocínio, para todos os colaboradores das empresas do Grupo São Geraldo.
@@ -35,16 +36,16 @@ layout: '@/layouts/StaticPageLayout.astro'
 - 5.3. Os laços com nossos parceiros, clientes e prestadores de serviços podem ser reforçados através de interações sociais legítimas, sempre focados no fortalecimento de relações empresariais éticas. Consequentemente, o oferecimento ou aceitação ocasional de brindes, presentes e/ou hospitalidades, nos estritos termos da Lei e desta Política, bem como dos Procedimentos Internos Padrão (POP’s), são considerados como cortesias que intencionam promover o estreitamento das relações.
 - 5.4. O recebimento e/ou oferecimento de brindes, presentes e hospitalidades demandam cuidados e observância das regras aplicáveis, sob pena de configurarem conflito de interesse e caracterização de suborno.
 - 5.5. São considerados indevidos, a oferta ou recebimento de presentes, brindes, hospitalidade e/ou doações quando:
-    - a. Tais benefícios possam influenciar ou influenciem decisões sobre negociações ou ações administrativas que, sem os mesmos, não ocorreriam ou o seriam de maneira diferente;
-    - b. Tais ações sejam praticadas para favorecimento próprio ou de terceiros;
-    - c. Quando haja negociação em curso ou em iminência de ocorrer, ou ainda, após negociação, como forma de agradecimento, ou ainda, intencionando a manutenção ou renovação de contrato ou aditivo contratual;
-    - d. Causar incômodo ou constrangimento pessoal, ou denegrir a imagem ou reputação do GRUPO SÃO GERALDO ou de qualquer um de seus colaboradores.
+  - a. Tais benefícios possam influenciar ou influenciem decisões sobre negociações ou ações administrativas que, sem os mesmos, não ocorreriam ou o seriam de maneira diferente;
+  - b. Tais ações sejam praticadas para favorecimento próprio ou de terceiros;
+  - c. Quando haja negociação em curso ou em iminência de ocorrer, ou ainda, após negociação, como forma de agradecimento, ou ainda, intencionando a manutenção ou renovação de contrato ou aditivo contratual;
+  - d. Causar incômodo ou constrangimento pessoal, ou denegrir a imagem ou reputação do GRUPO SÃO GERALDO ou de qualquer um de seus colaboradores.
 - 5.6. Antes de realizar o oferecimento ou o recebimento de brindes, presentes e hospitalidades é necessário assegurar-se de que este ato não se configura como ato ilegal perante as autoridades municipais, estaduais ou federais a partir de suas respectivas legislações; bem como se tais ações não são contrárias às regras internas das empresas nas quais estão sendo iniciadas ou para as quais estão sendo destinadas.
 - 5.7. Em caso de dúvidas em relação a conduta a ser tomada, traga em mente os seguintes questionamentos:
-    - a. Qual a motivação para esse oferecimento/recebimento?
-    - b. A oferta/recebimento pode ser interpretada como tentativa de suborno?
-    - c. Caso a situação fosse publicizada, haveria algum inconveniente para as empresas do GRUPO SÃO GERALDO?
-    - d. Existe alguma regra específica nesta Política e nas normas internas que proíbam tal conduta?
+  - a. Qual a motivação para esse oferecimento/recebimento?
+  - b. A oferta/recebimento pode ser interpretada como tentativa de suborno?
+  - c. Caso a situação fosse publicizada, haveria algum inconveniente para as empresas do GRUPO SÃO GERALDO?
+  - d. Existe alguma regra específica nesta Política e nas normas internas que proíbam tal conduta?
 - 5.8. Observado as respostas para os questionamentos acima, pode-se ter uma considerável noção se tal conduta é correta ou não e, diante disso, dar continuidade à ação. Porém, lembre- se que Se houver dúvida sobre ser permitido ou não a concessão ou recebimento de um benefício, o Departamento de Conformidade deve ser consultado. Não consultar significa que a pessoa envolvida está assumindo a responsabilidade pelo ato e que tem a certeza de estar cumprindo as diretrizes desse procedimento e do Código de conduta da empresa.
 
 ### 6. BRINDES, PRESENTES E HOSPITALIDADES
@@ -55,9 +56,9 @@ layout: '@/layouts/StaticPageLayout.astro'
 - 6.4. É proibido oferecer/ receber presentes e/ou hospitalidades de instituições públicas ou de seus agentes.
 - 6.5. É proibido conceder ou receber presente, brinde ou hospitalidade de instituições públicas ou seus agentes, dos quais as empresas do Grupo São Geraldo dependam de decisão para o funcionamento de suas atividades.
 - 6.6. Não se caracterizam como presentes ou brindes:
-    - a. Premiações em dinheiro ou bens ofertados por entidade acadêmica, científica ou cultural, em reconhecimento por contribuição de caráter intelectual;
-    - b. Bolsa de estudos para aperfeiçoamento profissional ou técnico, sem que haja interesse de favorecimento por parte daquele que a concedeu em virtude de cargo a ser ocupado ou permuta de favores em benefício próprio ou de terceiros;
-    - c. Material para divulgação e marketing das empresas do GRUPO SÃO GERALDO, com intenção de divulgar os produtos e ampliar a comunicação, dando visibilidade ao público interno e externo da companhia.
+  - a. Premiações em dinheiro ou bens ofertados por entidade acadêmica, científica ou cultural, em reconhecimento por contribuição de caráter intelectual;
+  - b. Bolsa de estudos para aperfeiçoamento profissional ou técnico, sem que haja interesse de favorecimento por parte daquele que a concedeu em virtude de cargo a ser ocupado ou permuta de favores em benefício próprio ou de terceiros;
+  - c. Material para divulgação e marketing das empresas do GRUPO SÃO GERALDO, com intenção de divulgar os produtos e ampliar a comunicação, dando visibilidade ao público interno e externo da companhia.
 - 6.7. Os benefícios recebidos em desacordo com as normas da empresa devem ser devolvidos e informados ao Departamento de Conformidade que documentará e arquivará todas as ocorrências relativas ao assunto e as medidas tomadas em relação às mesmas.
 - 6.8. O requisito inicial para que se admita uma hospitalidade é que seja um ato diretamente ligado a uma relação profissional, admitida mediante contrato ou negociação escrita entre as partes concessora e receptora do benefício, devidamente conhecida tal negociação/contrato pelo(a) Diretor(a) da área competente e aprovado pela Diretoria em conjunto.
 - 6.9. O valor limite para oferecimento de hospitalidade será definido e atualizado pelo Conselho de Administração após oitiva de sugestões da Diretoria e constará de forma expressa no Procedimento Operacional Padrão (POP) publicizado pelo Departamento de Conformidade a todos os demais Departamentos.

@@ -24,14 +24,8 @@ import react from '@astrojs/react';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
-const whenExternalScripts = (
-  items: (() => AstroIntegration) | (() => AstroIntegration)[] = []
-) =>
-  hasExternalScripts
-    ? Array.isArray(items)
-      ? items.map((item) => item())
-      : [items()]
-    : [];
+const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
+  hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 // https://astro.build/config
 export default defineConfig({
@@ -69,7 +63,7 @@ export default defineConfig({
     ...whenExternalScripts(() =>
       partytown({
         config: { forward: ['dataLayer.push'] },
-      })
+      }),
     ),
     compress({
       CSS: true,
@@ -91,19 +85,11 @@ export default defineConfig({
   ],
 
   image: {
-    domains: [
-      'cdn.pixabay.com',
-      'images.unsplash.com',
-      'cajuinasaogeraldo.com.br',
-    ],
+    domains: ['cdn.pixabay.com', 'images.unsplash.com', 'cajuinasaogeraldo.com.br'],
   },
 
   markdown: {
-    remarkPlugins: [
-      readingTimeRemarkPlugin,
-      resolveImagePathsRemarkPlugin,
-      remarkShortcodes,
-    ],
+    remarkPlugins: [readingTimeRemarkPlugin, resolveImagePathsRemarkPlugin, remarkShortcodes],
     rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
     shikiConfig: {
       wrap: true,

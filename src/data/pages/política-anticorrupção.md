@@ -3,6 +3,7 @@ title: Política de Anticorrupção
 draft: false
 layout: '@/layouts/StaticPageLayout.astro'
 ---
+
 ### 1. OBJETIVO, DESTINATÁRIOS E ABRANGÊNCIA
 
 - 1.1. O objetivo desta Política é o estabelecimento de regras e diretrizes para todos os colaboradores das empresas do Grupo São Geraldo, seus diretores, estagiários, Conselho de Administração, prestadores de serviços, fornecedores e partes relacionadas, a menos que, por exigência de legislação supervenientes, normas mais restritivas venham a ser desenvolvidas.
@@ -37,12 +38,12 @@ layout: '@/layouts/StaticPageLayout.astro'
 
 - 4.1. O Comitê de Ética representa a instância interna do Grupo São Geraldo que tem como responsabilidade primordial zelar pela observância do Código de Ética e apurar eventuais violações cometidas.
 - 4.2. É competência do Comitê de Ética:
-    - a) Elaborar e atualizar Políticas internas;
-    - b) Receber do Programa de Conformidade as estatísticas e indicadores sobre as denúncias de violações ao Código de Conduta e demais políticas e deliberar sobre as respectivas recomendações;
-    - c) Propor, acompanhar e assegurar o desenvolvimento e a implementação de ações, objetivando a disseminação, capacitação e o treinamento sobre as diretrizes do Código de Conduta
-    - d) Dirimir dúvidas a respeito da interpretação das diretrizes definidas no Código de Conduta e deliberar sobre os casos em que o Código é omisso;
-    - e) Planejar e executar atividades periódicas que visem à prevenção dos desvios de conduta;
-    - f) Submeter à aprovação do Conselho de Administração do Grupo São Geraldo, propostas para aperfeiçoamento do Código de Conduta.
+  - a) Elaborar e atualizar Políticas internas;
+  - b) Receber do Programa de Conformidade as estatísticas e indicadores sobre as denúncias de violações ao Código de Conduta e demais políticas e deliberar sobre as respectivas recomendações;
+  - c) Propor, acompanhar e assegurar o desenvolvimento e a implementação de ações, objetivando a disseminação, capacitação e o treinamento sobre as diretrizes do Código de Conduta
+  - d) Dirimir dúvidas a respeito da interpretação das diretrizes definidas no Código de Conduta e deliberar sobre os casos em que o Código é omisso;
+  - e) Planejar e executar atividades periódicas que visem à prevenção dos desvios de conduta;
+  - f) Submeter à aprovação do Conselho de Administração do Grupo São Geraldo, propostas para aperfeiçoamento do Código de Conduta.
 
 ### 5. FUNÇÃO DO DEPARTAMENTO JURÍDICO EM RELAÇÃO AO DEPARTAMENTO DE CONFORMIDADE
 
@@ -52,22 +53,22 @@ layout: '@/layouts/StaticPageLayout.astro'
 ### 6. PROIBIÇÕES
 
 - 6.1. São proibidas as seguintes ações por parte dos destinatários desta Política para com Agentes Públicos:
-    - a) Dar, oferecer, prometer ou autorizar que se dê vantagem indevida a Agentes Públicos ou pessoa a ele relacionada, diretamente ou por meio de intermediários;
-    - b) Financiar, custear, patrocinar ou de qualquer modo subvencionar a prática dos atos ilícitos previstos na legislação aplicável;
-    - c) Utilizar-se de interposta pessoa física ou jurídica para ocultar ou dissimular seus reais interesses ou a identidade dos beneficiários dos atos praticados;
-    - d) Dificultar atividade de investigação ou fiscalização de órgãos, entidades ou Agentes Públicos, ou intervir em sua atuação, inclusive no âmbito das agências reguladoras e dos órgãos de fiscalização do sistema financeiro nacional;
-    - e) Manipular ou fraudar licitação pública ou contratos celebrados com a administração pública;
-    - f) Dar, oferecer, prometer ou autorizar que sejam concedidos “pagamentos de facilitação”, ou seja, valores de pequena quantia pagos a um Agente Público ou terceiro, que não são exigidos ou previstos em lei ou regulamento, para iniciar ou acelerar um processo ou procedimento que é de responsabilidade do Agente Público realizar ou executar.
-    - g) Pedir, insinuar, receber ou aceitar qualquer vantagem indevida, de qualquer terceiro, em benefício próprio ou de parentes até o terceiro grau, de modo a influenciar a prática de qualquer ato no desempenho de suas atividades perante as empresas do Grupo São Geraldo.
+  - a) Dar, oferecer, prometer ou autorizar que se dê vantagem indevida a Agentes Públicos ou pessoa a ele relacionada, diretamente ou por meio de intermediários;
+  - b) Financiar, custear, patrocinar ou de qualquer modo subvencionar a prática dos atos ilícitos previstos na legislação aplicável;
+  - c) Utilizar-se de interposta pessoa física ou jurídica para ocultar ou dissimular seus reais interesses ou a identidade dos beneficiários dos atos praticados;
+  - d) Dificultar atividade de investigação ou fiscalização de órgãos, entidades ou Agentes Públicos, ou intervir em sua atuação, inclusive no âmbito das agências reguladoras e dos órgãos de fiscalização do sistema financeiro nacional;
+  - e) Manipular ou fraudar licitação pública ou contratos celebrados com a administração pública;
+  - f) Dar, oferecer, prometer ou autorizar que sejam concedidos “pagamentos de facilitação”, ou seja, valores de pequena quantia pagos a um Agente Público ou terceiro, que não são exigidos ou previstos em lei ou regulamento, para iniciar ou acelerar um processo ou procedimento que é de responsabilidade do Agente Público realizar ou executar.
+  - g) Pedir, insinuar, receber ou aceitar qualquer vantagem indevida, de qualquer terceiro, em benefício próprio ou de parentes até o terceiro grau, de modo a influenciar a prática de qualquer ato no desempenho de suas atividades perante as empresas do Grupo São Geraldo.
 
 ### 7. CONDUTAS ESPERADAS EM CASO DE OFERECIMENTO DE VANTAGEM INDEVIDA
 
 - 7.1. Em caso de oferecimento direto ou indireto de vantagem indevida, deve-se agir da seguinte forma:
-    - a) A recusa à proposta deve ser explícita e sem hesitação, não deixando margem de dúvida sobre sua conduta;
-    - b) Não se deve postergar a decisão, dizendo que pensará ou que consultará um superior. Qualquer destinatário que se encontre nesta situação está autorizado a recusar explicitamente a proposta, mesmo que isso possa representar um prejuízo ou uma dificuldade no desenvolvimento de suas atividades;
-    - c) Explique que o Código de Conduta e a legislação vigente proíbem este tipo de ação;
-    - d) Informe o Departamento de Conformidade o mais rápido possível;
-    - e) Qualquer problema que esteja enfrentando de forma constante também deve ser reportado através do Canal de Denúncia.
+  - a) A recusa à proposta deve ser explícita e sem hesitação, não deixando margem de dúvida sobre sua conduta;
+  - b) Não se deve postergar a decisão, dizendo que pensará ou que consultará um superior. Qualquer destinatário que se encontre nesta situação está autorizado a recusar explicitamente a proposta, mesmo que isso possa representar um prejuízo ou uma dificuldade no desenvolvimento de suas atividades;
+  - c) Explique que o Código de Conduta e a legislação vigente proíbem este tipo de ação;
+  - d) Informe o Departamento de Conformidade o mais rápido possível;
+  - e) Qualquer problema que esteja enfrentando de forma constante também deve ser reportado através do Canal de Denúncia.
 - 7.2. Caso presencie alguém em situação de oferecimento de vantagem indevida que não esteja seguindo as condutas acima descritas, este fato deve também ser comunicado ao Departamento de Conformidade, através do Canal de Denúncia.
 
 ### 8. DA MANUTENÇÃO DE REGISTROS

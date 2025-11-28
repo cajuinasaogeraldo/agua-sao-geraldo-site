@@ -25,7 +25,6 @@ const {
   count = 4,
 
   id,
-  isDark = false,
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
@@ -35,11 +34,7 @@ const posts = APP_BLOG.isEnabled ? await findLatestPosts({ count }) : [];
 
 {
   APP_BLOG.isEnabled ? (
-    <WidgetWrapper
-      id={id}
-      containerClass={classes?.container as string}
-      bg={bg}
-    >
+    <WidgetWrapper id={id} containerClass={classes?.container as string} bg={bg}>
       <div class="mb-8 flex flex-col lg:flex-row lg:justify-between">
         {title && (
           <div class="md:max-w-sm">
@@ -48,7 +43,7 @@ const posts = APP_BLOG.isEnabled ? await findLatestPosts({ count }) : [];
               set:html={title}
             />
             {APP_BLOG.list.isEnabled && linkText && linkUrl && (
-              <Button variant="yellow" href={linkUrl}>
+              <Button variant="secondary" href={linkUrl}>
                 {' '}
                 {linkText} »
               </Button>
@@ -57,10 +52,7 @@ const posts = APP_BLOG.isEnabled ? await findLatestPosts({ count }) : [];
         )}
 
         {information && (
-          <p
-            class="text-muted lg:max-w-md lg:text-sm dark:text-slate-400"
-            set:html={information}
-          />
+          <p class="text-muted lg:max-w-md lg:text-sm dark:text-slate-400" set:html={information} />
         )}
       </div>
 

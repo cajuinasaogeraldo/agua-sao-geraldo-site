@@ -39,19 +39,15 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
   ]}
 >
   <!-- Links, Sociais e Logo -->
-  <div
-    class="flex w-full flex-col items-center justify-evenly gap-4 md:flex-row lg:gap-0"
-  >
+  <div class="flex w-full flex-col items-center justify-evenly gap-4 md:flex-row lg:gap-0">
     <!-- Links e Sociais -->
     <div
       class="grid h-full max-w-3xl flex-1 grid-cols-[85px_1fr] gap-5 md:grid-cols-1 md:grid-rows-[auto_auto]"
     >
       <!-- Links -->
-      <div
-        class="order-2 grid items-start justify-center gap-4 pl-3 md:order-1! md:grid-cols-2"
-      >
+      <div class="order-2 grid items-start justify-center gap-4 pl-3 md:order-1! md:grid-cols-2">
         {
-          links.map(({ title, links: insideLinks }, index) => (
+          links.map(({ title, links: insideLinks }) => (
             <div class="grid gap-5 last:border-b-0">
               <span class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-lg">
                 {title}
@@ -103,12 +99,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
             aria-label="Entre em contato"
             class="mt-0! flex max-w-[300px] items-center justify-center gap-2 text-lg"
           >
-            <Image
-              class="size-6"
-              layout="contained"
-              src={whats}
-              alt="São geraldo"
-            />
+            <Image class="size-6" layout="contained" src={whats} alt="São geraldo" />
             |
             <span>Entre em Contato</span>
           </Button>
@@ -117,10 +108,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
             aria-label="Entre em contato"
             class="flex size-8 h-auto w-fit items-center gap-2"
           >
-            <Phone
-              fill="#FFF"
-              class="bg-agua-primary-green size-8 rounded-full p-2"
-            />
+            <Phone fill="#FFF" class="bg-agua-primary-green size-8 rounded-full p-2" />
             <span class="text-2xl font-bold!">88 2101.7654</span>
           </a>
         </div>
@@ -131,22 +119,13 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
     <div
       class="flex h-[94px] w-[157px] items-center justify-center md:order-first md:h-[130px]! md:w-[200px]! lg:h-[290px]! lg:w-[388px]!"
     >
-      <Image
-        class="h-full w-full"
-        layout="responsive"
-        src={logo}
-        alt="São geraldo"
-      />
+      <Image class="h-full w-full" layout="responsive" src={logo} alt="São geraldo" />
     </div>
   </div>
 
   <!-- Footnote -->
-  <div
-    class="mt-2 flex flex-col items-center justify-center gap-4 lg:mt-0 lg:flex-row"
-  >
-    <div
-      class="text-caption font-poppins text-center leading-[140%] text-white lg:w-full"
-    >
+  <div class="mt-2 flex flex-col items-center justify-center gap-4 lg:mt-0 lg:flex-row">
+    <div class="text-caption font-poppins text-center leading-[140%] text-white lg:w-full">
       <Fragment set:html={footNote} />
     </div>
   </div>

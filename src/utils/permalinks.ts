@@ -4,14 +4,7 @@ import { trim } from '@/utils/utils';
 
 // ==================== TYPES ====================
 
-type PermalinkType =
-  | 'home'
-  | 'blog'
-  | 'asset'
-  | 'category'
-  | 'tag'
-  | 'post'
-  | 'page';
+type PermalinkType = 'home' | 'blog' | 'asset' | 'category' | 'tag' | 'post' | 'page';
 
 type PermalinkHref = {
   type?: PermalinkType;
@@ -43,8 +36,7 @@ const createPath = (...params: string[]): string => {
   return '/' + paths + (SITE.trailingSlash && paths ? '/' : '');
 };
 
-const definitivePermalink = (permalink: string): string =>
-  createPath(BASE_PATHNAME, permalink);
+const definitivePermalink = (permalink: string): string => createPath(BASE_PATHNAME, permalink);
 
 const isExternalOrSpecialUrl = (slug: string): boolean => {
   const specialPrefixes = ['https://', 'http://', '://', '#', 'javascript:'];
@@ -58,9 +50,7 @@ const BASE_PATHNAME = SITE.base || '/';
 export const BLOG_BASE = cleanSlug(APP_BLOG?.list?.pathname);
 export const CATEGORY_BASE = cleanSlug(APP_BLOG?.category?.pathname);
 export const TAG_BASE = cleanSlug(APP_BLOG?.tag?.pathname) || 'tag';
-export const POST_PERMALINK_PATTERN = trimSlash(
-  APP_BLOG?.post?.permalink || `${BLOG_BASE}/%slug%`
-);
+export const POST_PERMALINK_PATTERN = trimSlash(APP_BLOG?.post?.permalink || `${BLOG_BASE}/%slug%`);
 
 // ==================== PERMALINK GENERATORS ====================
 
@@ -89,10 +79,7 @@ export const getCanonical = (path = ''): string | URL => {
   return url;
 };
 
-export const getPermalink = (
-  slug = '',
-  type: PermalinkType | string = 'page'
-): string => {
+export const getPermalink = (slug = '', type: PermalinkType | string = 'page'): string => {
   if (isExternalOrSpecialUrl(slug)) {
     return slug;
   }
@@ -100,34 +87,34 @@ export const getPermalink = (
   let permalink: string;
 
   switch (type) {
-    case 'home':
-      permalink = getHomePermalink();
-      break;
+  case 'home':
+    permalink = getHomePermalink();
+    break;
 
-    case 'blog':
-      permalink = getBlogPermalink();
-      break;
+  case 'blog':
+    permalink = getBlogPermalink();
+    break;
 
-    case 'asset':
-      permalink = getAsset(slug);
-      break;
+  case 'asset':
+    permalink = getAsset(slug);
+    break;
 
-    case 'category':
-      permalink = createPath(CATEGORY_BASE, trimSlash(slug));
-      break;
+  case 'category':
+    permalink = createPath(CATEGORY_BASE, trimSlash(slug));
+    break;
 
-    case 'tag':
-      permalink = createPath(TAG_BASE, trimSlash(slug));
-      break;
+  case 'tag':
+    permalink = createPath(TAG_BASE, trimSlash(slug));
+    break;
 
-    case 'post':
-      permalink = createPath(trimSlash(slug));
-      break;
+  case 'post':
+    permalink = createPath(trimSlash(slug));
+    break;
 
-    case 'page':
-    default:
-      permalink = createPath(slug);
-      break;
+  case 'page':
+  default:
+    permalink = createPath(slug);
+    break;
   }
 
   return definitivePermalink(permalink);
@@ -135,9 +122,7 @@ export const getPermalink = (
 
 // ==================== PERMALINK APPLICATION ====================
 
-const processHrefValue = (
-  hrefValue: string | PermalinkHref
-): string | undefined => {
+const processHrefValue = (hrefValue: string | PermalinkHref): string | undefined => {
   if (typeof hrefValue === 'string') {
     return getPermalink(hrefValue);
   }
@@ -154,9 +139,7 @@ const processHrefValue = (
   return undefined;
 };
 
-export const applyGetPermalinks = (
-  menu: PermalinksInput = {}
-): PermalinksInput => {
+export const applyGetPermalinks = (menu: PermalinksInput = {}): PermalinksInput => {
   // Handle arrays
   if (Array.isArray(menu)) {
     return menu.map((item) => applyGetPermalinks(item) as Permalinks);

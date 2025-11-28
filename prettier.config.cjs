@@ -1,2 +1,6 @@
-const prettierConfig = require("@cajuinasi/prettier-config/front");
-module.exports = prettierConfig;
+const cajuinaConfig = require('@cajuinasi/prettier-config');
+
+module.exports = {
+  ...cajuinaConfig,
+  printWidth: 100, // Override específico
+};

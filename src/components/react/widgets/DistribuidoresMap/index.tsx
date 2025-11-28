@@ -14,20 +14,13 @@ interface Props {
 }
 
 function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
-  const [sortedDistribuidores, setSortedDistribuidores] = useState<
-    Distribuidor[]
-  >([]);
+  const [sortedDistribuidores, setSortedDistribuidores] = useState<Distribuidor[]>([]);
   const [infoWindowShown, setInfoWindowShown] = useState(false);
 
   const map = useMap();
 
-  const {
-    hoveredId,
-    selectedId,
-    handleMarkerHover,
-    handleMarkerSelect,
-    resetMarkers,
-  } = useDistribuidorMarkers();
+  const { hoveredId, selectedId, handleMarkerHover, handleMarkerSelect, resetMarkers } =
+    useDistribuidorMarkers();
 
   const {
     handleCardClick,
@@ -47,10 +40,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
     },
   });
 
-  const handleMarkerClick = (
-    id: number,
-    marker: google.maps.marker.AdvancedMarkerElement
-  ) => {
+  const handleMarkerClick = (id: number, marker: google.maps.marker.AdvancedMarkerElement) => {
     handleMarkerSelect(id);
     setInfoWindowShown((prev) => (selectedId === id ? !prev : true));
 
@@ -70,9 +60,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
     // Volta para os bounds de todos os distribuidores
     if (map && sortedDistribuidores.length > 1) {
       const bounds = new google.maps.LatLngBounds();
-      sortedDistribuidores.forEach((d) =>
-        bounds.extend({ lat: d.lat, lng: d.lng })
-      );
+      sortedDistribuidores.forEach((d) => bounds.extend({ lat: d.lat, lng: d.lng }));
       map.fitBounds(bounds, 90);
 
       google.maps.event.addListenerOnce(map, 'bounds_changed', () => {
@@ -125,10 +113,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 
             {/* Mostra marker da localização padrão apenas quando não há busca ativa */}
             {sortedDistribuidores.length === 0 && (
-              <DefaultLocationMarker
-                position={defaultPosition}
-                placeId={defaultPosition.placeId}
-              />
+              <DefaultLocationMarker position={defaultPosition} placeId={defaultPosition.placeId} />
             )}
           </Map>
         </div>
@@ -146,18 +131,13 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 
             {/* Search */}
             <div className="flex justify-start p-0">
-              <AutoCompleteSearchBox
-                onPlaceSelect={handlePlaceSelect}
-                onReset={handleReset}
-              />
+              <AutoCompleteSearchBox onPlaceSelect={handlePlaceSelect} onReset={handleReset} />
             </div>
 
             {isSearchLoading && (
               <div className="font-poppins flex items-center justify-center gap-2 py-4">
                 <div className="border-caju-heading-primary h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></div>
-                <span className="text-sm text-gray-600">
-                  Buscando distribuidores próximos...
-                </span>
+                <span className="text-sm text-gray-600">Buscando distribuidores próximos...</span>
               </div>
             )}
 
@@ -197,9 +177,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
             {/* Buttons */}
             <div className="[&_button]:font-poppins! flex gap-3 self-center [&_button]:h-[45px] [&_button]:text-xs [&_button]:font-medium [&_button]:lg:h-[65px] [&_button]:lg:text-xl">
               <button className="btn-primary px-6">VER MAIS</button>
-              <button className="btn-secondary max-w-80 flex-1">
-                SEJA UM DISTRIBUIDOR
-              </button>
+              <button className="btn-secondary max-w-80 flex-1">SEJA UM DISTRIBUIDOR</button>
             </div>
           </div>
         </div>
@@ -226,10 +204,7 @@ export default function DistribuidoresGmaps({
       region="BR"
       version="beta"
     >
-      <Gmaps
-        distribuidores={distribuidores}
-        defaultPosition={saoGeraldoPosition}
-      />
+      <Gmaps distribuidores={distribuidores} defaultPosition={saoGeraldoPosition} />
     </APIProvider>
   );
 }

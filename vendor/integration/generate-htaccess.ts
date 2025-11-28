@@ -1,4 +1,3 @@
-// integrations/htaccess/index.ts
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -52,7 +51,7 @@ interface HtaccessConfig {
 export default function generateHtaccess({
   config: configPath = 'src/htaccess',
 }: {
-  config: HtaccessConfig;
+  config: string;
 }): AstroIntegration {
   let htaccessConfig: HtaccessConfig = {};
 
@@ -66,10 +65,7 @@ export default function generateHtaccess({
         // Carrega configuração
         try {
           const configFile = new URL(configPath, config.root);
-          const configContent = fs.readFileSync(
-            fileURLToPath(configFile),
-            'utf8'
-          );
+          const configContent = fs.readFileSync(fileURLToPath(configFile), 'utf8');
 
           // tenta YAML SEMPRE
           try {
@@ -82,10 +78,8 @@ export default function generateHtaccess({
           }
 
           addWatchFile(configFile);
-        } catch (error) {
-          buildLogger.warn(
-            `Arquivo ${configPath} não encontrado. Usando padrão.`
-          );
+        } catch (_error) {
+          buildLogger.warn(`Arquivo ${configPath} não encontrado. Usando padrão.`);
           htaccessConfig = getDefaultConfig();
         }
       },
@@ -94,9 +88,7 @@ export default function generateHtaccess({
         const buildLogger = logger.fork('htaccess');
 
         if (htaccessConfig.enabled === false) {
-          buildLogger.info(
-            'Geração de .htaccess desabilitada na configuração.'
-          );
+          buildLogger.info('Geração de .htaccess desabilitada na configuração.');
           return;
         }
 
@@ -285,9 +277,7 @@ function buildCachingSection(rules?: CacheRule[]): string {
   return lines.join('\n');
 }
 
-function buildCompressionSection(
-  compression: NonNullable<HtaccessConfig['compression']>
-): string {
+function buildCompressionSection(compression: NonNullable<HtaccessConfig['compression']>): string {
   const lines = [
     `# ------------------------------------------------------
 # COMPRESSION
@@ -328,16 +318,12 @@ function buildCorsSection(cors: NonNullable<HtaccessConfig['cors']>): string {
   const allowOrigin = cors.origins?.[0] ?? '*';
   const credentials = cors.allowCredentials ? 'true' : 'false';
   const methods = cors.allowedMethods?.join(', ') ?? 'GET, POST, OPTIONS';
-  const headers =
-    cors.allowedHeaders?.join(', ') ??
-    'Content-Type, Accept, Authorization, Origin';
+  const headers = cors.allowedHeaders?.join(', ') ?? 'Content-Type, Accept, Authorization, Origin';
 
   // Headers gerais
   lines.push(`  Header set Access-Control-Allow-Origin "${allowOrigin}"`);
   if (cors.allowCredentials) {
-    lines.push(
-      `  Header set Access-Control-Allow-Credentials "${credentials}"`
-    );
+    lines.push(`  Header set Access-Control-Allow-Credentials "${credentials}"`);
   }
   lines.push(`  Header set Access-Control-Allow-Methods "${methods}"`);
   lines.push(`  Header set Access-Control-Allow-Headers "${headers}"`);

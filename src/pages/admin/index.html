@@ -4,16 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
-    <link
-      href="/admin/collections/news.yml"
-      type="text/yaml"
-      rel="cms-config-url"
-    />
-    <link
-      href="/admin/collections/pages.yml"
-      type="text/yaml"
-      rel="cms-config-url"
-    />
+    <link href="/admin/collections/news.yml" type="text/yaml" rel="cms-config-url" />
+    <link href="/admin/collections/pages.yml" type="text/yaml" rel="cms-config-url" />
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
     <title>Agua São Geraldo CMS</title>
     <style>
@@ -81,22 +73,17 @@
 
       function addGeocodeButton() {
         // Buscar a section do campo de endereço
-        const enderecoSection = document.querySelector(
-          'section[data-key-path="endereco"]'
-        );
+        const enderecoSection = document.querySelector('section[data-key-path="endereco"]');
 
         if (!enderecoSection) return;
 
         // Verificar se o botão já existe
         const existingButton =
-          enderecoSection.nextElementSibling?.querySelector?.(
-            '.geocode-button'
-          );
+          enderecoSection.nextElementSibling?.querySelector?.('.geocode-button');
         if (existingButton) return;
 
         // Buscar o input de endereço
-        const enderecoInput =
-          enderecoSection.querySelector('input[type="text"]');
+        const enderecoInput = enderecoSection.querySelector('input[type="text"]');
         if (!enderecoInput) return;
 
         // Criar container para o botão
@@ -138,7 +125,7 @@
           try {
             const query = encodeURIComponent(endereco);
             const response = await fetch(
-              `https://nominatim.openstreetmap.org/search?format=json&q=${query}`
+              `https://nominatim.openstreetmap.org/search?format=json&q=${query}`,
             );
             const data = await response.json();
 
@@ -148,12 +135,8 @@
               console.log('Coordenadas obtidas da API:', { lat, lon });
 
               // Estratégia 1: Buscar por data-key-path
-              let latSection = document.querySelector(
-                'section[data-key-path="lat"]'
-              );
-              let lngSection = document.querySelector(
-                'section[data-key-path="lng"]'
-              );
+              let latSection = document.querySelector('section[data-key-path="lat"]');
+              let lngSection = document.querySelector('section[data-key-path="lng"]');
 
               let latInput = null;
               let lngInput = null;
@@ -165,12 +148,8 @@
 
               // Estratégia 2: Buscar por data-typed-key-path
               if (!latInput || !lngInput) {
-                latSection = document.querySelector(
-                  'section[data-typed-key-path="lat"]'
-                );
-                lngSection = document.querySelector(
-                  'section[data-typed-key-path="lng"]'
-                );
+                latSection = document.querySelector('section[data-typed-key-path="lat"]');
+                lngSection = document.querySelector('section[data-typed-key-path="lng"]');
                 console.log('Estratégia 2 - Sections com typed-key-path:', {
                   latSection,
                   lngSection,
@@ -185,9 +164,7 @@
               // Estratégia 3: Buscar todos os inputs e identificar pelo label
               if (!latInput || !lngInput) {
                 console.log('Estratégia 3 - Buscando por labels');
-                const allSections = document.querySelectorAll(
-                  'section[role="group"]'
-                );
+                const allSections = document.querySelectorAll('section[role="group"]');
 
                 allSections.forEach((section, idx) => {
                   const header = section.querySelector('h4');
@@ -228,12 +205,8 @@
                       input.value = value;
                       input.setAttribute('value', value);
 
-                      input.dispatchEvent(
-                        new Event('input', { bubbles: true })
-                      );
-                      input.dispatchEvent(
-                        new Event('change', { bubbles: true })
-                      );
+                      input.dispatchEvent(new Event('input', { bubbles: true }));
+                      input.dispatchEvent(new Event('change', { bubbles: true }));
                       input.dispatchEvent(new Event('blur', { bubbles: true }));
 
                       // Remover foco
@@ -255,36 +228,31 @@
 
                     showStatus(
                       `✅ Coordenadas preenchidas! Latitude: ${latValue}, Longitude: ${lngValue}`,
-                      'success'
+                      'success',
                     );
                   })
                   .catch((err) => {
                     console.error('Erro ao atualizar campos:', err);
                     showStatus(
                       '⚠️ Coordenadas preenchidas, mas pode ser necessário verificar.',
-                      'error'
+                      'error',
                     );
                   });
               } else {
-                showStatus(
-                  '❌ Inputs de coordenadas não encontrados.',
-                  'error'
-                );
-                console.error(
-                  'Não foi possível encontrar os campos após todas as estratégias'
-                );
+                showStatus('❌ Inputs de coordenadas não encontrados.', 'error');
+                console.error('Não foi possível encontrar os campos após todas as estratégias');
               }
             } else {
               showStatus(
                 '❌ Endereço não encontrado. Tente ser mais específico ou verifique a ortografia.',
-                'error'
+                'error',
               );
             }
           } catch (error) {
             console.error('Erro ao buscar coordenadas:', error);
             showStatus(
               '❌ Erro ao buscar coordenadas. Verifique sua conexão e tente novamente.',
-              'error'
+              'error',
             );
           } finally {
             button.disabled = false;
@@ -308,10 +276,7 @@
         buttonContainer.appendChild(statusDiv);
 
         // Inserir logo após a section do endereço
-        enderecoSection.parentElement.insertBefore(
-          buttonContainer,
-          enderecoSection.nextSibling
-        );
+        enderecoSection.parentElement.insertBefore(buttonContainer, enderecoSection.nextSibling);
       }
     </script>
 
@@ -324,13 +289,8 @@
         // Verificar se está em uma página de coleção (edição/criação de post)
         const currentPath = window.location.hash || window.location.pathname;
 
-        if (
-          !currentPath.includes('collections/') ||
-          currentPath.includes('collections/config')
-        ) {
-          console.log(
-            'Não está em uma página de coleção, botão Layout Helper não será exibido'
-          );
+        if (!currentPath.includes('collections/') || currentPath.includes('collections/config')) {
+          console.log('Não está em uma página de coleção, botão Layout Helper não será exibido');
           return false;
         }
 
@@ -348,9 +308,7 @@
           return true;
         }
 
-        console.log(
-          'Campo body encontrado em página de coleção, injetando botão de Layout Helper'
-        );
+        console.log('Campo body encontrado em página de coleção, injetando botão de Layout Helper');
 
         // Container do botão
         const buttonContainer = document.createElement('div');
@@ -396,8 +354,7 @@
 
         // Info text
         const infoText = document.createElement('p');
-        infoText.textContent =
-          '💡 Use shortcodes para criar layouts avançados e adicionar vídeos!';
+        infoText.textContent = '💡 Use shortcodes para criar layouts avançados e adicionar vídeos!';
         infoText.style.cssText = `
                 margin: 8px 0 0 0;
                 font-size: 12px;
@@ -425,9 +382,7 @@
           lastPath = currentPath;
 
           // Remover botão existente
-          const existingButton = document.getElementById(
-            'layout-helper-button-container'
-          );
+          const existingButton = document.getElementById('layout-helper-button-container');
           if (existingButton) {
             existingButton.remove();
             console.log('Botão removido devido a mudança de path');

@@ -28,7 +28,7 @@ const metadataDefinition = () => {
                 url: z.string(),
                 width: z.number().optional(),
                 height: z.number().optional(),
-              })
+              }),
             )
             .optional(),
           locale: z.string().optional(),

@@ -5,9 +5,7 @@ import type { AstroConfig, AstroIntegration } from 'astro';
 import configBuilder, { type Config } from './utils/configBuilder';
 import loadConfig from './utils/loadConfig';
 
-export default ({
-  config: _themeConfig = 'src/config.yaml',
-} = {}): AstroIntegration => {
+export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegration => {
   let cfg: AstroConfig;
   return {
     name: 'astrowind-integration',
@@ -29,8 +27,7 @@ export default ({
 
         const configFile = new URL(_themeConfig, config.root);
         const rawJsonConfig = (await loadConfig(configFile)) as Config;
-        const { SITE, I18N, METADATA, APP_BLOG, UI, ANALYTICS } =
-          configBuilder(rawJsonConfig);
+        const { SITE, I18N, METADATA, APP_BLOG, UI, ANALYTICS } = configBuilder(rawJsonConfig);
 
         updateConfig({
           site: SITE.site,
@@ -90,8 +87,7 @@ export default ({
 
           const hasIntegration =
             Array.isArray(cfg?.integrations) &&
-            cfg.integrations?.find((e) => e?.name === '@astrojs/sitemap') !==
-              undefined;
+            cfg.integrations?.find((e) => e?.name === '@astrojs/sitemap') !== undefined;
           const sitemapExists = fs.existsSync(sitemapFile);
 
           if (hasIntegration && sitemapExists) {
@@ -99,10 +95,7 @@ export default ({
               encoding: 'utf8',
               flag: 'a+',
             });
-            const sitemapUrl = new URL(
-              sitemapName,
-              String(new URL(cfg.base, cfg.site))
-            );
+            const sitemapUrl = new URL(sitemapName, String(new URL(cfg.base, cfg.site)));
             const pattern = /^Sitemap:(.*)$/m;
 
             if (!pattern.test(robotsTxt)) {
@@ -112,7 +105,7 @@ export default ({
                 {
                   encoding: 'utf8',
                   flag: 'w',
-                }
+                },
               );
             } else {
               fs.writeFileSync(
@@ -121,7 +114,7 @@ export default ({
                 {
                   encoding: 'utf8',
                   flag: 'w',
-                }
+                },
               );
             }
           }

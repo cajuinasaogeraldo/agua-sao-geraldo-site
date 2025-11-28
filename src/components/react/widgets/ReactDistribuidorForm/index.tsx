@@ -3,10 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { FormField } from './FormField';
 import { distribuidorSchema, type DistribuidorFormData } from './validators';
-import {
-  GoogleReCaptchaProvider,
-  GoogleReCaptchaCheckbox,
-} from '@google-recaptcha/react';
+import { GoogleReCaptchaProvider, GoogleReCaptchaCheckbox } from '@google-recaptcha/react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/pt-br';
@@ -30,7 +27,6 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
   const {
     register,
     handleSubmit,
-    control,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<DistribuidorFormData>({
@@ -49,9 +45,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
     });
 
     if (!req.ok) {
-      setRecaptchaError(
-        'Falha ao validar reCAPTCHA. Por favor, tente novamente.'
-      );
+      setRecaptchaError('Falha ao validar reCAPTCHA. Por favor, tente novamente.');
       return false;
     }
 
@@ -72,24 +66,18 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           }
         });
 
-        const response = await fetch(
-          `${apiUrl}/shared/brevo-mail/submit-form`,
-          {
-            method: 'POST',
-            body: formData,
-          }
-        );
+        const response = await fetch(`${apiUrl}/shared/brevo-mail/submit-form`, {
+          method: 'POST',
+          body: formData,
+        });
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           if (
             errorData.message &&
-            (errorData.message.includes('reCAPTCHA') ||
-              errorData.message.includes('token'))
+            (errorData.message.includes('reCAPTCHA') || errorData.message.includes('token'))
           ) {
-            setRecaptchaError(
-              'Falha na validação do reCAPTCHA. Por favor, tente novamente.'
-            );
+            setRecaptchaError('Falha na validação do reCAPTCHA. Por favor, tente novamente.');
             return;
           }
           throw new Error('Falha ao enviar formulário');
@@ -210,9 +198,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
               action={actions.SOLICITACAO_DISTRIBUIDOR}
               id="DISTRIBUIDOR_FORM"
             />
-            {recaptchaError && (
-              <span className="text-[#d32f2f]/70">{recaptchaError}</span>
-            )}
+            {recaptchaError && <span className="text-[#d32f2f]/70">{recaptchaError}</span>}
           </div>
           {/* Submit */}
           <button
@@ -233,16 +219,9 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
   );
 }
 
-export default function ReactDistribuidorForm({
-  recaptchaSiteKey,
-  apiUrl,
-}: Props) {
+export default function ReactDistribuidorForm({ recaptchaSiteKey, apiUrl }: Props) {
   return (
-    <GoogleReCaptchaProvider
-      type="v2-checkbox"
-      siteKey={recaptchaSiteKey!}
-      isEnterprise
-    >
+    <GoogleReCaptchaProvider type="v2-checkbox" siteKey={recaptchaSiteKey!} isEnterprise>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
         <Form apiUrl={apiUrl} />
       </LocalizationProvider>

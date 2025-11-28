@@ -6,4 +6,3 @@ lat: -7.2138
 lng: -39.3158
 active: true
 ---
-
