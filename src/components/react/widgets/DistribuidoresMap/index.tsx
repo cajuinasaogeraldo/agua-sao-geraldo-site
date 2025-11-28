@@ -6,6 +6,7 @@ import DistribuidorMarker from './DistribuidorMarker';
 import DefaultLocationMarker from './DefaultLocationMarker';
 import { useDistribuidorMarkers } from '../../hooks/useDistribuidorMarkers';
 import useGmapsActions from '../../hooks/useGmapsActions';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 interface Props {
   distribuidores: Distribuidor[];
@@ -16,6 +17,7 @@ interface Props {
 function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
   const [sortedDistribuidores, setSortedDistribuidores] = useState<Distribuidor[]>([]);
   const [infoWindowShown, setInfoWindowShown] = useState(false);
+  const isMobile = useIsMobile();
 
   const map = useMap();
 
@@ -79,11 +81,11 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 
   return (
     <section id="nos-encontre" className="min-h-[521px] w-full px-4 lg:px-12">
-      <div className="mt-8 mb-4 lg:hidden">
+      {isMobile && (
         <h2 className="text-xxs text-caju-heading-primary scale-95 font-bold uppercase">
           Nos encontre perto de você
         </h2>
-      </div>
+      )}
 
       <div className="flex flex-col items-center justify-center gap-6 lg:flex-row-reverse lg:gap-8">
         <div className="h-[237px] w-full rounded-xl md:min-h-[500px] lg:ml-32 lg:min-h-[600px] lg:flex-2">
@@ -121,13 +123,13 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
         <div className="w-full lg:flex lg:flex-2 lg:items-center lg:justify-center">
           <div className="flex w-full flex-col gap-4">
             {/* Title */}
-            <div className="mt-8 hidden lg:block">
+            {!isMobile && (
               <h2 className="text-xxs text-caju-heading-primary scale-95 font-bold uppercase">
                 Nos encontre
                 <br />
                 perto de você
               </h2>
-            </div>
+            )}
 
             {/* Search */}
             <div className="flex justify-start p-0">

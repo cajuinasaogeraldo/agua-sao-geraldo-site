@@ -31,7 +31,7 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
 
   return (
     <div
-      className="relative mt-6 w-full lg:px-2"
+      className="relative mt-6 w-full px-2"
       onMouseEnter={handlePause}
       onMouseLeave={handleResume}
     >
