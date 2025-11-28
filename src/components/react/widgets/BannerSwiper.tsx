@@ -145,7 +145,7 @@ function BannerSlideContent({ banner, index }: { banner: BannerData; index: numb
           width={1920}
           height={700}
           layout="cover"
-          decoding="auto"
+          decoding="async"
           loading={index === 0 ? 'eager' : 'lazy'}
           fetchPriority={index === 0 ? 'high' : 'auto'}
           className={`absolute inset-0 size-full object-${objectFit} object-center`}
