@@ -18,6 +18,7 @@ interface ImageOptimizedProps extends Omit<HTMLAttributes<HTMLImageElement>, 'sr
   fetchPriority?: 'high' | 'low' | 'auto';
   sizes?: string;
   className?: string;
+  decoding?: 'sync' | 'async' | 'auto';
   layout?: ImageLayout;
   objectFit?: string;
   objectPosition?: string;
@@ -41,6 +42,7 @@ export default function ImageOptimized({
   height,
   loading = 'lazy',
   fetchPriority = 'auto',
+  decoding = 'async',
   sizes: customSizes,
   className = '',
   layout = 'constrained',
@@ -121,6 +123,7 @@ export default function ImageOptimized({
       srcSet={srcSet}
       sizes={baseConfig.sizes}
       loading={loading}
+      decoding={decoding}
       fetchPriority={fetchPriority}
       className={className}
       style={baseConfig.style}
