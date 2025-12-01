@@ -80,7 +80,7 @@ const metadata = {
   </section>
 </Layout>
 
-<script define:vars={{ postsForSearch }}>
+<script is:inline define:vars={{ postsForSearch }} defer>
   const posts = postsForSearch;
 
   function normalizeText(text) {

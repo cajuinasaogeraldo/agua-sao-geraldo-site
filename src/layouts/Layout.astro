@@ -46,6 +46,19 @@ const gtmId = ANALYTICS?.gtm?.id ? String(ANALYTICS.gtm.id) : null;
   </head>
 
   <body class="text-default bg-page tracking-tight antialiased">
+    {
+      gtmId ? (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+          />
+        </noscript>
+      ) : null
+    }
+
     <slot />
     <BasicScripts />
   </body>
