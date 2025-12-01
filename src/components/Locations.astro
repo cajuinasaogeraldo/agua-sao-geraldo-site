@@ -23,10 +23,6 @@ const apiKey =
     : import.meta.env.PUBLIC_GOOGLE_MAPS_KEY_DEV;
 ---
 
-<WidgetWrapper containerClass="pb-12" id="distribuidores-map">
-  <DistribuidoresGmaps
-    client:only="react"
-    distribuidores={distribuidores}
-    apiKey={apiKey}
-  />
+<WidgetWrapper containerClass="pb-12" id="revenda">
+  <DistribuidoresGmaps client:only="react" distribuidores={distribuidores} apiKey={apiKey} />
 </WidgetWrapper>
