@@ -5,6 +5,7 @@ backend:
   branch: 'development'
   base_url: 'https://cajuina-cms-auth.cadastro-cajuina.workers.dev/'
   skip_ci: true
+  squash_merges: true
   commit_messages:
     create: '[cms] Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}>'
     update: '[cms] Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}>'
@@ -14,6 +15,8 @@ backend:
 
 media_folder: 'src/assets/images' # Location where files will be stored in the repo
 public_folder: '/src/assets/images' # The src attribute for uploaded media
+
+publish_mode: editorial_workflow
 
 media_libraries:
   default:
