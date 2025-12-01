@@ -29,6 +29,7 @@ export const headerData = {
       text: 'Seja um revendedor',
       variant: 'tertiary',
       href: '/solicite/seja-um-revendedor/',
+      class: 'text-agua-primary-green!',
     },
   ] as CallToAction[],
 };

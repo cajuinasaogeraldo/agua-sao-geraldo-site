@@ -41,7 +41,7 @@ const overlayStyle = color
   ? { backgroundColor: color, opacity: opacity / 100 }
   : { opacity: opacity / 100 };
 
-const overlayBgClass = !color ? 'bg-caju-heading-primary' : '';
+const overlayBgClass = !color ? 'bg-agua-primary-blue' : '';
 ---
 
 <div class={twMerge('relative overflow-hidden w-full h-full', className)}>
@@ -72,12 +72,7 @@ const overlayBgClass = !color ? 'bg-caju-heading-primary' : '';
 
   <!-- Overlay de cor -->
   <div
-    class={twMerge(
-      'absolute inset-0 w-full h-full',
-      overlayBgClass,
-      blendModeClass,
-      overlayClass
-    )}
+    class={twMerge('absolute inset-0 w-full h-full', overlayBgClass, blendModeClass, overlayClass)}
     style={overlayStyle}
   >
   </div>
@@ -86,7 +81,7 @@ const overlayBgClass = !color ? 'bg-caju-heading-primary' : '';
   <div
     class={twMerge(
       'relative z-10 w-full h-full flex justify-center items-center py-4',
-      contentClass
+      contentClass,
     )}
   >
     <slot />

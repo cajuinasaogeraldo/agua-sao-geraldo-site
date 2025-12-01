@@ -2,12 +2,13 @@
 import { Icon } from 'astro-icon/components';
 import ToggleMenu from '@/components/common/ToggleMenu.astro';
 import Button from '@/components/ui/Button.astro';
+import Logo from '@/components/Logo.astro';
 
 import { getHomePermalink } from '@/utils/permalinks';
 import { trimSlash } from '@/utils/permalinks';
 import type { CallToAction } from '@/types';
 
-import Logo from '@/components/Logo.astro';
+import { twMerge } from 'tailwind-merge';
 
 interface Link {
   text?: string;
@@ -28,13 +29,7 @@ export interface Props {
   isFixed?: boolean;
 }
 
-const {
-  id = 'header',
-  links = [],
-  actions = [],
-  isSticky = false,
-  isFixed = false,
-} = Astro.props;
+const { id = 'header', links = [], actions = [], isSticky = false, isFixed = false } = Astro.props;
 
 const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
 const isHome = currentPath === '/';
@@ -47,17 +42,19 @@ const isHome = currentPath === '/';
       fixed: isFixed && !isSticky,
       absolute: !isFixed && !isSticky,
     },
-    'top-0 z-40 mx-auto w-full flex-none border-b border-gray-50/0 bg-none transition-opacity ease-in-out',
+    'top-0 z-40 mx-auto w-full flex-none md:border-b border-gray-50/0 bg-none transition-opacity ease-in-out',
     'lg:px-5',
   ]}
   {...isSticky ? { 'data-aw-sticky-header': true } : {}}
   {...id ? { id } : {}}
 >
-  <!-- Gradiente de fundo verde -->
-  <!-- <div
-    class="from-caju-header-primary via-caju-header-primary/90 pointer-events-none absolute inset-0 h-full bg-linear-to-b from-0% via-70% to-transparent"
+  <!-- Gradiente de fundo verde (apenas mobile) -->
+  <div
+    aria-hidden="true"
+    data-isVisible={isHome}
+    class="from-agua-primary-blue via-agua-primary-blue/95 pointer-events-none absolute inset-0 h-full bg-linear-to-b from-0% via-70% to-transparent data-[isVisible=true]:hidden md:hidden"
   >
-  </div> -->
+  </div>
 
   <!-- CONTAINER PRINCIPAL - Organiza todo o conteúdo do header -->
   <div
@@ -128,9 +125,12 @@ const isHome = currentPath === '/';
                 /* Se não tem sub-links, cria um link simples */
                 <a
                   class:list={[
-                    'hover:text-link text-white!! flex items-center px-4 py-3 whitespace-nowrap',
+                    'hover:text-link text-white flex items-center px-4 py-3 whitespace-nowrap',
                     {
-                      'text-agua-primary-blue!': !isHome,
+                      'text-white!': !isHome,
+                    },
+                    {
+                      'md:text-agua-primary-blue!': !isHome,
                     },
                     {
                       'text-agua-primary-green! underline! underline-offset-8!':
@@ -154,7 +154,11 @@ const isHome = currentPath === '/';
               {actions.map((btnProps) => (
                 <Button
                   {...btnProps}
-                  class="mt-0! max-h-[52px] max-w-[206px] py-2 text-sm font-semibold normal-case md:px-2 lg:px-3"
+                  class={twMerge(
+                    'mt-0! max-h-[52px] max-w-[206px] py-2 text-sm font-semibold normal-case md:px-2 lg:px-3',
+                    // 'bg-agua-secondary-blue md:bg-transparent',
+                    btnProps.class,
+                  )}
                 />
               ))}
             </div>

@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { useState, useEffect } from 'react';
@@ -146,6 +147,8 @@ function BannerSlideContent({ banner, index }: { banner: BannerData; index: numb
           height={700}
           layout="cover"
           decoding="async"
+          priority={index === 0}
+          id={index === 0 ? 'primaryimage' : `bannerImage-${index + 1}`}
           loading={index === 0 ? 'eager' : 'lazy'}
           fetchPriority={index === 0 ? 'high' : 'auto'}
           className={`absolute inset-0 size-full object-${objectFit} object-center`}

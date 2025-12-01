@@ -204,7 +204,7 @@ small {
 }
 
 @utility btn-tertiary {
-  @apply button border-agua-primary-green border-2 bg-transparent;
+  @apply button border-agua-primary-green text-agua-primary-green border-2 bg-transparent;
 }
 
 @utility btn-action {
