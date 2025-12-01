@@ -6,7 +6,7 @@ on:
   repository_dispatch:
     types: [cms-publish, rebuild]
   workflow_run:
-    workflows: ['Create and Auto-Merge PR']
+    workflows: ["Create and Auto-Merge PR"]
     types:
       - completed
   workflow_dispatch:
@@ -14,6 +14,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    # Só executa se foi disparado por push/dispatch OU se o workflow anterior foi bem-sucedido
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -25,8 +27,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.18.0'
-          cache: 'pnpm'
+          node-version: "20.18.0"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

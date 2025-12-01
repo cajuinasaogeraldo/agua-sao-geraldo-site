@@ -13,11 +13,11 @@ export const headerData = {
     },
     {
       text: 'Propriedades',
-      href: '/propriedades/',
+      href: '#propriedades',
     },
     {
       text: 'Revenda',
-      href: '/revenda/',
+      href: '#revenda',
     },
     {
       text: 'Notícias',
