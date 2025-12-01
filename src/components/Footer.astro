@@ -39,11 +39,9 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
   ]}
 >
   <!-- Links, Sociais e Logo -->
-  <div
-    class="grid grid-cols-1 lg:grid-cols-[repeat(2,minmax(0,25 %),auto)] items-start place-items-center gap-4"
-  >
+  <div class="grid grid-cols-1 md:grid-cols-[minmax(0,30%)_2fr] items-start gap-4">
     <!-- Links e Sociais -->
-    <div class="h-full max-w-3xl grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+    <div class="h-full max-w-3xl flex flex-col md:flex-row gap-4">
       <!-- Links -->
       <div
         class="order-2 grid items-start justify-center gap-1! lg:gap-4! pl-3 md:order-1! md:grid-cols-2"
@@ -108,7 +106,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
           <a
             href="tel://8821017654"
             aria-label="Entre em contato"
-            class="flex size-8 h-auto w-fit items-center gap-2"
+            class="flex size-8 h-auto w-fit items-center gap-2 self-center md:self-start"
           >
             <Phone fill="#FFF" class="bg-agua-primary-green size-8 rounded-full p-2" />
             <span class="text-2xl font-bold!">88 2101.7654</span>
@@ -119,7 +117,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
 
     <!-- Logo -->
     <Image
-      class="lg:order-first! max-w-[200px] lg:max-w-[388px]!"
+      class="lg:order-first! max-w-[200px] lg:max-w-[388px]! place-self-center"
       layout="responsive"
       src={logo}
       alt="São geraldo"
