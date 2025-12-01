@@ -22,12 +22,12 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(news.permalink, 'news') : 
 ---
 
 <article
-  class={`*:font-poppins max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade shadow-lg rounded-lg ${image ? 'md:grid-cols-2' : ''}`}
+  class={`*:font-poppins px-2 max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade shadow-2xl rounded-lg ${image ? 'md:grid-cols-2' : ''}`}
 >
   {
     image &&
       (link ? (
-        <a class="group relative block" href={link ?? 'javascript:void(0)'}>
+        <a class="group relative block self-center" href={link ?? 'javascript:void(0)'}>
           <div class="relative h-0 overflow-hidden rounded-sm bg-gray-400 pb-[56.25%] shadow-lg md:h-72 md:pb-[75%] lg:pb-[56.25%] dark:bg-slate-700">
             {image && (
               <Image
@@ -68,7 +68,7 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(news.permalink, 'news') : 
         <span class="text-caption">
           <Icon name="tabler:clock" class="-mt-0.5 inline-block h-3.5 w-3.5 dark:text-gray-400" />
           <time datetime={String(news.publishDate)} class="inline-block"
-          >{getFormattedDate(news.publishDate)}</time
+            >{getFormattedDate(news.publishDate)}</time
           >
           {
             news.author && (
