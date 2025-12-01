@@ -1,4 +1,6 @@
 ---
+// @ts-nocheck @ts-ignore
+
 import Layout from '@/layouts/Layout.astro';
 import BlockItem from '@/components/widgets/content-helper/BlockItem.astro';
 import CodePanel from '@/components/widgets/content-helper/CodePanel.astro';
@@ -25,9 +27,7 @@ const metadata = {
     <div
       class="mb-6 rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 p-4 text-center shadow-lg shadow-indigo-500/30"
     >
-      <h1 class="mb-1 text-2xl font-bold text-white">
-        Assistente de Publicações
-      </h1>
+      <h1 class="mb-1 text-2xl font-bold text-white">Assistente de Publicações</h1>
       <p class="text-sm text-white/90">
         Construa seu post com blocos visuais e copie tudo pronto para o CMS
       </p>
@@ -35,9 +35,7 @@ const metadata = {
 
     {/* Builder & Preview */}
     <div class="mb-8 flex min-h-[500px] gap-5">
-      <div
-        class="flex flex-1 flex-col rounded-xl border border-neutral-700 bg-neutral-900 p-6"
-      >
+      <div class="flex flex-1 flex-col rounded-xl border border-neutral-700 bg-neutral-900 p-6">
         <div class="mb-5 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <span class="text-xl">✍️</span>
@@ -74,16 +72,12 @@ const metadata = {
 
     {/* Blocks Library */}
     <div class="mb-6 rounded-xl border border-neutral-700 bg-neutral-900 p-6">
-      <div
-        class="mb-4 flex flex-col gap-1 md:flex-row md:items-center md:justify-between"
-      >
+      <div class="mb-4 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
         <div class="flex items-center gap-2 text-base font-semibold text-white">
           <span>📦</span>
           <span>Blocos disponíveis</span>
         </div>
-        <div class="text-xs text-neutral-400">
-          Arraste ou clique para adicionar
-        </div>
+        <div class="text-xs text-neutral-400">Arraste ou clique para adicionar</div>
       </div>
 
       {/* Category Filter */}
@@ -189,7 +183,7 @@ const metadata = {
     <LinkModal />
     <ListModal />
 
-    <script>
+    <script defer>
       // ============================================
       // CONFIGURAÇÕES E TIPOS
       // ============================================
@@ -221,15 +215,13 @@ const metadata = {
         if (!candidate) return null;
 
         const markdownLinkMatch = candidate.match(
-          /^\[([^\]]+)\]\((https?:\/\/(?:www\.)?instagram\.com\/[^\s)]+)\)$/i
+          /^\[([^\]]+)\]\((https?:\/\/(?:www\.)?instagram\.com\/[^\s)]+)\)$/i,
         );
         if (markdownLinkMatch) {
           candidate = markdownLinkMatch[2];
         }
 
-        const urlMatch = candidate.match(
-          /https?:\/\/(?:www\.)?instagram\.com\/[\w\-./?#=&%]+/i
-        );
+        const urlMatch = candidate.match(/https?:\/\/(?:www\.)?instagram\.com\/[\w\-./?#=&%]+/i);
         if (urlMatch) {
           candidate = urlMatch[0];
         }
@@ -308,16 +300,12 @@ const metadata = {
       const codeBlock = document.getElementById('codeBlock')!;
       const copyButton = document.getElementById('copyButton')!;
       const clearButton = document.getElementById('clearButton')!;
-      const categoryFilter = document.getElementById(
-        'categoryFilter'
-      ) as HTMLSelectElement;
+      const categoryFilter = document.getElementById('categoryFilter') as HTMLSelectElement;
       const blockItems = document.querySelectorAll('.block-item');
 
       // YouTube Modal
       const youtubeModal = document.getElementById('youtubeModal')!;
-      const youtubeInput = document.getElementById(
-        'youtubeInput'
-      ) as HTMLInputElement;
+      const youtubeInput = document.getElementById('youtubeInput') as HTMLInputElement;
       const modalCancel = document.getElementById('modalCancel')!;
       const modalConfirm = document.getElementById('modalConfirm')!;
 
@@ -325,54 +313,30 @@ const metadata = {
       // LIST MODAL
       // ============================================
       const instagramModal = document.getElementById('instagramModal')!;
-      const instagramInput = document.getElementById(
-        'instagramInput'
-      ) as HTMLTextAreaElement;
+      const instagramInput = document.getElementById('instagramInput') as HTMLTextAreaElement;
       const instagramCancel = document.getElementById('instagramCancel')!;
       const instagramConfirm = document.getElementById('instagramConfirm')!;
 
       const listModal = document.getElementById('listModal') as HTMLElement;
-      const listModeSelect = document.getElementById(
-        'listModeSelect'
-      ) as HTMLSelectElement;
-      const listItemsContainer = document.getElementById(
-        'listItems'
-      ) as HTMLElement;
-      const addItemBtn = document.getElementById(
-        'addItemBtn'
-      ) as HTMLButtonElement;
-      const confirmListBtn = document.getElementById(
-        'confirmListBtn'
-      ) as HTMLButtonElement;
-      const cancelListBtn = document.getElementById(
-        'cancelListBtn'
-      ) as HTMLButtonElement;
+      const listModeSelect = document.getElementById('listModeSelect') as HTMLSelectElement;
+      const listItemsContainer = document.getElementById('listItems') as HTMLElement;
+      const addItemBtn = document.getElementById('addItemBtn') as HTMLButtonElement;
+      const confirmListBtn = document.getElementById('confirmListBtn') as HTMLButtonElement;
+      const cancelListBtn = document.getElementById('cancelListBtn') as HTMLButtonElement;
 
       // Heading Modal
       const headingModal = document.getElementById('headingModal')!;
-      const headingTextInput = document.getElementById(
-        'headingTextInput'
-      ) as HTMLInputElement;
-      const headingColorSelect = document.getElementById(
-        'headingColorSelect'
-      ) as HTMLSelectElement;
-      const headingLevelSelect = document.getElementById(
-        'headingLevelSelect'
-      ) as HTMLSelectElement;
+      const headingTextInput = document.getElementById('headingTextInput') as HTMLInputElement;
+      const headingColorSelect = document.getElementById('headingColorSelect') as HTMLSelectElement;
+      const headingLevelSelect = document.getElementById('headingLevelSelect') as HTMLSelectElement;
       const headingCancel = document.getElementById('headingCancel')!;
       const headingConfirm = document.getElementById('headingConfirm')!;
 
       // Link Modal
       const linkModal = document.getElementById('linkModal')!;
-      const linkTextInput = document.getElementById(
-        'linkTextInput'
-      ) as HTMLInputElement;
-      const linkUrlInput = document.getElementById(
-        'linkUrlInput'
-      ) as HTMLInputElement;
-      const linkNewTabCheck = document.getElementById(
-        'linkNewTabCheck'
-      ) as HTMLInputElement;
+      const linkTextInput = document.getElementById('linkTextInput') as HTMLInputElement;
+      const linkUrlInput = document.getElementById('linkUrlInput') as HTMLInputElement;
+      const linkNewTabCheck = document.getElementById('linkNewTabCheck') as HTMLInputElement;
       const linkCancel = document.getElementById('linkCancel')!;
       const linkConfirm = document.getElementById('linkConfirm')!;
 
@@ -508,7 +472,7 @@ const metadata = {
       confirmListBtn.addEventListener('click', () => {
         const mode = listModeSelect.value;
         const inputs = Array.from(
-          listItemsContainer.querySelectorAll('input')
+          listItemsContainer.querySelectorAll('input'),
         ) as HTMLInputElement[];
 
         const items = inputs.map((i) => i.value.trim()).filter(Boolean);
@@ -518,9 +482,7 @@ const metadata = {
         }
 
         const shortcode =
-          `[[list:${mode}]]\n\n` +
-          items.map((i) => `- ${i}`).join('\n\n') +
-          `\n\n[[/list]]`;
+          `[[list:${mode}]]\n\n` + items.map((i) => `- ${i}`).join('\n\n') + `\n\n[[/list]]`;
 
         insertContent(shortcode);
         closeListModal();
@@ -555,9 +517,7 @@ const metadata = {
           return;
         }
 
-        const match = url.match(
-          /(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/
-        );
+        const match = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
         if (!match) {
           alert('❌ URL do YouTube inválida');
           return;
@@ -600,9 +560,7 @@ const metadata = {
       instagramConfirm.addEventListener('click', () => {
         const rawValue = instagramInput.value.trim();
         if (!rawValue) {
-          alert(
-            'Por favor, cole a URL ou o código de incorporação do Instagram'
-          );
+          alert('Por favor, cole a URL ou o código de incorporação do Instagram');
           return;
         }
 
@@ -659,8 +617,7 @@ const metadata = {
         const selectedColor = headingColorSelect.value || DEFAULT_HEADING_COLOR;
 
         const hashes = '#'.repeat(parseInt(selectedLevel.replace('h', '')));
-        const colorClass =
-          HEADING_COLORS[selectedColor as keyof typeof HEADING_COLORS].value;
+        const colorClass = HEADING_COLORS[selectedColor as keyof typeof HEADING_COLORS].value;
 
         const shortcode = `<span class="${colorClass}">${hashes} ${textValue}</span>`;
 
@@ -750,7 +707,7 @@ const metadata = {
             const startOffset = getAbsoluteOffset(
               contentEditor,
               range.startContainer,
-              range.startOffset
+              range.startOffset,
             );
 
             const textBefore = fullText.substring(0, startOffset);
@@ -783,9 +740,7 @@ const metadata = {
         }
 
         const currentText = contentEditor.textContent || '';
-        const newContent = currentText
-          ? `${currentText}\n\n${content}`
-          : content;
+        const newContent = currentText ? `${currentText}\n\n${content}` : content;
         contentEditor.textContent = newContent;
         editorContent = newContent;
 
@@ -801,17 +756,9 @@ const metadata = {
         contentEditor.focus();
       }
 
-      function getAbsoluteOffset(
-        root: Node,
-        node: Node,
-        offset: number
-      ): number {
+      function getAbsoluteOffset(root: Node, node: Node, offset: number): number {
         let currentOffset = 0;
-        const walker = document.createTreeWalker(
-          root,
-          NodeFilter.SHOW_TEXT,
-          null
-        );
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
 
         let currentNode = walker.nextNode();
         while (currentNode) {
@@ -903,12 +850,9 @@ const metadata = {
         let html = markdown;
 
         // YouTube
-        html = html.replace(
-          /\[\[youtube:([a-zA-Z0-9_-]+)\]\]/g,
-          (_, videoId) => {
-            return `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
-          }
-        );
+        html = html.replace(/\[\[youtube:([a-zA-Z0-9_-]+)\]\]/g, (_, videoId) => {
+          return `<div class="youtube-embed"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        });
 
         // Instagram
         html = html.replace(/\[\[instagram:([^\]]+)\]\]/g, (_, rawUrl) => {
@@ -929,25 +873,21 @@ const metadata = {
           /\[\[link:([^|]+)\|([^\]]+)\]\]([\s\S]*?)\[\[\/link\]\]/g,
           (_, url, target, text) => {
             const targetAttr =
-              target.trim() === '_blank'
-                ? 'target="_blank" rel="noopener noreferrer"'
-                : '';
+              target.trim() === '_blank' ? 'target="_blank" rel="noopener noreferrer"' : '';
             return `<a href="${url.trim()}" ${targetAttr} class="text-blue-600 hover:text-blue-800 underline">${text.trim()}</a>`;
-          }
+          },
         );
 
         // Two Columns
         html = html.replace(
           /\[\[two-columns:(\d+)\/(\d+)\]\]([\s\S]*?)\[\[\/two-columns\]\]/g,
           (_, col1, col2, content) => {
-            const col1Content =
-              content.match(/\[col1\]([\s\S]*?)\[\/col1\]/)?.[1] || '';
-            const col2Content =
-              content.match(/\[col2\]([\s\S]*?)\[\/col2\]/)?.[1] || '';
+            const col1Content = content.match(/\[col1\]([\s\S]*?)\[\/col1\]/)?.[1] || '';
+            const col2Content = content.match(/\[col2\]([\s\S]*?)\[\/col2\]/)?.[1] || '';
             const col1Processed = processShortcodes(col1Content.trim());
             const col2Processed = processShortcodes(col2Content.trim());
             return `<div class="layout-two-columns" style="--col1:${col1}%;--col2:${col2}%;"><div class="layout-column-1">${col1Processed}</div><div class="layout-column-2">${col2Processed}</div></div>`;
-          }
+          },
         );
 
         // Image Left/Right
@@ -956,17 +896,14 @@ const metadata = {
           (_, position, url, alt, content) => {
             const contentProcessed = processShortcodes(content.trim());
             return `<div class="layout-image-${position}"><div class="layout-image-container"><img src="${url.trim()}" alt="${alt.trim()}" loading="lazy" /></div><div class="layout-text-content">${contentProcessed}</div></div>`;
-          }
+          },
         );
 
         // Card
-        html = html.replace(
-          /\[\[card\]\]([\s\S]*?)\[\[\/card\]\]/g,
-          (_, content) => {
-            const contentProcessed = processShortcodes(content.trim());
-            return `<div class="layout-card">${contentProcessed}</div>`;
-          }
-        );
+        html = html.replace(/\[\[card\]\]([\s\S]*?)\[\[\/card\]\]/g, (_, content) => {
+          const contentProcessed = processShortcodes(content.trim());
+          return `<div class="layout-card">${contentProcessed}</div>`;
+        });
 
         return html;
       }
@@ -982,9 +919,7 @@ const metadata = {
           return;
         }
 
-        const clipboardPayload = markdown.endsWith('\n')
-          ? markdown
-          : `${markdown}\n`;
+        const clipboardPayload = markdown.endsWith('\n') ? markdown : `${markdown}\n`;
 
         navigator.clipboard.writeText(clipboardPayload).then(() => {
           const originalHTML = copyButton.innerHTML;
@@ -1019,8 +954,8 @@ const metadata = {
   <style>
     body {
       font-family:
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-        Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
       background-color: #000000e1;
       color: #333;
       margin: 0;

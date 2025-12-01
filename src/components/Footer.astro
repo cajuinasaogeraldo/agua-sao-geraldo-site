@@ -39,16 +39,18 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
   ]}
 >
   <!-- Links, Sociais e Logo -->
-  <div class="flex w-full flex-col items-center justify-evenly gap-4 md:flex-row lg:gap-0">
+  <div
+    class="grid grid-cols-1 lg:grid-cols-[repeat(2,minmax(0,25 %),auto)] items-start place-items-center gap-4"
+  >
     <!-- Links e Sociais -->
-    <div
-      class="grid h-full max-w-3xl flex-1 grid-cols-[85px_1fr] gap-5 md:grid-cols-1 md:grid-rows-[auto_auto]"
-    >
+    <div class="h-full max-w-3xl grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
       <!-- Links -->
-      <div class="order-2 grid items-start justify-center gap-4 pl-3 md:order-1! md:grid-cols-2">
+      <div
+        class="order-2 grid items-start justify-center gap-1! lg:gap-4! pl-3 md:order-1! md:grid-cols-2"
+      >
         {
           links.map(({ title, links: insideLinks }) => (
-            <div class="grid gap-5 last:border-b-0">
+            <div class="grid gap-5 last:border-b-0 p-2!">
               <span class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-lg">
                 {title}
               </span>
@@ -71,7 +73,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
           ))
         }
 
-        <div class="grid h-fit! gap-5 last:border-b-0">
+        <div class="grid h-fit! w-full gap-5 p-2 last:border-b-0">
           <span
             class="border-agua-secondary-green border-b-2 pb-2 text-sm text-white! uppercase md:text-lg"
           >
@@ -97,7 +99,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
             variant="primary"
             href="https://web.whatsapp.com/send?phone=558892527344&text=Oi,%20vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
             aria-label="Entre em contato"
-            class="mt-0! flex max-w-[300px] items-center justify-center gap-2 text-lg"
+            class="mt-0! rounded-2xl flex max-w-[300px] items-center justify-center gap-2 text-lg"
           >
             <Image class="size-6" layout="contained" src={whats} alt="São geraldo" />
             |
@@ -116,11 +118,12 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
     </div>
 
     <!-- Logo -->
-    <div
-      class="flex h-[94px] w-[157px] items-center justify-center md:order-first md:h-[130px]! md:w-[200px]! lg:h-[290px]! lg:w-[388px]!"
-    >
-      <Image class="h-full w-full" layout="responsive" src={logo} alt="São geraldo" />
-    </div>
+    <Image
+      class="lg:order-first! max-w-[200px] lg:max-w-[388px]!"
+      layout="responsive"
+      src={logo}
+      alt="São geraldo"
+    />
   </div>
 
   <!-- Footnote -->

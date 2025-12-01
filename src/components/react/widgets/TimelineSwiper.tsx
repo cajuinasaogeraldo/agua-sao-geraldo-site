@@ -33,16 +33,16 @@ export default function TimelineSwiper({ steps, className }: Props) {
                 <div
                   className={`size-4 rounded-full border-2 lg:size-6 ${
                     index % 2 === 0
-                      ? 'lg:bg-caju-heading-yellow border-yellow-400 bg-transparent'
-                      : 'lg:bg-caju-heading-primary border-caju-heading-yellow bg-caju-heading-yellow'
+                      ? 'bg-white lg:bg-agua-primary-blue border-agua-primary-green'
+                      : 'border-agua-primary-blue bg-agua-primary-green'
                   }`}
                 ></div>
-                <div className="border-caju-heading-yellow flex-1 border-t-[3px] border-dotted lg:border-t-8 lg:border-black"></div>
+                <div className="border-agua-primary-green flex-1 border-t-[3px] border-dotted lg:border-t-8 lg:border-black"></div>
               </div>
 
               {/* conteúdo */}
               <div className="mr-2">
-                <h5 className="lg:text-caju-heading-primary text-caju-heading-yellow mb-2 max-w-[400px] text-sm font-extrabold! uppercase lg:text-4xl">
+                <h5 className="lg:text-agua-primary-blue text-agua-primary-green mb-2 max-w-[400px] text-sm font-extrabold! uppercase lg:text-4xl">
                   {item.title}
                 </h5>
                 <p className="font-poppins lg:text-font text-left text-[9px] text-white lg:text-[24px]">

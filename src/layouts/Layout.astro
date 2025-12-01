@@ -14,7 +14,7 @@ import BasicScripts from '@/components/common/BasicScripts.astro';
 import { ClientRouter } from 'astro:transitions';
 
 import type { MetaData as MetaDataType } from '@/types';
-import GoogleTagmanager from '@/components/common/GoogleTagManager/GoogleTagmanager.astro';
+import GoogleTagManager from '@/components/common/GoogleTagManager.astro';
 import arrowListIcon from '@/assets/icons/arrow-list.svg';
 
 export interface Props {
@@ -37,7 +37,7 @@ const gtmId = ANALYTICS?.gtm?.id ? String(ANALYTICS.gtm.id) : null;
     <CommonMeta />
     <Favicons />
     <Metadata {...metadata} />
-    {gtmId ? <GoogleTagmanager id={gtmId} /> : null}
+    {gtmId ? <GoogleTagManager id={gtmId} /> : null}
     <SiteVerification />
     <Analytics />
 
@@ -46,6 +46,19 @@ const gtmId = ANALYTICS?.gtm?.id ? String(ANALYTICS.gtm.id) : null;
   </head>
 
   <body class="text-default bg-page tracking-tight antialiased">
+    {
+      gtmId ? (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0"
+            width="0"
+            style="display:none;visibility:hidden"
+          />
+        </noscript>
+      ) : null
+    }
+
     <slot />
     <BasicScripts />
   </body>
