@@ -6,7 +6,7 @@ backend:
   base_url: 'https://cajuina-cms-auth.cadastro-cajuina.workers.dev/'
   skip_ci: true
   squash_merges: true
-  preview_url: 'https://red-chamois-284776.hostingersite.com/preview/{{pr_number}}'
+  preview_url: 'https://seagreen-squirrel-365460.hostingersite.com/'
   commit_messages:
     create: '[cms] Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}>'
     update: '[cms] Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}>'
