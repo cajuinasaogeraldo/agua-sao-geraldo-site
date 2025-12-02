@@ -8,6 +8,11 @@ collections:
     create: true
     media_folder: '/src/assets/images/news' # Location where files will be stored in the repo
     public_folder: '/src/assets/images/news' # The src attribute for uploaded media
+    sortable_fields:
+      fields: [publishDate, title, draft, categories]
+      default:
+        field: publishDate
+        direction: descending # default: ascending
     fields:
       - { label: 'Título', name: 'title', widget: 'string' }
       # - {
