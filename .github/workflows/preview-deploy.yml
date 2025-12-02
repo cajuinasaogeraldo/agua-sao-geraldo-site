@@ -12,13 +12,6 @@ jobs:
         with:
           ref: ${{ github.event.client_payload.branch }}
 
-      - name: Get safe branch name
-        id: branch
-        run: |
-          BRANCH="${{ github.event.client_payload.branch }}"
-          SAFE_BRANCH=$(echo "$BRANCH" | sed 's/[^a-zA-Z0-9-]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
-          echo "safe=$SAFE_BRANCH" >> $GITHUB_OUTPUT
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -50,7 +43,7 @@ jobs:
         with:
           switches: -avzr --checksum --delete --delete-before --include='.htaccess' --exclude='.git*' --exclude='node_modules/' --exclude='.github/'
           path: ./dist/
-          remote_path: ${{ vars.SSH_REMOTE_PATH }}/preview/${{ steps.branch.outputs.safe }}/
+          remote_path: ${{ vars.SSH_REMOTE_PATH }}/preview/${{ github.event.client_payload.branch }}/
           remote_host: ${{ vars.SSH_HOST }}
           remote_user: ${{ vars.SSH_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -64,4 +57,4 @@ jobs:
           echo "  Slug: ${{ github.event.client_payload.slug }}"
           echo "  PR: #${{ github.event.client_payload.prNumber }}"
           echo ""
-          echo "📍 Preview URL: ${{ vars.SITE_URL }}/preview/${{ steps.branch.outputs.safe }}/"
+          echo "📍 Preview URL: ${{ vars.SITE_URL }}/preview/${{ github.event.client_payload.branch }}/"
