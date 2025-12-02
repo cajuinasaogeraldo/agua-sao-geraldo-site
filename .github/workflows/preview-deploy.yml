@@ -43,7 +43,7 @@ jobs:
         with:
           switches: -avzr --checksum --delete --delete-before --include='.htaccess' --exclude='.git*' --exclude='node_modules/' --exclude='.github/'
           path: ./dist/
-          remote_path: ${{ vars.SSH_REMOTE_PATH }}/preview/${{ github.event.client_payload.branch }}/
+          remote_path: ${{ vars.SSH_REMOTE_PATH }}/preview/${{ github.event.client_payload.prNumber }}/
           remote_host: ${{ vars.SSH_HOST }}
           remote_user: ${{ vars.SSH_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -57,4 +57,4 @@ jobs:
           echo "  Slug: ${{ github.event.client_payload.slug }}"
           echo "  PR: #${{ github.event.client_payload.prNumber }}"
           echo ""
-          echo "📍 Preview URL: ${{ vars.SITE_URL }}/preview/${{ github.event.client_payload.branch }}/"
+          echo "📍 Preview URL: ${{ vars.SITE_URL }}/preview/${{ github.event.client_payload.prNumber }}/"
