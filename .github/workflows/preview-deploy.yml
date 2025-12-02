@@ -57,4 +57,4 @@ jobs:
           echo "  Slug: ${{ github.event.client_payload.slug }}"
           echo "  PR: #${{ github.event.client_payload.pr_number }}"
           echo ""
-          echo "📍 Preview URL: ${{ vars.PREVIEW_URL }}""
+          echo "📍 Preview URL: ${{ vars.PREVIEW_URL }}"
