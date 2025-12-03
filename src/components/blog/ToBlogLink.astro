@@ -16,22 +16,16 @@ const { class: className = '' } = Astro.props;
 
 <div
   class={twMerge(
-    'mx-auto max-w-3xl px-6 pt-8 pb-12 sm:px-6 md:pt-4 md:pb-20',
-    className
+    'px-6 pt-8 pb-12 sm:px-6 md:pt-4 md:pb-20 mx-auto flex max-w-5xl w-full justify-start',
+    className,
   )}
 >
-  <Button variant="green" class="px-3 md:px-3" href={getBlogPermalink()}>
+  <Button variant="primary" class="px-3 md:px-3" href={getBlogPermalink()}>
     {
       textDirection === 'rtl' ? (
-        <Icon
-          name="tabler:chevron-right"
-          class="mr-1 -ml-1.5 h-5 w-5 rtl:-mr-1.5 rtl:ml-1"
-        />
+        <Icon name="tabler:chevron-right" class="mr-1 -ml-1.5 h-5 w-5 rtl:-mr-1.5 rtl:ml-1" />
       ) : (
-        <Icon
-          name="tabler:chevron-left"
-          class="mr-1 -ml-1.5 h-5 w-5 rtl:-mr-1.5 rtl:ml-1"
-        />
+        <Icon name="tabler:chevron-left" class="mr-1 -ml-1.5 h-5 w-5 rtl:-mr-1.5 rtl:ml-1" />
       )
     } Voltar para notícias
   </Button>

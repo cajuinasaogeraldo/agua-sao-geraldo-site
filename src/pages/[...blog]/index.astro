@@ -24,10 +24,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { post } = Astro.props;
 
 const url = getCanonical(getPermalink(post.permalink, 'post'));
-const image = (await findImage(post.image)) as
-  | ImageMetadata
-  | string
-  | undefined;
+const image = (await findImage(post.image)) as ImageMetadata | string | undefined;
 
 // Valores padrão baseados no post
 const defaultMetadata = {
@@ -44,14 +41,14 @@ const defaultMetadata = {
     locale: 'pt_BR',
     ...(image
       ? {
-        images: [
-          {
-            url: image,
-            width: (image as ImageMetadata)?.width,
-            height: (image as ImageMetadata)?.height,
-          },
-        ],
-      }
+          images: [
+            {
+              url: image,
+              width: (image as ImageMetadata)?.width,
+              height: (image as ImageMetadata)?.height,
+            },
+          ],
+        }
       : {}),
   },
   twitter: {
@@ -65,14 +62,8 @@ const metadata = merge(defaultMetadata, post?.metadata || {}) as MetaData;
 
 <Layout metadata={metadata}>
   <SinglePost post={{ ...post, image: image }} url={url}>
-    {
-      post.Content ? (
-        <post.Content />
-      ) : (
-        <Fragment set:html={post.content || ''} />
-      )
-    }
+    {post.Content ? <post.Content /> : <Fragment set:html={post.content || ''} />}
   </SinglePost>
   <ToBlogLink />
-  <RelatedPosts news={post} />
+  <!-- <RelatedPosts news={post} /> -->
 </Layout>
