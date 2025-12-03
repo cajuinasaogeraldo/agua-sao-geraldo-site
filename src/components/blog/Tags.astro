@@ -11,12 +11,7 @@ export interface Props {
   isCategory?: boolean;
 }
 
-const {
-  tags,
-  class: className = 'text-sm',
-  title = undefined,
-  isCategory = false,
-} = Astro.props;
+const { tags, class: className = 'text-sm', title = undefined, isCategory = false } = Astro.props;
 ---
 
 {
@@ -35,7 +30,7 @@ const {
             ) : (
               <a
                 href={getPermalink(tag.slug, isCategory ? 'category' : 'tag')}
-                class="text-muted hover:text-agua-secondary-green text-slate-300"
+                class="text-muted hover:text-agua-secondary-green"
               >
                 {tag.title}
               </a>
