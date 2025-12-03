@@ -119,7 +119,7 @@ p {
 }
 
 a {
-  @apply font-poppins text-blue-100;
+  @apply font-poppins text-agua-secondary-green;
   text-decoration: none;
 }
 

@@ -22,7 +22,7 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(news.permalink, 'news') : 
 ---
 
 <article
-  class={`*:font-poppins px-2 max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade shadow-2xl rounded-lg ${image ? 'md:grid-cols-2' : ''}`}
+  class={`*:font-poppins px-4 max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade shadow-2xl rounded-lg ${image ? 'md:grid-cols-2' : ''}`}
 >
   {
     image &&
@@ -62,7 +62,7 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(news.permalink, 'news') : 
         </div>
       ))
   }
-  <div class="mt-2">
+  <div class="mt-0">
     <header>
       <div class="mb-1">
         <span class="text-caption">
@@ -96,25 +96,27 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(news.permalink, 'news') : 
           }
         </span>
       </div>
-      <h2
-        class="font-heading *:text-agua-primary-green! mb-2 text-xl! leading-tight! font-bold! md:text-2xl!"
-      >
-        {
-          link ? (
-            <a class="font-poppins inline-block transition duration-200 ease-in" href={link}>
-              {news.title}
-            </a>
-          ) : (
-            news.title
-          )
-        }
-      </h2>
+      <div class="max-h-[100px] overflow-hidden max-w-full relative">
+        <h2
+          class="font-heading *:text-agua-primary-green! mb-2 text-xl! leading-tight! font-bold! md:text-2xl!"
+        >
+          {
+            link ? (
+              <a class="font-poppins inline-block transition duration-200 ease-in" href={link}>
+                {news.title}
+              </a>
+            ) : (
+              news.title
+            )
+          }
+        </h2>
+      </div>
     </header>
 
     {news.excerpt && <p class="text-body text-muted font-poppins grow">{news.excerpt}</p>}
     {
       news.tags && Array.isArray(news.tags) ? (
-        <footer class="mt-5">
+        <footer class="mt-3">
           <PostTags tags={news.tags} />
         </footer>
       ) : (

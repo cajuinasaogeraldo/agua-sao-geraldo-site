@@ -21,7 +21,7 @@ collections:
 
   - name: about-gallery
     icon: image
-    label: Galeria de Imagens
+    label: Galeria Imagens Sobre
     folder: src/data/about-gallery
     create: true
     slug: '{{slug}}'
