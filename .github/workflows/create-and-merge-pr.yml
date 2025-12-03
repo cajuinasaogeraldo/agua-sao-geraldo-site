@@ -44,6 +44,6 @@ jobs:
 
       - name: Add PR to merge queue
         if: steps.create-pr.outputs.pr_number != ''
-        run: gh pr merge ${{ steps.create-pr.outputs.pr_number }} --auto
+        run: gh pr merge ${{ steps.create-pr.outputs.pr_number }} --merge --auto
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
