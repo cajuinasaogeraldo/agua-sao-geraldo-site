@@ -119,7 +119,7 @@ p {
 }
 
 a {
-  @apply font-poppins text-agua-secondary-green;
+  @apply font-poppins text-slate-100 hover:text-slate-300;
   text-decoration: none;
 }
 
