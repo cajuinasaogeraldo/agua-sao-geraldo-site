@@ -13,6 +13,7 @@ backend:
     delete: '[cms] Delete {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}>'
     uploadMedia: '[cms] Upload “{{path}}” - {{author-name}} <{{author-login}}>'
     deleteMedia: '[cms] Delete “{{path}}” - {{author-name}} <{{author-login}}>'
+    workflowPublish: '[cms] Editorial Publish {{collection}} "{{slug}}"'
 
 media_folder: 'src/assets/images' # Location where files will be stored in the repo
 public_folder: '/src/assets/images' # The src attribute for uploaded media
