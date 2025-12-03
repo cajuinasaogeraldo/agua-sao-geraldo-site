@@ -1,5 +1,5 @@
 ---
-title: Agora builda porque é só tirar o ruleset
+title: Agora builda
 draft: false
 categories: noticias
 tags:
