@@ -1,5 +1,5 @@
 ---
-title: Post from WorkflowWWWWWW
+title: Agora builda porque é só tirar o ruleset
 draft: false
 categories: noticias
 tags:
