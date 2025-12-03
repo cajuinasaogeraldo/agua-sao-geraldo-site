@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  create-pr:
+  create-and-merge-pr:
     if: ${{ github.event_name == 'repository_dispatch' || contains(github.event.head_commit.message, '[cms]') || contains(github.event.head_commit.message, '[ci]') }}
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +31,7 @@ jobs:
         with:
           source_branch: ${{ github.ref_name }}
           destination_branch: main
-          pr_title: '🚀 Auto-deploy from Sveltia CMS - Run #${{ github.run_number }}'
+          pr_title: "🚀 Auto-deploy from Sveltia CMS - Run #${{ github.run_number }}"
           pr_body: |
             Automated PR from CMS content update
 
@@ -42,8 +42,8 @@ jobs:
             _This PR was automatically created by the CI workflow_
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Merge PR with admin privileges
+      - name: Enable auto-merge on PR
         if: steps.create-pr.outputs.pr_number != ''
-        run: gh pr merge ${{ steps.create-pr.outputs.pr_number }} --merge
+        run: gh pr merge ${{ steps.create-pr.outputs.pr_number }} --merge --auto
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
