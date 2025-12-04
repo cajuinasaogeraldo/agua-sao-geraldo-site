@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "turbo run build:astro",
+    "build": "turbo run build:astro --output-logs=full",
     "build:astro": "astro build",
     "preview": "astro preview",
     "astro": "astro",
