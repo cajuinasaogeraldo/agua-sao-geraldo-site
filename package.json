@@ -2,10 +2,12 @@
   "name": "agua-sao-geraldo-site",
   "type": "module",
   "version": "1.0.0",
+  "packageManager": "pnpm@9.12.3",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "turbo build",
+    "build": "turbo run build:astro",
+    "build:astro": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "check": "pnpm run check:astro && pnpm run check:eslint && pnpm run check:prettier",
