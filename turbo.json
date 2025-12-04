@@ -1,0 +1,69 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "tasks": {
+        "build": {
+            "dependsOn": [
+                "^build"
+            ],
+            "inputs": [
+                "src/**",
+                "public/**",
+                "astro.config.ts",
+                "tailwind.config.ts",
+                "tsconfig.json",
+                "package.json"
+            ],
+            "outputs": [
+                "dist/**",
+                ".astro/**"
+            ],
+            "env": [
+                "NODE_ENV",
+                "PUBLIC_GOOGLE_MAPS_KEY_PROD",
+                "PUBLIC_GOOGLE_CAPTCHA_SITEKEY",
+                "PUBLIC_API_BASE_URL",
+                "GOOGLE_SITE_VERIFICATION",
+                "GOOGLE_ANALYTICS_ID",
+                "SITE_URL"
+            ],
+            "cache": true
+        },
+        "dev": {
+            "cache": false,
+            "persistent": true
+        },
+        "check": {
+            "dependsOn": [
+                "check:astro",
+                "check:eslint",
+                "check:prettier"
+            ],
+            "cache": true
+        },
+        "check:astro": {
+            "inputs": [
+                "src/**/*.astro",
+                "src/**/*.ts",
+                "src/**/*.tsx"
+            ],
+            "cache": true
+        },
+        "check:eslint": {
+            "inputs": [
+                "src/**",
+                "*.config.*"
+            ],
+            "cache": true
+        },
+        "check:prettier": {
+            "inputs": [
+                "src/**",
+                "*.config.*"
+            ],
+            "cache": true
+        },
+        "fix": {
+            "cache": false
+        }
+    }
+}
