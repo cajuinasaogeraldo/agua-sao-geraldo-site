@@ -1,6 +1,7 @@
 # build output
 # generated types
 .astro/
+.turbo/
 
 dist/
 **/dist/*
