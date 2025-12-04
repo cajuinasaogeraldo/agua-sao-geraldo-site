@@ -27,7 +27,7 @@ interface DistribuidorMarkerProps {
   onInfoWindowClose: () => void;
 }
 
-export const DistribuidorMarker: React.FC<DistribuidorMarkerProps> = ({
+const DistribuidorMarker: React.FC<DistribuidorMarkerProps> = ({
   distribuidor,
   isHovered,
   isSelected,

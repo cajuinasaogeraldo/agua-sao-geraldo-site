@@ -33,5 +33,5 @@ export default {
       addVariant('intersect', '&:not([no-intersect])');
     }),
   ],
-  purge: ['./src/**/*.html', './src/**/*.astro', './src/**/*.jsx'],
+  purge: ['./src/**/*.html', './src/**/*.astro', './src/components/react/**/*.tsx'],
 };

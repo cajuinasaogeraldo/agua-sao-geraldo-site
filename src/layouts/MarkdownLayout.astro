@@ -1,5 +1,5 @@
 ---
-import Layout from '@/layouts/PageLayout.astro';
+import Layout from '@/layouts/AdminLayout.astro';
 import type { MetaData } from '@/types';
 
 export interface Props {
@@ -15,7 +15,7 @@ const metadata: MetaData = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout frontmatter={metadata}>
   <section class="mx-auto max-w-4xl px-4 pt-24 pb-12 sm:px-6 md:px-8 md:pt-28">
     <h1 class="font-heading text-3xl font-bold tracking-tighter md:text-5xl">
       {frontmatter.title}

@@ -22,7 +22,7 @@ interface DefaultLocationMarkerProps {
   placeId: string;
 }
 
-export const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
+const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
   position,
   placeId,
 }) => {
