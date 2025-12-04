@@ -47,6 +47,7 @@ export default defineConfig({
     icon({
       include: {
         tabler: ['*'],
+        mdi: ['*'],
         'flat-color-icons': [
           'template',
           'gallery',
@@ -62,7 +63,10 @@ export default defineConfig({
     }),
     ...whenExternalScripts(() =>
       partytown({
-        config: { forward: ['dataLayer.push'] },
+        config: {
+          forward: ['dataLayer.push', 'fbq'],
+          debug: true,
+        },
       }),
     ),
     compress({

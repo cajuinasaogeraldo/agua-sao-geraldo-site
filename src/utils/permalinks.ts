@@ -87,34 +87,34 @@ export const getPermalink = (slug = '', type: PermalinkType | string = 'page'): 
   let permalink: string;
 
   switch (type) {
-  case 'home':
-    permalink = getHomePermalink();
-    break;
+    case 'home':
+      permalink = getHomePermalink();
+      break;
 
-  case 'blog':
-    permalink = getBlogPermalink();
-    break;
+    case 'blog':
+      permalink = getBlogPermalink();
+      break;
 
-  case 'asset':
-    permalink = getAsset(slug);
-    break;
+    case 'asset':
+      permalink = getAsset(slug);
+      break;
 
-  case 'category':
-    permalink = createPath(CATEGORY_BASE, trimSlash(slug));
-    break;
+    case 'category':
+      permalink = createPath(CATEGORY_BASE, trimSlash(slug));
+      break;
 
-  case 'tag':
-    permalink = createPath(TAG_BASE, trimSlash(slug));
-    break;
+    case 'tag':
+      permalink = createPath(TAG_BASE, trimSlash(slug));
+      break;
 
-  case 'post':
-    permalink = createPath(trimSlash(slug));
-    break;
+    case 'post':
+      permalink = createPath(trimSlash(slug));
+      break;
 
-  case 'page':
-  default:
-    permalink = createPath(slug);
-    break;
+    case 'page':
+    default:
+      permalink = createPath(slug);
+      break;
   }
 
   return definitivePermalink(permalink);

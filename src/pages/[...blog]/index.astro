@@ -11,7 +11,7 @@ import { getCanonical, getPermalink } from '@/utils/permalinks';
 import { getStaticPathsBlogPost, blogPostRobots } from '@/utils/blog';
 import { findImage } from '@/utils/images';
 import type { MetaData } from '@/types';
-import RelatedPosts from '@/components/blog/RelatedPosts.astro';
+import _RelatedPosts from '@/components/blog/RelatedPosts.astro';
 
 export const prerender = true;
 
@@ -41,14 +41,14 @@ const defaultMetadata = {
     locale: 'pt_BR',
     ...(image
       ? {
-          images: [
-            {
-              url: image,
-              width: (image as ImageMetadata)?.width,
-              height: (image as ImageMetadata)?.height,
-            },
-          ],
-        }
+        images: [
+          {
+            url: image,
+            width: (image as ImageMetadata)?.width,
+            height: (image as ImageMetadata)?.height,
+          },
+        ],
+      }
       : {}),
   },
   twitter: {

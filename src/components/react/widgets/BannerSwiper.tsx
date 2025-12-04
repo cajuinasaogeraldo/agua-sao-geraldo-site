@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { useState, useEffect } from 'react';

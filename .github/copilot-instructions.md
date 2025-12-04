@@ -28,6 +28,7 @@ src/
 ## Padrões de Código
 
 ### Imports - usar alias `@`
+
 ```typescript
 import Image from '@/components/common/Image.astro';
 import { fetchPosts } from '@/utils/blog';
@@ -35,15 +36,17 @@ import type { News } from '@/types';
 ```
 
 ### Collections - usar glob loader
+
 ```typescript
 // src/content/config.ts
 const news = defineCollection({
   loader: glob({ base: './src/data/news', pattern: '**/*.{md,mdx}' }),
-  schema: ({ image }) => z.object({ title: z.string(), image: image() })
+  schema: ({ image }) => z.object({ title: z.string(), image: image() }),
 });
 ```
 
 ### Cores da marca
+
 ```typescript
 // Usar classes Tailwind: bg-agua-primary-blue, text-agua-primary-green
 agua: { primary: { blue: '#004F9F', green: '#74BC1F' } }
@@ -61,11 +64,11 @@ pnpm knip         # Detectar código não utilizado
 
 ## CI/CD Workflows
 
-| Workflow | Trigger | Ação |
-|----------|---------|------|
-| `deploy-ssh.yml` | push main, workflow_dispatch | Build + rsync para Hostinger |
-| `create-and-merge-pr.yml` | commits `[cms]` ou `[ci]` | Auto-merge PR do CMS |
-| `preview-deploy.yml` | PRs | Deploy de preview |
+| Workflow                  | Trigger                      | Ação                         |
+| ------------------------- | ---------------------------- | ---------------------------- |
+| `deploy-ssh.yml`          | push main, workflow_dispatch | Build + rsync para Hostinger |
+| `create-and-merge-pr.yml` | commits `[cms]` ou `[ci]`    | Auto-merge PR do CMS         |
+| `preview-deploy.yml`      | PRs                          | Deploy de preview            |
 
 ## Convenções Importantes
 
