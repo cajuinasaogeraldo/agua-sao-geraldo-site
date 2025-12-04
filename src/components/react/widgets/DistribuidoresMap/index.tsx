@@ -204,6 +204,7 @@ export default function DistribuidoresGmaps({
       apiKey={apiKey}
       libraries={['marker', 'places']}
       region="BR"
+      solutionChannel={'partytown'}
       version="beta"
     >
       <Gmaps distribuidores={distribuidores} defaultPosition={saoGeraldoPosition} />

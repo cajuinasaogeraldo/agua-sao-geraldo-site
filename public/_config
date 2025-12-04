@@ -63,8 +63,6 @@ analytics:
   vendors:
     googleAnalytics:
       id: 'G-BFYBHKNTQ7' # or "G-XXXXXXXXXX"
-  gtm:
-    id: 'GTM-MF9N2L9P'
 
 ui:
   theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

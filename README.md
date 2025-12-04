@@ -152,8 +152,6 @@ analytics:
   vendors:
     googleAnalytics:
       id: 'G-XXXXXXXXXX'
-  gtm:
-    id: 'GTM-XXXXXXX'
 
 ui:
   theme: 'light:only'
