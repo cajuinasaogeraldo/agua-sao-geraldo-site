@@ -122,6 +122,20 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
         } catch (error) {
           /* empty */
         }
+
+        // Substituir placeholder da API Key do Google Maps no admin/index.html
+        try {
+          const adminIndexFile = new URL('admin/index.html', cfg.outDir);
+          if (fs.existsSync(adminIndexFile)) {
+            let content = fs.readFileSync(adminIndexFile, { encoding: 'utf8' });
+            const gmapsApiKey = process.env.PUBLIC_GOOGLE_MAPS_GEOCODING_PROD || '';
+            content = content.replace(/%%GMAPS_API_KEY%%/g, gmapsApiKey);
+            fs.writeFileSync(adminIndexFile, content, { encoding: 'utf8' });
+            buildLogger.info('Admin page updated with Google Maps API key.');
+          }
+        } catch (err) {
+          buildLogger.warn('Failed to update admin/index.html with API key');
+        }
       },
     },
   };

@@ -48,11 +48,11 @@
     </style>
   </head>
   <body>
-    <!-- <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script> -->
-    <script
-      type="text/partytown"
-      src="https://unpkg.com/@cajuinasi/sveltia-cms/dist/sveltia-cms.js"
-    ></script>
+    <!-- Google Maps API Key -->
+    <script>
+      window.GMAPS_API_KEY = '%%GMAPS_API_KEY%%';
+    </script>
+    <script src="https://unpkg.com/@cajuinasi/sveltia-cms/dist/sveltia-cms.js"></script>
     <script>
       // Esperar o CMS carregar completamente
       window.addEventListener('load', function () {
@@ -127,130 +127,160 @@
           statusDiv.style.display = 'none';
 
           try {
+            const GMAPS_API_KEY = window.GMAPS_API_KEY;
+
+            if (!GMAPS_API_KEY || GMAPS_API_KEY.includes('%%')) {
+              // Fallback para localStorage (útil em dev)
+              const storedKey = localStorage.getItem('GMAPS_API_KEY');
+              if (storedKey) {
+                window.GMAPS_API_KEY = storedKey;
+              } else {
+                const userKey = prompt(
+                  'API Key do Google Maps não configurada.\nInsira a key para usar em dev (será salva no localStorage):',
+                );
+                if (userKey) {
+                  localStorage.setItem('GMAPS_API_KEY', userKey);
+                  window.GMAPS_API_KEY = userKey;
+                } else {
+                  showStatus('❌ API Key do Google Maps não configurada.', 'error');
+                  return;
+                }
+              }
+            }
+
             const query = encodeURIComponent(endereco);
             const response = await fetch(
-              `https://nominatim.openstreetmap.org/search?format=json&q=${query}`,
+              `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${GMAPS_API_KEY}`,
             );
             const data = await response.json();
 
-            if (data && data.length > 0) {
-              const { lat, lon } = data[0];
+            if (data.error_message) {
+              console.error('Erro da API Google Maps:', data.error_message);
+              showStatus(`❌ Erro da API: ${data.error_message}`, 'error');
+              return;
+            }
 
-              console.log('Coordenadas obtidas da API:', { lat, lon });
+            if (data.status === 'ZERO_RESULTS' || !data.results || data.results.length === 0) {
+              showStatus(
+                '❌ Endereço não encontrado. Tente ser mais específico ou verifique a ortografia.',
+                'error',
+              );
+              return;
+            }
 
-              // Estratégia 1: Buscar por data-key-path
-              let latSection = document.querySelector('section[data-key-path="lat"]');
-              let lngSection = document.querySelector('section[data-key-path="lng"]');
+            const location = data.results[0].geometry.location;
+            const lat = location.lat;
+            const lon = location.lng;
 
-              let latInput = null;
-              let lngInput = null;
+            console.log('Coordenadas obtidas da API Google Maps:', { lat, lon });
+
+            // Estratégia 1: Buscar por data-key-path
+            let latSection = document.querySelector('section[data-key-path="lat"]');
+            let lngSection = document.querySelector('section[data-key-path="lng"]');
+
+            let latInput = null;
+            let lngInput = null;
+
+            if (latSection && lngSection) {
+              latInput = latSection.querySelector('input');
+              lngInput = lngSection.querySelector('input');
+            }
+
+            // Estratégia 2: Buscar por data-typed-key-path
+            if (!latInput || !lngInput) {
+              latSection = document.querySelector('section[data-typed-key-path="lat"]');
+              lngSection = document.querySelector('section[data-typed-key-path="lng"]');
+              console.log('Estratégia 2 - Sections com typed-key-path:', {
+                latSection,
+                lngSection,
+              });
 
               if (latSection && lngSection) {
                 latInput = latSection.querySelector('input');
                 lngInput = lngSection.querySelector('input');
               }
+            }
 
-              // Estratégia 2: Buscar por data-typed-key-path
-              if (!latInput || !lngInput) {
-                latSection = document.querySelector('section[data-typed-key-path="lat"]');
-                lngSection = document.querySelector('section[data-typed-key-path="lng"]');
-                console.log('Estratégia 2 - Sections com typed-key-path:', {
-                  latSection,
-                  lngSection,
-                });
+            // Estratégia 3: Buscar todos os inputs e identificar pelo label
+            if (!latInput || !lngInput) {
+              console.log('Estratégia 3 - Buscando por labels');
+              const allSections = document.querySelectorAll('section[role="group"]');
 
-                if (latSection && lngSection) {
-                  latInput = latSection.querySelector('input');
-                  lngInput = lngSection.querySelector('input');
-                }
-              }
+              allSections.forEach((section, idx) => {
+                const header = section.querySelector('h4');
+                if (header) {
+                  const text = header.textContent.trim().toLowerCase();
+                  console.log(`Section ${idx}: "${text}"`);
 
-              // Estratégia 3: Buscar todos os inputs e identificar pelo label
-              if (!latInput || !lngInput) {
-                console.log('Estratégia 3 - Buscando por labels');
-                const allSections = document.querySelectorAll('section[role="group"]');
-
-                allSections.forEach((section, idx) => {
-                  const header = section.querySelector('h4');
-                  if (header) {
-                    const text = header.textContent.trim().toLowerCase();
-                    console.log(`Section ${idx}: "${text}"`);
-
-                    if (text === 'latitude') {
-                      latInput = section.querySelector('input');
-                    }
-                    if (text === 'longitude') {
-                      lngInput = section.querySelector('input');
-                    }
+                  if (text === 'latitude') {
+                    latInput = section.querySelector('input');
                   }
+                  if (text === 'longitude') {
+                    lngInput = section.querySelector('input');
+                  }
+                }
+              });
+            }
+
+            if (latInput && lngInput) {
+              const latValue = parseFloat(lat).toFixed(6);
+              const lngValue = parseFloat(lon).toFixed(6);
+
+              console.log('Preenchendo com:', { latValue, lngValue });
+
+              const updateField = (input, value) => {
+                // Focar no campo primeiro
+                input.focus();
+
+                // Selecionar todo o conteúdo
+                input.select();
+
+                // Limpar o campo
+                input.value = '';
+
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+
+                return new Promise((resolve) => {
+                  setTimeout(() => {
+                    input.value = value;
+                    input.setAttribute('value', value);
+
+                    input.dispatchEvent(new Event('input', { bubbles: true }));
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                    input.dispatchEvent(new Event('blur', { bubbles: true }));
+
+                    // Remover foco
+                    input.blur();
+
+                    resolve();
+                  }, 100);
                 });
-              }
+              };
 
-              if (latInput && lngInput) {
-                const latValue = parseFloat(lat).toFixed(6);
-                const lngValue = parseFloat(lon).toFixed(6);
+              updateField(latInput, latValue)
+                .then(() => {
+                  return updateField(lngInput, lngValue);
+                })
+                .then(() => {
+                  setTimeout(() => {
+                    enderecoInput.focus();
+                  }, 200);
 
-                console.log('Preenchendo com:', { latValue, lngValue });
-
-                const updateField = (input, value) => {
-                  // Focar no campo primeiro
-                  input.focus();
-
-                  // Selecionar todo o conteúdo
-                  input.select();
-
-                  // Limpar o campo
-                  input.value = '';
-
-                  input.dispatchEvent(new Event('input', { bubbles: true }));
-
-                  return new Promise((resolve) => {
-                    setTimeout(() => {
-                      input.value = value;
-                      input.setAttribute('value', value);
-
-                      input.dispatchEvent(new Event('input', { bubbles: true }));
-                      input.dispatchEvent(new Event('change', { bubbles: true }));
-                      input.dispatchEvent(new Event('blur', { bubbles: true }));
-
-                      // Remover foco
-                      input.blur();
-
-                      resolve();
-                    }, 100);
-                  });
-                };
-
-                updateField(latInput, latValue)
-                  .then(() => {
-                    return updateField(lngInput, lngValue);
-                  })
-                  .then(() => {
-                    setTimeout(() => {
-                      enderecoInput.focus();
-                    }, 200);
-
-                    showStatus(
-                      `✅ Coordenadas preenchidas! Latitude: ${latValue}, Longitude: ${lngValue}`,
-                      'success',
-                    );
-                  })
-                  .catch((err) => {
-                    console.error('Erro ao atualizar campos:', err);
-                    showStatus(
-                      '⚠️ Coordenadas preenchidas, mas pode ser necessário verificar.',
-                      'error',
-                    );
-                  });
-              } else {
-                showStatus('❌ Inputs de coordenadas não encontrados.', 'error');
-                console.error('Não foi possível encontrar os campos após todas as estratégias');
-              }
+                  showStatus(
+                    `✅ Coordenadas preenchidas! Latitude: ${latValue}, Longitude: ${lngValue}`,
+                    'success',
+                  );
+                })
+                .catch((err) => {
+                  console.error('Erro ao atualizar campos:', err);
+                  showStatus(
+                    '⚠️ Coordenadas preenchidas, mas pode ser necessário verificar.',
+                    'error',
+                  );
+                });
             } else {
-              showStatus(
-                '❌ Endereço não encontrado. Tente ser mais específico ou verifique a ortografia.',
-                'error',
-              );
+              showStatus('❌ Inputs de coordenadas não encontrados.', 'error');
+              console.error('Não foi possível encontrar os campos após todas as estratégias');
             }
           } catch (error) {
             console.error('Erro ao buscar coordenadas:', error);
