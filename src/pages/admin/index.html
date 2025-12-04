@@ -172,8 +172,6 @@
             const lat = location.lat;
             const lon = location.lng;
 
-            console.log('Coordenadas obtidas da API Google Maps:', { lat, lon });
-
             // Estratégia 1: Buscar por data-key-path
             let latSection = document.querySelector('section[data-key-path="lat"]');
             let lngSection = document.querySelector('section[data-key-path="lng"]');
@@ -190,10 +188,6 @@
             if (!latInput || !lngInput) {
               latSection = document.querySelector('section[data-typed-key-path="lat"]');
               lngSection = document.querySelector('section[data-typed-key-path="lng"]');
-              console.log('Estratégia 2 - Sections com typed-key-path:', {
-                latSection,
-                lngSection,
-              });
 
               if (latSection && lngSection) {
                 latInput = latSection.querySelector('input');
@@ -203,14 +197,12 @@
 
             // Estratégia 3: Buscar todos os inputs e identificar pelo label
             if (!latInput || !lngInput) {
-              console.log('Estratégia 3 - Buscando por labels');
               const allSections = document.querySelectorAll('section[role="group"]');
 
               allSections.forEach((section, idx) => {
                 const header = section.querySelector('h4');
                 if (header) {
                   const text = header.textContent.trim().toLowerCase();
-                  console.log(`Section ${idx}: "${text}"`);
 
                   if (text === 'latitude') {
                     latInput = section.querySelector('input');
@@ -225,8 +217,6 @@
             if (latInput && lngInput) {
               const latValue = parseFloat(lat).toFixed(6);
               const lngValue = parseFloat(lon).toFixed(6);
-
-              console.log('Preenchendo com:', { latValue, lngValue });
 
               const updateField = (input, value) => {
                 // Focar no campo primeiro
@@ -324,7 +314,6 @@
         const currentPath = window.location.hash || window.location.pathname;
 
         if (!currentPath.includes('collections/') || currentPath.includes('collections/config')) {
-          console.log('Não está em uma página de coleção, botão Layout Helper não será exibido');
           return false;
         }
 
@@ -332,17 +321,13 @@
         const bodyField = document.querySelector('[data-key-path="body"]');
 
         if (!bodyField) {
-          console.log('Campo body não encontrado ainda...');
           return false;
         }
 
         // Verificar se já foi injetado
         if (document.getElementById('layout-helper-button-container')) {
-          console.log('Botão já existe, pulando injeção');
           return true;
         }
-
-        console.log('Campo body encontrado em página de coleção, injetando botão de Layout Helper');
 
         // Container do botão
         const buttonContainer = document.createElement('div');
@@ -403,7 +388,6 @@
         // Inserir acima do campo body
         bodyField.parentElement.insertBefore(buttonContainer, bodyField);
 
-        console.log('✅ Botão Content Helper injetado com sucesso!');
         return true;
       }
 
@@ -412,14 +396,12 @@
 
         // Se o path mudou
         if (currentPath !== lastPath) {
-          console.log('🔄 Path mudou:', lastPath, '->', currentPath);
           lastPath = currentPath;
 
           // Remover botão existente
           const existingButton = document.getElementById('layout-helper-button-container');
           if (existingButton) {
             existingButton.remove();
-            console.log('Botão removido devido a mudança de path');
           }
 
           // Tentar injetar o botão

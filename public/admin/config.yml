@@ -4,7 +4,6 @@ backend:
   repo: 'cajuinasaogeraldo/agua-sao-geraldo-site'
   branch: 'development'
   base_url: 'https://cajuina-cms-auth.cadastro-cajuina.workers.dev/'
-  skip_ci: true
   squash_merges: true
   preview_url: 'https://seagreen-squirrel-365460.hostingersite.com/'
   commit_messages:
