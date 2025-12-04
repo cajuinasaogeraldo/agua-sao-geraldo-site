@@ -5,11 +5,7 @@ import { fileURLToPath } from 'node:url';
 const loadConfig = async (configPathOrData: string | object | URL) => {
   if (typeof configPathOrData === 'string') {
     const content = fs.readFileSync(fileURLToPath(configPathOrData), 'utf8');
-    if (
-      configPathOrData.href.includes('_config') ||
-      configPathOrData.endsWith('.yaml') ||
-      configPathOrData.endsWith('.yml')
-    ) {
+    if (configPathOrData.endsWith('.yaml') || configPathOrData.endsWith('.yml')) {
       return yaml.load(content);
     }
     return content;

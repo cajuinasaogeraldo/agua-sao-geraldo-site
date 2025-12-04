@@ -155,17 +155,13 @@ const metadata = {
 
     noResults.classList.add('hidden');
     searchStatus.textContent = `${results.length} resultado${results.length !== 1 ? 's' : ''} para "${query}"`;
-
+    // prettier-ignore
     container.innerHTML = `
       <ul>
-        ${results
-          .map(
-            (post) => `
+        ${results.map((post) => `
           <li class="mb-12 md:mb-20">
             <article class="grid gap-4 md:grid-cols-[280px_1fr] md:gap-8">
-              ${
-                post.image
-                  ? `
+              ${post.image ? `
                 <a href="/${post.permalink}/" class="block overflow-hidden rounded-lg">
                   <img 
                     src="${post.image}" 
@@ -174,19 +170,13 @@ const metadata = {
                     loading="lazy"
                   />
                 </a>
-              `
-                  : ''
-              }
+              ` : ''}
               <div class="flex flex-col justify-center">
-                ${
-                  post.category
-                    ? `
+                ${post.category ? `
                   <span class="text-agua-primary-green mb-2 text-sm font-medium uppercase">
                     ${post.category.title}
                   </span>
-                `
-                    : ''
-                }
+                ` : ''}
                 <h2 class="mb-2 text-xl font-bold md:text-2xl">
                   <a href="/${post.permalink}/" class="hover:text-agua-primary-green transition-colors">
                     ${post.title}
@@ -201,9 +191,7 @@ const metadata = {
               </div>
             </article>
           </li>
-        `,
-          )
-          .join('')}
+        `).join('')}
       </ul>
     `;
   }

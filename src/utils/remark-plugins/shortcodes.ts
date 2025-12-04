@@ -266,21 +266,21 @@ async function processListShortcodes(content: string, filePath?: string): Promis
 
 function getListStyleClass(param: string): string {
   switch (param) {
-  case '>':
-    return 'list-style-arrow';
-  case '-':
-    return 'list-style-dash';
-  case '•':
-  case 'disc':
-    return 'list-style-disc';
-  case '○':
-  case 'circle':
-    return 'list-style-circle';
-  case '▪':
-  case 'square':
-    return 'list-style-square';
-  default:
-    return 'list-style-disc';
+    case '>':
+      return 'list-style-arrow';
+    case '-':
+      return 'list-style-dash';
+    case '•':
+    case 'disc':
+      return 'list-style-disc';
+    case '○':
+    case 'circle':
+      return 'list-style-circle';
+    case '▪':
+    case 'square':
+      return 'list-style-square';
+    default:
+      return 'list-style-disc';
   }
 }
 
@@ -352,23 +352,23 @@ function extractParagraphText(node: any): string {
   return node.children
     .map((child: any) => {
       switch (child.type) {
-      case 'text':
-        return child.value || '';
-      case 'strong':
-        return `**${extractParagraphText(child)}**`;
-      case 'emphasis':
-        return `*${extractParagraphText(child)}*`;
-      case 'link': {
-        const url = child.url || '';
-        return `[${extractParagraphText(child)}](${url})`;
-      }
-      case 'image': {
-        const alt = child.alt || '';
-        const title = child.title ? ` "${child.title}"` : '';
-        return `![${alt}](${child.url || ''}${title})`;
-      }
-      default:
-        return child.children ? extractParagraphText(child) : '';
+        case 'text':
+          return child.value || '';
+        case 'strong':
+          return `**${extractParagraphText(child)}**`;
+        case 'emphasis':
+          return `*${extractParagraphText(child)}*`;
+        case 'link': {
+          const url = child.url || '';
+          return `[${extractParagraphText(child)}](${url})`;
+        }
+        case 'image': {
+          const alt = child.alt || '';
+          const title = child.title ? ` "${child.title}"` : '';
+          return `![${alt}](${child.url || ''}${title})`;
+        }
+        default:
+          return child.children ? extractParagraphText(child) : '';
       }
     })
     .join('');
@@ -592,60 +592,60 @@ async function generateHTML(
   filePath?: string,
 ): Promise<string> {
   switch (name) {
-  case 'link': {
-    if (!params) return content;
-    const [urlRaw, targetRaw] = params.split('|').map((item) => item.trim());
-    const href = urlRaw || '#';
-    const targetAttr = targetRaw === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '';
-    const inner = await renderInlineMarkdown(content, filePath);
-    return `<a href="${href}"${targetAttr} class="text-blue-600 hover:text-blue-800 underline">${inner}</a>`;
-  }
+    case 'link': {
+      if (!params) return content;
+      const [urlRaw, targetRaw] = params.split('|').map((item) => item.trim());
+      const href = urlRaw || '#';
+      const targetAttr = targetRaw === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '';
+      const inner = await renderInlineMarkdown(content, filePath);
+      return `<a href="${href}"${targetAttr} class="text-blue-600 hover:text-blue-800 underline">${inner}</a>`;
+    }
 
-  case 'two-columns': {
-    const ratio = (params || '50/50').replace(/\s+/g, '');
-    const [leftRaw, rightRaw] = ratio.split('/');
-    const left = leftRaw || '50';
-    const right = rightRaw || '50';
+    case 'two-columns': {
+      const ratio = (params || '50/50').replace(/\s+/g, '');
+      const [leftRaw, rightRaw] = ratio.split('/');
+      const left = leftRaw || '50';
+      const right = rightRaw || '50';
 
-    const col1Match = content.match(/\[col1\]([\s\S]*?)\[\/col1\]/i);
-    const col2Match = content.match(/\[col2\]([\s\S]*?)\[\/col2\]/i);
+      const col1Match = content.match(/\[col1\]([\s\S]*?)\[\/col1\]/i);
+      const col2Match = content.match(/\[col2\]([\s\S]*?)\[\/col2\]/i);
 
-    const col1Raw = col1Match ? col1Match[1].trim() : '';
-    const col2Raw = col2Match ? col2Match[1].trim() : '';
+      const col1Raw = col1Match ? col1Match[1].trim() : '';
+      const col2Raw = col2Match ? col2Match[1].trim() : '';
 
-    const col1Content = await renderMarkdownBlock(col1Raw, processNested, filePath, {
-      rewriteAssets: false,
-    });
-    const col2Content = await renderMarkdownBlock(col2Raw, processNested, filePath, {
-      rewriteAssets: false,
-    });
+      const col1Content = await renderMarkdownBlock(col1Raw, processNested, filePath, {
+        rewriteAssets: false,
+      });
+      const col2Content = await renderMarkdownBlock(col2Raw, processNested, filePath, {
+        rewriteAssets: false,
+      });
 
-    return `<div class="layout-two-columns" style="--col1:${left}%;--col2:${right}%"><div class="layout-column-1">${col1Content}</div><div class="layout-column-2">${col2Content}</div></div>`;
-  }
+      return `<div class="layout-two-columns" style="--col1:${left}%;--col2:${right}%"><div class="layout-column-1">${col1Content}</div><div class="layout-column-2">${col2Content}</div></div>`;
+    }
 
-  case 'image-left':
-  case 'image-right': {
-    const [urlRaw, altRaw] = (params || '').split('|').map((item) => item.trim());
-    const alt = altRaw || '';
-    const url = urlRaw || '';
-    const position = name === 'image-left' ? 'left' : 'right';
-    const inner = await renderMarkdownBlock(content, processNested, filePath);
+    case 'image-left':
+    case 'image-right': {
+      const [urlRaw, altRaw] = (params || '').split('|').map((item) => item.trim());
+      const alt = altRaw || '';
+      const url = urlRaw || '';
+      const position = name === 'image-left' ? 'left' : 'right';
+      const inner = await renderMarkdownBlock(content, processNested, filePath);
 
-    return `<div class="layout-image-${position}"><div class="layout-image-container"><img src="${url}" alt="${alt}" loading="lazy" class="w-full" /></div><div class="layout-text-content">${inner}</div></div>`;
-  }
+      return `<div class="layout-image-${position}"><div class="layout-image-container"><img src="${url}" alt="${alt}" loading="lazy" class="w-full" /></div><div class="layout-text-content">${inner}</div></div>`;
+    }
 
-  case 'card': {
-    const inner = await renderMarkdownBlock(content, processNested, filePath);
-    return `<div class="layout-card">${inner}</div>`;
-  }
+    case 'card': {
+      const inner = await renderMarkdownBlock(content, processNested, filePath);
+      return `<div class="layout-card">${inner}</div>`;
+    }
 
-  case 'list': {
-    // Se cair aqui, já foi processado antes
-    return content;
-  }
+    case 'list': {
+      // Se cair aqui, já foi processado antes
+      return content;
+    }
 
-  default:
-    return content;
+    default:
+      return content;
   }
 }
 

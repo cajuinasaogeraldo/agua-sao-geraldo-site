@@ -10,12 +10,7 @@ export interface Props {
   nextText?: string;
 }
 
-const {
-  prevUrl,
-  nextUrl,
-  prevText = 'Mais recentes',
-  nextText = 'Mais antigos',
-} = Astro.props;
+const { prevUrl, nextUrl, prevText = 'Mais recentes', nextText = 'Mais antigos' } = Astro.props;
 ---
 
 {
@@ -23,7 +18,7 @@ const {
     <div class="container flex">
       <div class="container mx-auto flex flex-row justify-between">
         <Button
-          variant="green"
+          variant="primary"
           class={`mr-2 px-3 md:px-3 ${!prevUrl ? 'invisible' : ''}`}
           href={getPermalink(prevUrl)}
         >
@@ -32,7 +27,7 @@ const {
         </Button>
 
         <Button
-          variant="green"
+          variant="primary"
           class={`px-3 md:px-3 ${!nextUrl ? 'invisible' : ''}`}
           href={getPermalink(nextUrl)}
         >

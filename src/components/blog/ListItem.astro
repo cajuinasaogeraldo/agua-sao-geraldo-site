@@ -68,7 +68,7 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(news.permalink, 'news') : 
         <span class="text-caption">
           <Icon name="tabler:clock" class="-mt-0.5 inline-block h-3.5 w-3.5 dark:text-gray-400" />
           <time datetime={String(news.publishDate)} class="inline-block"
-            >{getFormattedDate(news.publishDate)}</time
+          >{getFormattedDate(news.publishDate)}</time
           >
           {
             news.author && (

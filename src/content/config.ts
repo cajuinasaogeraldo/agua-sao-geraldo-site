@@ -80,9 +80,10 @@ const news = defineCollection({
       image: image().optional(),
 
       category: z.string().optional(),
-      tags: z.array(z.any()).optional(), // ← CORRIGIDO
+      tags: z.array(z.any()).optional(),
       author: z.string().optional(),
 
+      content: z.any().optional(),
       metadata: metadataDefinition(),
     }),
 });

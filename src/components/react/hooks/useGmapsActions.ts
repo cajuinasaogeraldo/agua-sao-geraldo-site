@@ -116,19 +116,19 @@ export default function useGmapsActions({
         setIsLoading(false);
 
         switch (error.code) {
-        case error.PERMISSION_DENIED:
-          alert(
-            'Você negou o acesso à localização. Por favor, habilite nas configurações do navegador.',
-          );
-          break;
-        case error.POSITION_UNAVAILABLE:
-          alert('Localização indisponível no momento.');
-          break;
-        case error.TIMEOUT:
-          alert('Tempo esgotado ao obter localização.');
-          break;
-        default:
-          alert('Não foi possível obter sua localização: ' + error.message);
+          case error.PERMISSION_DENIED:
+            alert(
+              'Você negou o acesso à localização. Por favor, habilite nas configurações do navegador.',
+            );
+            break;
+          case error.POSITION_UNAVAILABLE:
+            alert('Localização indisponível no momento.');
+            break;
+          case error.TIMEOUT:
+            alert('Tempo esgotado ao obter localização.');
+            break;
+          default:
+            alert('Não foi possível obter sua localização: ' + error.message);
         }
       },
       {

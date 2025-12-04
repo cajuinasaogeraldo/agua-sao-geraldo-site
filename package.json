@@ -15,7 +15,6 @@
     "fix": "npm run fix:eslint && npm run fix:prettier",
     "fix:eslint": "eslint --fix .",
     "fix:prettier": "prettier -w .",
-    "lint": "eslint \"{src,api,}/**/*.ts\" --fix",
     "knip": "knip -c knip.config.ts --no-exit-code",
     "prepare": "husky || true"
   },
@@ -53,7 +52,7 @@
     "@astrojs/check": "^0.9.6",
     "@astrojs/mdx": "^4.3.12",
     "@astrojs/partytown": "^2.1.4",
-    "@cajuinasi/eslint-config": "^2.0.0",
+    "@cajuinasi/eslint-config": "^2.0.1",
     "@cajuinasi/prettier-config": "^2.0.1",
     "@eslint/js": "^9.39.1",
     "@iconify-json/flat-color-icons": "^1.2.3",

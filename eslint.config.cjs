@@ -8,6 +8,8 @@ module.exports = [
     rules: {
       'no-console': 'warn',
       '@typescript-eslint/no-require-imports': 'off',
+      indent: 'off',
+      '@typescript-eslint/indent': 'off',
     },
   },
   {

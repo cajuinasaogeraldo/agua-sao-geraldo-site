@@ -71,7 +71,6 @@ export const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className="default-location-marker"
-        ariaLabel="Localização da fábrica no mapa"
         style={{
           transform: `scale(${scale})`,
           transformOrigin: AdvancedMarkerAnchorPoint.BOTTOM.join(' '),
@@ -87,12 +86,10 @@ export const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
 
       {showInfoWindow && marker && (
         <InfoWindow
-          id="default-location-marker-info-window"
           anchor={marker}
           onCloseClick={handleInfoWindowClose}
           headerDisabled={false}
           ariaLabel="Informações sobre o local"
-          title="Informações sobre o local"
         >
           <PlaceOverview
             place={placeId}
