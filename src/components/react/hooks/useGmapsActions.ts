@@ -83,22 +83,6 @@ export default function useGmapsActions({
       return;
     }
 
-    // Verifica permissão primeiro
-    try {
-      const permission = await navigator.permissions.query({
-        name: 'geolocation',
-      });
-
-      if (permission.state === 'denied') {
-        alert(
-          'Você negou o acesso à localização. Por favor, habilite nas configurações do navegador.',
-        );
-        return;
-      }
-    } catch (_error) {
-      console.log('Permissions API não disponível, tentando obter localização diretamente');
-    }
-
     setIsLoading(true);
 
     const randomDelay = Math.random() * 2000 + 1500;

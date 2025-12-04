@@ -83,10 +83,10 @@ const DistribuidorMarker: React.FC<DistribuidorMarkerProps> = ({
       {showInfoWindow && marker && isSelected && (
         <InfoWindow anchor={marker} onCloseClick={onInfoWindowClose} headerDisabled={false}>
           <div className="p-2">
-            <h3 className="text-caju-heading-primary mb-2 text-base font-bold">
+            <p className="text-caju-heading-primary mb-1 text-base font-bold">
               {distribuidor.nome}
-            </h3>
-            <p className="mb-1 text-sm">{distribuidor.endereco}</p>
+            </p>
+            <p className="text-sm">{distribuidor.endereco}</p>
             {distribuidor.telefone && (
               <p className="text-sm font-medium">{distribuidor.telefone}</p>
             )}
