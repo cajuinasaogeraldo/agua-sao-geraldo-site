@@ -199,14 +199,7 @@ export default function DistribuidoresGmaps({
   };
 
   return (
-    <APIProvider
-      language="pt-BR"
-      apiKey={apiKey}
-      libraries={['marker', 'places']}
-      region="BR"
-      solutionChannel={'partytown'}
-      version="beta"
-    >
+    <APIProvider language="pt-BR" apiKey={apiKey} region="BR" version="beta">
       <Gmaps distribuidores={distribuidores} defaultPosition={saoGeraldoPosition} />
     </APIProvider>
   );
