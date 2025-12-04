@@ -50,7 +50,7 @@ jobs:
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
           GOOGLE_ANALYTICS_ID: ${{ vars.GOOGLE_ANALYTICS_ID }}
           SITE_URL: ${{ vars.SITE_URL }}
-        run: pnpm turbo build
+        run: pnpm build
 
       - name: Deploy via SSH/rsync
         uses: burnett01/rsync-deployments@7.0.1
