@@ -40,9 +40,9 @@ export const footerData = {
       title: 'Institucional',
       links: [
         { text: 'Sobre', href: '/sobre/' },
-        { text: 'Propriedades', href: '/propriedades/' },
+        { text: 'Propriedades', href: '/#propriedades' },
         { text: 'Notícias', href: '/blog/' },
-        { text: 'Revenda', href: '/revenda/' },
+        { text: 'Revenda', href: '/#revenda' },
         {
           text: 'Trabalhe Conosco',
           href: 'https://cajuinasaogeraldo.gupy.io/',
