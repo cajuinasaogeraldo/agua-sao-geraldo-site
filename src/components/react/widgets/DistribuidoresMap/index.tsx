@@ -177,9 +177,26 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
             )}
 
             {/* Buttons */}
-            <div className="[&_button]:font-poppins! flex gap-3 self-center [&_button]:h-[45px] [&_button]:text-xs [&_button]:font-medium [&_button]:lg:h-[65px] [&_button]:lg:text-xl">
-              <button className="btn-primary px-6">VER MAIS</button>
-              <button className="btn-secondary max-w-80 flex-1">SEJA UM DISTRIBUIDOR</button>
+            <div
+              id="actions_area"
+              className="[&_button]:font-poppins! flex gap-3 self-center [&_button]:h-[45px] [&_button]:text-xs [&_button]:font-medium [&_button]:lg:h-[65px] [&_button]:lg:text-xl"
+            >
+              <button
+                aria-labelledby="actions_area"
+                title="Ver mais distribuidores"
+                className="btn-primary px-6 uppercase"
+              >
+                Ver mais
+              </button>
+              <a
+                aria-labelledby="actions_area"
+                title="Seja um revendedor"
+                href="/solicite/seja-um-revendedor/"
+              >
+                <button className="btn-secondary max-w-80 flex-1 uppercase">
+                  Seja um revendedor
+                </button>
+              </a>
             </div>
           </div>
         </div>

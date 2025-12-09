@@ -87,7 +87,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
         alert('Formulário enviado com sucesso!');
         onSubmitSuccess?.();
-        reset();
+        window.location.reload();
       }
     } catch (error) {
       console.error('Erro ao enviar formulário:', error);
