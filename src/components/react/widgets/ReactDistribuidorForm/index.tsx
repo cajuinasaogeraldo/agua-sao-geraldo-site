@@ -44,7 +44,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
       formData.append('captchaToken', token || '');
       formData.append('formId', AllowedFormIds.REVENDEDOR);
 
-      const response = await fetch(`${apiUrl}/shared/brevo-mail/submit-form`, {
+      const response = await fetch(`${apiUrl}/forms/submit`, {
         method: 'POST',
         body: formData,
       });
@@ -64,8 +64,8 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
       alert('Formulário enviado com sucesso!');
       onSubmitSuccess?.();
       window.location.reload();
-    } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
+    } catch (error: any) {
+      console.error('Erro ao enviar formulário:', error, error.message);
       alert('Erro ao enviar formulário. Tente novamente.');
     }
   };

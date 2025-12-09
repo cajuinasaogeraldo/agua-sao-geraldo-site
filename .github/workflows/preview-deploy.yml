@@ -20,8 +20,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.18.0'
-          cache: 'pnpm'
+          node-version: "20.18.0"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --force
@@ -32,7 +32,7 @@ jobs:
           PREVIEW_BRANCH: ${{ github.event.client_payload.branch }}
           PUBLIC_GOOGLE_MAPS_KEY_PROD: ${{ secrets.PUBLIC_GOOGLE_MAPS_KEY_PROD }}
           PUBLIC_GOOGLE_CAPTCHA_SITEKEY: ${{ vars.PUBLIC_GOOGLE_CAPTCHA_SITEKEY }}
-          PUBLIC_API_BASE_URL: ${{ vars.API_BASE_URL }}
+          PUBLIC_API_BASE_URL: ${{ vars.PUBLIC_API_BASE_URL }}
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
           GOOGLE_ANALYTICS_ID: ${{ vars.GOOGLE_ANALYTICS_ID }}
           SITE_URL: ${{ vars.SITE_URL }}
