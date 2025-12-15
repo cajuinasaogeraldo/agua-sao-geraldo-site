@@ -7,27 +7,6 @@
 import type { ImageLayout } from '@/types';
 import { transformUrl, parseUrl } from 'unpic';
 
-export interface ImageProps {
-  src?: string | null;
-  width?: string | number | null;
-  height?: string | number | null;
-  alt?: string | null;
-  loading?: 'eager' | 'lazy' | null;
-  decoding?: 'sync' | 'async' | 'auto' | null;
-  style?: string;
-  srcset?: string | null;
-  sizes?: string | null;
-  fetchpriority?: 'high' | 'low' | 'auto' | null;
-  inferSize?: boolean;
-
-  layout?: ImageLayout;
-  widths?: number[] | null;
-  aspectRatio?: string | number | null;
-  objectPosition?: string;
-
-  format?: string;
-}
-
 /* ******* */
 const config = {
   // FIXME: Use this when image.width is minor than deviceSizes

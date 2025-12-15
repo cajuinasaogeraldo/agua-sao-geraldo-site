@@ -133,7 +133,7 @@ export default ({ config: _themeConfig = 'src/config.yaml' } = {}): AstroIntegra
             fs.writeFileSync(adminIndexFile, content, { encoding: 'utf8' });
             buildLogger.info('Admin page updated with Google Maps API key.');
           }
-        } catch (err) {
+        } catch (_err) {
           buildLogger.warn('Failed to update admin/index.html with API key');
         }
       },

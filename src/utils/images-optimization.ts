@@ -85,6 +85,7 @@ const parseAspectRatio = (aspectRatio: number | string | null | undefined): numb
 
 /**
  * Gets the `sizes` attribute for an image, based on the layout and width
+ * @lintignore
  */
 export const getSizes = (width?: number, layout?: Layout): string | undefined => {
   if (!width || !layout) {
@@ -121,6 +122,9 @@ const encodeSrcSetUrl = (url: string): string => {
   return url.replace(/ /g, '%20');
 };
 
+/**
+ * @lintignore
+ */
 export const getImageStyles = ({
   width,
   height,
@@ -260,12 +264,15 @@ const getStyle = ({
 
   const styles = Object.fromEntries(styleEntries.filter(([, value]) => value));
 
+  /**
+   * @lintignore
+   */
   return Object.entries(styles)
     .map(([key, value]) => `${key}: ${value};`)
     .join(' ');
 };
 
-export const getBreakpoints = ({
+const getBreakpoints = ({
   width,
   breakpoints,
   layout,

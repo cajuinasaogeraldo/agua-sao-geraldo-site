@@ -21,7 +21,7 @@ const load = async function () {
 let _images: Record<string, () => Promise<unknown>> | undefined = undefined;
 
 /** */
-export const fetchLocalImages = async () => {
+const fetchLocalImages = async () => {
   _images = _images || (await load());
   return _images;
 };

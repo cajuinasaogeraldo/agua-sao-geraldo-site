@@ -13,25 +13,25 @@ export type Config = {
   analytics?: unknown;
 };
 
-export interface SiteConfig {
+interface SiteConfig {
   name: string;
   site?: string;
   base?: string;
   trailingSlash?: boolean;
   googleSiteVerificationId?: string;
 }
-export interface MetaDataConfig extends Omit<MetaData, 'title'> {
+interface MetaDataConfig extends Omit<MetaData, 'title'> {
   title?: {
     default: string;
     template: string;
   };
 }
-export interface I18NConfig {
+interface I18NConfig {
   language: string;
   textDirection: string;
   dateFormatter?: Intl.DateTimeFormat;
 }
-export interface AppBlogConfig {
+interface AppBlogConfig {
   isEnabled: boolean;
   postsPerPage: number;
   isRelatedPostsEnabled: boolean;
@@ -69,17 +69,13 @@ export interface AppBlogConfig {
     };
   };
 }
-export interface AnalyticsConfig {
+interface AnalyticsConfig {
   vendors: {
     googleAnalytics: {
       id?: string;
       partytown?: boolean;
     };
   };
-}
-
-export interface UIConfig {
-  theme: string;
 }
 
 const DEFAULT_SITE_NAME = 'Website';
