@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   AdvancedMarker,
   AdvancedMarkerAnchorPoint,
@@ -22,10 +22,7 @@ interface DefaultLocationMarkerProps {
   placeId: string;
 }
 
-const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
-  position,
-  placeId,
-}) => {
+const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({ position, placeId }) => {
   const isMobile = useIsMobile();
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [isHovered, setIsHovered] = useState(false);
@@ -50,18 +47,6 @@ const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
   const scale = isHovered ? 1.2 : 1;
   const pinBackground = isHovered ? PIN_COLORS.hover : PIN_COLORS.default;
 
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      const markers = document.querySelectorAll('gmp-advanced-marker');
-
-      markers.forEach((m) => m.setAttribute('aria-label', 'Localização no mapa'));
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <>
       <AdvancedMarker
@@ -85,12 +70,7 @@ const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
       </AdvancedMarker>
 
       {showInfoWindow && marker && (
-        <InfoWindow
-          anchor={marker}
-          onCloseClick={handleInfoWindowClose}
-          headerDisabled={false}
-          ariaLabel="Informações sobre o local"
-        >
+        <InfoWindow anchor={marker} onCloseClick={handleInfoWindowClose} headerDisabled={false}>
           <PlaceOverview
             place={placeId}
             size="medium"

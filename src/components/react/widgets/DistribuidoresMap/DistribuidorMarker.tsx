@@ -6,6 +6,7 @@ import {
   Pin,
   useAdvancedMarkerRef,
 } from '@vis.gl/react-google-maps';
+import { PlaceOverview } from '@googlemaps/extended-component-library/react';
 import type { Distribuidor } from '@/types';
 
 // Cores do projeto Cajuína
@@ -66,7 +67,6 @@ const DistribuidorMarker: React.FC<DistribuidorMarkerProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className="distribuidor-marker"
-        aria-label={`Abrir informações do local ${distribuidor.nome}`}
         style={{
           transform: `scale(${scale})`,
           transformOrigin: AdvancedMarkerAnchorPoint.BOTTOM.join(' '),
@@ -82,15 +82,24 @@ const DistribuidorMarker: React.FC<DistribuidorMarkerProps> = ({
 
       {showInfoWindow && marker && isSelected && (
         <InfoWindow anchor={marker} onCloseClick={onInfoWindowClose} headerDisabled={false}>
-          <div className="p-2">
-            <p className="text-caju-heading-primary mb-1 text-base font-bold">
-              {distribuidor.nome}
-            </p>
-            <p className="text-sm">{distribuidor.endereco}</p>
-            {distribuidor.telefone && (
-              <p className="text-sm font-medium">{distribuidor.telefone}</p>
-            )}
-          </div>
+          {distribuidor.placeId ? (
+            <PlaceOverview
+              place={distribuidor.placeId}
+              size="medium"
+              googleLogoAlreadyDisplayed
+              className="min-w-[300px]"
+            />
+          ) : (
+            <div className="p-2">
+              <span className="text-caju-heading-primary mb-2 text-2xl font-bold">
+                {distribuidor.nome}
+              </span>
+              <p className="mb-1 text-sm">{distribuidor.endereco}</p>
+              {distribuidor.telefone && (
+                <p className="text-sm font-medium">{distribuidor.telefone}</p>
+              )}
+            </div>
+          )}
         </InfoWindow>
       )}
     </>

@@ -30,6 +30,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
     handlePlaceSelect,
     handleReset,
     isSearchLoading,
+    isInitialState,
   } = useGmapsActions({
     map,
     defaultPosition,
@@ -87,13 +88,15 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
         </h2>
       )}
 
-      <div className="flex flex-col items-center justify-center gap-6 lg:flex-row-reverse lg:gap-8">
-        <div className="h-[237px] w-full rounded-xl md:min-h-[500px] lg:ml-32 lg:min-h-[600px] lg:flex-2">
+      <div className="flex flex-col items-center justify-center! lg:justify-between! gap-6 lg:flex-row-reverse lg:gap-8">
+        {/* Map and markers */}
+        <div className="h-[237px] w-full rounded-xl! md:min-h-[500px] lg:ml-12 lg:min-h-[600px] lg:flex-2">
           <Map
             onClick={handleMapClick}
-            className="h-full w-full rounded-xl"
+            className="h-full w-full rounded-md!"
             defaultCenter={defaultPosition}
             defaultZoom={16}
+            renderingType="VECTOR"
             gestureHandling="cooperative"
             mapTypeControl={false}
             cameraControl={false}
@@ -114,15 +117,16 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
             ))}
 
             {/* Mostra marker da localização padrão apenas quando não há busca ativa */}
-            {sortedDistribuidores.length === 0 && (
+            {isInitialState && (
               <DefaultLocationMarker position={defaultPosition} placeId={defaultPosition.placeId} />
             )}
           </Map>
         </div>
 
-        <div className="w-full lg:flex lg:flex-2 lg:items-center lg:justify-center">
-          <div className="flex w-full flex-col gap-4">
-            {/* Title */}
+        {/* Search and distribuidores */}
+        <div className="w-full lg:flex lg:flex-2 lg:items-center lg:justify-center border border-gray-300 rounded-xl shadow-xl  p-4 md:py-8 md:px-4">
+          <div className="flex w-full flex-col">
+            {/* Title Desktop */}
             {!isMobile && (
               <h2 className="text-xxs text-caju-heading-primary scale-95 font-bold uppercase">
                 Nos encontre
@@ -131,72 +135,62 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
               </h2>
             )}
 
-            {/* Search */}
-            <div className="flex justify-start p-0">
+            {/* Search and distribuidores */}
+            <div className="bg-white p-4 rounded-md">
+              {/* Search */}
               <AutoCompleteSearchBox onPlaceSelect={handlePlaceSelect} onReset={handleReset} />
+
+              {isSearchLoading && (
+                <div className="font-inter flex items-center justify-center gap-2 py-4">
+                  <div className="border-caju-heading-primary h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></div>
+                  <span className="text-sm text-gray-600">Buscando distribuidores próximos...</span>
+                </div>
+              )}
+
+              {!isSearchLoading && sortedDistribuidores.length === 0 && (
+                <div className="font-inter flex flex-wrap items-center justify-start gap-1 py-5 ml-2">
+                  <p className="text-center">
+                    Use sua localização para encontrar distribuidores próximos
+                  </p>
+                  <button
+                    onClick={handleUseCurrentLocation}
+                    className="btn-green px-6 py-3 whitespace-nowrap lg:text-base"
+                    title="Usar minha localização"
+                  >
+                    📍 Usar Minha Localização
+                  </button>
+                </div>
+              )}
+
+              {!isSearchLoading && sortedDistribuidores.length > 0 && (
+                <div className="hide-scrollbar flex cursor-grab gap-2 my-2 lg:flex-col max-h-[300px] max-w-[650px] overflow-y-scroll">
+                  {sortedDistribuidores.map((dist) => (
+                    <div
+                      className="font-inter min-w-[225px] cursor-pointer border-2 border-gray-200 bg-[#FEF7FF] px-4 py-1 font-medium hover:border-gray-300 hover:shadow-md lg:max-h-24 lg:max-w-[650px]"
+                      key={dist.id + dist.lat + dist.nome}
+                      onClick={() => handleCardClick(dist)}
+                    >
+                      <p className="text-caju-heading-primary mb-0! text-base! font-bold">
+                        {dist.nome}
+                      </p>
+                      <p>{dist.endereco}</p>
+                      <p>{dist.telefone}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {isSearchLoading && (
-              <div className="font-poppins flex items-center justify-center gap-2 py-4">
-                <div className="border-caju-heading-primary h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></div>
-                <span className="text-sm text-gray-600">Buscando distribuidores próximos...</span>
-              </div>
-            )}
-
-            {!isSearchLoading && sortedDistribuidores.length === 0 && (
-              <div className="font-poppins flex flex-col items-center justify-center gap-4 py-8">
-                <p className="text-center">
-                  Use sua localização para encontrar distribuidores próximos
-                </p>
-                <button
-                  onClick={handleUseCurrentLocation}
-                  className="btn-primary px-6 py-3 whitespace-nowrap lg:text-base"
-                  title="Usar minha localização"
-                >
-                  📍 Usar Minha Localização
-                </button>
-              </div>
-            )}
-
-            {!isSearchLoading && sortedDistribuidores.length > 0 && (
-              <div className="hide-scrollbar flex cursor-grab gap-2 overflow-x-auto lg:max-h-[450px] lg:flex-col lg:overflow-y-auto">
-                {sortedDistribuidores.map((dist) => (
-                  <div
-                    className="font-poppins min-w-[225px] cursor-pointer border-2 border-gray-200 bg-[#FEF7FF] px-4 py-1 font-medium hover:border-gray-300 hover:shadow-md lg:max-h-20 lg:max-w-[650px]"
-                    key={dist.id + dist.lat + dist.nome}
-                    onClick={() => handleCardClick(dist)}
-                  >
-                    <span className="text-caju-heading-primary mb-0! text-base! font-bold!">
-                      {dist.nome}
-                    </span>
-                    <span>{dist.endereco}</span>
-                    <span>{dist.telefone}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
             {/* Buttons */}
-            <div
-              id="actions_area"
-              className="[&_button]:font-poppins! flex gap-3 self-center [&_button]:h-[45px] [&_button]:text-xs [&_button]:font-medium [&_button]:lg:h-[65px] [&_button]:lg:text-xl"
-            >
-              <button
-                aria-labelledby="actions_area"
-                title="Ver mais distribuidores"
-                className="btn-primary px-6 uppercase"
-              >
-                Ver mais
+            <div className="[&_button]:font-inter! flex gap-3 self-start [&_button]:h-[45px] [&_button]:text-xs [&_button]:font-medium [&_button]:lg:h-[65px] [&_button]:lg:text-xl">
+              <button onClick={handleUseCurrentLocation} className="btn-green px-6">
+                VER MAIS
               </button>
-              <a
-                aria-labelledby="actions_area"
-                title="Seja um revendedor"
-                href="/solicite/seja-um-revendedor/"
-              >
-                <button className="btn-secondary max-w-80 flex-1 uppercase">
-                  Seja um revendedor
-                </button>
-              </a>
+              <button className="btn-yellow max-w-80 flex-1">
+                <a className="uppercase" href="/solicite/seja-um-distribuidor/">
+                  seja um distribuidor
+                </a>
+              </button>
             </div>
           </div>
         </div>
@@ -216,7 +210,13 @@ export default function DistribuidoresGmaps({
   };
 
   return (
-    <APIProvider language="pt-BR" apiKey={apiKey} region="BR" version="beta">
+    <APIProvider
+      language="pt-BR"
+      apiKey={apiKey}
+      region="BR"
+      version="beta"
+      authReferrerPolicy="origin"
+    >
       <Gmaps distribuidores={distribuidores} defaultPosition={saoGeraldoPosition} />
     </APIProvider>
   );

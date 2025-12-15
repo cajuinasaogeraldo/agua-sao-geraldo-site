@@ -2,25 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { useState, useEffect } from 'react';
 import ImageOptimized from '@/components/react/common/ImageOptimized';
-
-interface BannerData {
-  title: string;
-  subtitle?: string;
-  description?: string;
-  image: string;
-  imageMobile?: string;
-  cta?: string;
-  textPosition: 'left' | 'center' | 'right';
-  textAlign: 'top' | 'middle' | 'bottom';
-  overlay: boolean;
-}
-
-interface BannerSwiperProps {
-  banners: Array<{
-    data: BannerData;
-    id: string;
-  }>;
-}
+import type { BannerData, BannerSwiperProps } from '../types';
 
 const positionClasses: Record<BannerData['textPosition'], string> = {
   left: 'text-left items-start',
@@ -38,80 +20,42 @@ export default function BannerSwiper({ banners }: BannerSwiperProps) {
   if (!banners || banners.length === 0) return null;
 
   return (
-    <>
-      <style>{`
-       /* Bullets base — branco translúcido */
-        .banner-swiper .swiper-pagination-bullet {
-          width: 12px;
-          height: 12px;
-          background: rgba(255, 255, 255, 0.5); /* branco suave */
-          opacity: 1;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    <div id="bannerSwiper" className="relative h-[341px] w-full overflow-hidden md:h-[700px]">
+      <Swiper
+        className="size-full"
+        modules={[Navigation, Pagination, Autoplay, EffectFade]}
+        effect="fade"
+        fadeEffect={{ crossFade: true }}
+        speed={700}
+        loop={banners.length > 1}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        navigation={{
+          nextEl: '#bannerSwiper .swiper-button-next',
+          prevEl: '#bannerSwiper .swiper-button-prev',
+        }}
+        pagination={
+          banners.length > 1
+            ? {
+                clickable: true,
+              }
+            : false
         }
+      >
+        {banners.map((banner, index) => (
+          <SwiperSlide key={banner.id}>
+            <BannerSlideContent banner={banner.data} index={index} />
+          </SwiperSlide>
+        ))}
 
-        /* Bullet ativo — branco puro com leve gradiente */
-        .banner-swiper .swiper-pagination-bullet-active {
-          width: 32px;
-          border-radius: 6px;
-          background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 1) 0%,
-            rgba(230, 230, 230, 1) 100%
-          );
-          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4);
-        }
-
-        /* Hover — branco mais forte */
-        .banner-swiper .swiper-pagination-bullet:hover {
-          background: rgba(255, 255, 255, 0.9);
-          transform: scale(1.1);
-        }
-
-        .banner-swiper .swiper-pagination {
-          bottom: 1.5rem !important;
-          z-index: 20 !important;
-          position: absolute !important;
-        }
-
-        @media (max-width: 768px) {
-          .banner-swiper .swiper-pagination {
-            bottom: 1rem !important;
-          }
-        }
-      `}</style>
-
-      <div className="relative h-[341px] w-full overflow-hidden md:h-[700px]">
-        <Swiper
-          className="banner-swiper size-full"
-          modules={[Navigation, Pagination, Autoplay, EffectFade]}
-          effect="fade"
-          fadeEffect={{
-            crossFade: true,
-          }}
-          speed={700}
-          loop={banners.length > 1}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-          pagination={
-            banners.length > 1
-              ? {
-                  clickable: true,
-                }
-              : false
-          }
-        >
-          {banners.map((banner, index) => (
-            <SwiperSlide key={banner.id}>
-              <BannerSlideContent banner={banner.data} index={index} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </>
+        {/* NAV BUTTONS */}
+        <div className="swiper-button-prev py-3 text-caju-heading-yellow! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
+        <div className="swiper-button-next py-3 text-caju-heading-yellow! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
+      </Swiper>
+    </div>
   );
 }
 
@@ -132,24 +76,35 @@ function BannerSlideContent({ banner, index }: { banner: BannerData; index: numb
     img.src = banner.image;
   }, [banner.image]);
 
-  const { title, subtitle, description, image, cta, textPosition, textAlign, overlay } = banner;
+  const {
+    title,
+    subtitle,
+    description,
+    image,
+    imageMobile,
+    cta,
+    textPosition,
+    textAlign,
+    overlay,
+  } = banner;
 
   const hasCTA = !!cta;
 
   const content = (
-    <div className="relative size-full">
+    <div className="relative size-full bg-caju-heading-primary">
       <picture>
+        {imageMobile && <source media="(max-width: 768px)" srcSet={imageMobile} />}
         <ImageOptimized
           src={image}
           alt={title}
           width={1920}
           height={700}
           layout="cover"
-          decoding="async"
-          id={index === 0 ? 'primary-image' : `banner-image-${index + 1}`}
           loading={index === 0 ? 'eager' : 'lazy'}
           fetchPriority={index === 0 ? 'high' : 'auto'}
-          className={`absolute inset-0 size-full object-${objectFit} object-center`}
+          className={`absolute inset-0 size-full object-center ${
+            objectFit === 'cover' ? 'object-cover' : 'object-contain'
+          }`}
           objectFit={objectFit}
           objectPosition="center"
           aspectRatio={imageRatio || undefined}
@@ -165,7 +120,6 @@ function BannerSlideContent({ banner, index }: { banner: BannerData; index: numb
       >
         <div className={`mx-auto flex w-full max-w-7xl flex-col ${positionClasses[textPosition]}`}>
           {subtitle && <p className="mb-4 text-xl text-white/90 md:text-3xl">{subtitle}</p>}
-
           {description && (
             <p className="mb-8 max-w-2xl text-base text-white/80 md:text-lg">{description}</p>
           )}
