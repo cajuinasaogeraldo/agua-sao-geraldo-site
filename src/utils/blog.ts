@@ -1,3 +1,6 @@
+/**
+ * @lintignore
+ */
 import type { PaginateFunction } from 'astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
@@ -59,7 +62,6 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<News> =
     image,
     tags: rawTags = [],
     category: rawCategory,
-    content,
     author,
     draft = false,
     metadata = {},
@@ -107,8 +109,6 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<News> =
     metadata,
 
     Content: Content,
-    content: content,
-    // or 'content' in case you consume from API
 
     readingTime: remarkPluginFrontmatter?.readingTime,
   };
@@ -121,7 +121,6 @@ const load = async function (): Promise<Array<News>> {
   const results = (await Promise.all(normalizedPosts))
     .sort((a, b) => b.publishDate.valueOf() - a.publishDate.valueOf())
     .filter((post) => !post.draft);
-
   return results;
 };
 
@@ -132,20 +131,47 @@ let _tags: Array<Taxonomy>;
  * @lintignore
  */
 export const isBlogEnabled = APP_BLOG.isEnabled;
+/**
+ * @lintignore
+ */
 export const isRelatedPostsEnabled = APP_BLOG.isRelatedPostsEnabled;
+/**
+ * @lintignore
+ */
 export const isBlogListRouteEnabled = APP_BLOG.list.isEnabled;
+/**
+ * @lintignore
+ */
 export const isBlogPostRouteEnabled = APP_BLOG.post.isEnabled;
+/**
+ * @lintignore
+ */
 export const isBlogCategoryRouteEnabled = APP_BLOG.category.isEnabled;
+/**
+ * @lintignore
+ */
 export const isBlogTagRouteEnabled = APP_BLOG.tag.isEnabled;
-
+/**
+ * @lintignore
+ */
 export const blogListRobots = APP_BLOG.list.robots;
+/**
+ * @lintignore
+ */
 export const blogPostRobots = APP_BLOG.post.robots;
+/**
+ * @lintignore
+ */
 export const blogCategoryRobots = APP_BLOG.category.robots;
+/**
+ * @lintignore
+ */
 export const blogTagRobots = APP_BLOG.tag.robots;
-
+/**
+ * @lintignore
+ */
 export const blogPostsPerPage = APP_BLOG?.postsPerPage;
 
-/** */
 export const fetchPosts = async (): Promise<Array<News>> => {
   if (!_posts) {
     _posts = await load();
@@ -164,7 +190,9 @@ export const fetchTags = async (): Promise<typeof _tags> => {
   return _tags;
 };
 
-/** */
+/**
+ * @lintignore
+ */
 export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<News>> => {
   if (!Array.isArray(slugs)) return [];
 
@@ -192,7 +220,9 @@ export const findPostsByIds = async (ids: Array<string>): Promise<Array<News>> =
   }, []);
 };
 
-/** */
+/**
+ * @lintignore
+ */
 export const findLatestPosts = async ({ count }: { count?: number }): Promise<Array<News>> => {
   const _count = count || 4;
   const posts = await fetchPosts();
@@ -200,7 +230,9 @@ export const findLatestPosts = async ({ count }: { count?: number }): Promise<Ar
   return posts ? posts.slice(0, _count) : [];
 };
 
-/** */
+/**
+ * @lintignore
+ */
 export const getStaticPathsBlogList = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogListRouteEnabled) return [];
   return paginate(await fetchPosts(), {

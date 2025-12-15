@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
 export const parceriasSchema = z.object({
+  requestType: z.string().min(1, 'Tipo de solicitação é obrigatório'),
   name: z.string().min(1, 'Nome é obrigatório'),
   email: z.string().min(1, 'E-mail é obrigatório').email('E-mail inválido'),
   whatsapp: z.string().min(1, 'Telefone é obrigatório'),
-  requestType: z.string().min(1, 'Tipo de solicitação é obrigatório'),
   institutionName: z.string().min(1, 'Nome da instituição é obrigatório'),
   institutionEmail: z.string().min(1, 'E-mail da instituição é obrigatório'),
   institutionPhone: z.string().min(1, 'Telefone da instituição é obrigatório'),

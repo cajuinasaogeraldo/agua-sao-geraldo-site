@@ -1,5 +1,8 @@
 import { I18N } from 'astrowind:config';
 
+/**
+ * @lintignore
+ */
 export const formatter: Intl.DateTimeFormat = new Intl.DateTimeFormat(I18N?.language, {
   year: 'numeric',
   month: 'short',
@@ -18,6 +21,9 @@ export const trim = (str = '', ch?: string) => {
 };
 
 // Function to format a number in thousands (K) or millions (M) format depending on its value
+/**
+ * @lintignore
+ */
 export const toUiAmount = (amount: number) => {
   if (!amount) return 0;
 

@@ -1,14 +1,6 @@
 @import './tailwind.css';
 @import './pages.css';
 
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 body {
   font-family: 'Poppins', 'Inter';
   margin: 0;
@@ -68,6 +60,57 @@ h5,
 h6 {
   margin: 0 0 0.5rem 0;
   @apply text-agua-primary-blue!;
+}
+
+#bannerSwiper {
+  /* ========================================
+   BANNER SWIPER - Overrides de biblioteca
+   ======================================== */
+
+  /* Bullets - base (branco translúcido) */
+  .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Bullet ativo - branco puro com gradiente sutil */
+  .swiper-pagination-bullet-active {
+    width: 32px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(230, 230, 230, 1) 100%);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4);
+  }
+
+  /* Hover - branco mais forte */
+  .swiper-pagination-bullet:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
+  }
+
+  /* Posicionamento da paginação */
+  .swiper-pagination {
+    bottom: 1.5rem !important;
+    z-index: 20 !important;
+    position: absolute !important;
+  }
+
+  @media (max-width: 768px) {
+    .swiper-pagination {
+      bottom: 1rem !important;
+    }
+  }
+
+  /* Mobile - ajuste de tamanho das setas */
+  @media (max-width: 768px) {
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+      font-size: 14px;
+    }
+  }
 }
 
 /* YouTube Embed - Container responsivo para vídeos embeddados */

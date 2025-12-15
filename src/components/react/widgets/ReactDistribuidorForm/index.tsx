@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import { FormField } from './FormField';
 import { distribuidorSchema, type DistribuidorFormData } from './validators';
 import { GoogleReCaptchaProvider, GoogleReCaptchaCheckbox } from '@google-recaptcha/react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -9,6 +8,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/pt-br';
 import { PrivacyPolicyModal } from '../../common/PrivacyPolicyModal';
 import { AllowedFormIds } from '../../common/form-constants';
+import { FormField } from '../../common/FormField';
 
 interface Props {
   onSubmitSuccess?: () => void;
@@ -42,7 +42,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
         }
       });
       formData.append('captchaToken', token || '');
-      formData.append('formId', AllowedFormIds.REVENDEDOR);
+      formData.append('formId', AllowedFormIds.CAJUINA_DISTRIBUIDOR);
 
       const response = await fetch(`${apiUrl}/forms/submit`, {
         method: 'POST',
@@ -63,9 +63,9 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
       alert('Formulário enviado com sucesso!');
       onSubmitSuccess?.();
-      window.location.reload();
-    } catch (error: any) {
-      console.error('Erro ao enviar formulário:', error, error.message);
+      reset();
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
       alert('Erro ao enviar formulário. Tente novamente.');
     }
   };
@@ -166,12 +166,12 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
             />
           </div>
         </div>
-        <div className="flex flex-col items-center! justify-start gap-4 md:flex-row p-4 md:px-6 md:py-8">
+        <div className="flex flex-col items-center justify-start gap-4 md:flex-row p-4 md:px-6 md:py-8">
           {/* reCAPTCHA */}
           <div className="flex flex-col gap-1">
             <GoogleReCaptchaCheckbox
               onChange={setToken}
-              action={AllowedFormIds.REVENDEDOR}
+              action={AllowedFormIds.CAJUINA_DISTRIBUIDOR}
               id="DISTRIBUIDOR_FORM"
             />
             {recaptchaError && <span className="text-[#d32f2f]/70">{recaptchaError}</span>}
@@ -180,7 +180,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-secondary mt-0! w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
+            className="btn-yellow w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
           >
             {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
           </button>

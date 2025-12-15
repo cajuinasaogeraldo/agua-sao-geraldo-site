@@ -1,7 +1,7 @@
 import type { Distribuidor } from '@/types';
 import { useState, useRef } from 'react';
+import { toast } from 'sonner';
 
-// Raio de busca em graus (aproximadamente km)
 const SEARCH_RADIUS = 0.5; // ~55km
 
 interface hookProps {
@@ -22,7 +22,16 @@ export default function useGmapsActions({
   onSelectMarker,
 }: hookProps) {
   const [isSearchLoading, setIsLoading] = useState(false);
-  const currentReferencePoint = useRef<{ lat: number; lng: number } | null>(null); // Rastreia a referência atual (localização ou busca)
+  const [isInitialState, setIsInitialState] = useState(true);
+  const currentReferencePoint = useRef<{ lat: number; lng: number } | null>(null);
+  const geolocationAttempt = useRef(0);
+
+  // Função centralizada de reset
+  const resetSearchState = () => {
+    currentReferencePoint.current = null;
+    setSortedDistribuidores([]);
+    onResetMarkers();
+  };
 
   const handleCardClick = (dist: Distribuidor) => {
     if (map) {
@@ -32,18 +41,7 @@ export default function useGmapsActions({
     onSelectMarker?.(dist.id);
   };
 
-  const handleRadiusFilterAndSort = (searchLat: number, searchLng: number) => {
-    currentReferencePoint.current = { lat: searchLat, lng: searchLng };
-
-    const nearby = distribuidores
-      .map((dist) => ({
-        ...dist,
-        distance: Math.sqrt(Math.pow(dist.lat - searchLat, 2) + Math.pow(dist.lng - searchLng, 2)),
-      }))
-      .filter((dist) => dist.distance <= SEARCH_RADIUS)
-      .sort((a, b) => a.distance - b.distance);
-
-    setSortedDistribuidores(nearby);
+  const adjustMapToResults = (nearby: Distribuidor[], searchLat: number, searchLng: number) => {
     if (!map) return;
 
     if (nearby.length > 1) {
@@ -57,86 +55,162 @@ export default function useGmapsActions({
           map.setZoom(18);
         }
       });
-      return;
-    }
-
-    if (nearby.length === 1) {
-      const only = nearby[0];
-      map.setCenter({ lat: only.lat, lng: only.lng });
+    } else if (nearby.length === 1) {
+      map.setCenter({ lat: nearby[0].lat, lng: nearby[0].lng });
       map.setZoom(16);
-      return;
+    } else {
+      map.setCenter({ lat: searchLat, lng: searchLng });
+      map.setZoom(12);
     }
-
-    map.setCenter({ lat: searchLat, lng: searchLng });
-    map.setZoom(12);
   };
 
-  const resetSearchFilters = () => {
-    currentReferencePoint.current = null;
-    setSortedDistribuidores([]);
-    onResetMarkers();
+  const handleRadiusFilterAndSort = (searchLat: number, searchLng: number) => {
+    setIsInitialState(false);
+    currentReferencePoint.current = { lat: searchLat, lng: searchLng };
+
+    const nearby = distribuidores
+      .map((dist) => ({
+        ...dist,
+        distance: Math.sqrt(Math.pow(dist.lat - searchLat, 2) + Math.pow(dist.lng - searchLng, 2)),
+      }))
+      .filter((dist) => dist.distance <= SEARCH_RADIUS)
+      .sort((a, b) => a.distance - b.distance);
+
+    setSortedDistribuidores(nearby);
+    adjustMapToResults(nearby, searchLat, searchLng);
+  };
+
+  const requestGeolocation = (useHighAccuracy: boolean): Promise<GeolocationPosition> => {
+    return new Promise((resolve, reject) => {
+      const options: PositionOptions = {
+        enableHighAccuracy: useHighAccuracy,
+        timeout: useHighAccuracy ? 30000 : 10000,
+        maximumAge: useHighAccuracy ? 0 : 30000,
+      };
+
+      navigator.geolocation.getCurrentPosition(resolve, reject, options);
+    });
+  };
+
+  const handleGeolocationError = (error: GeolocationPositionError, isFirstAttempt: boolean) => {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        toast.error('Permissão negada', {
+          description: `
+            <div className="text-sm">
+              <p>Para ativar a localização:</p>
+              <ol className="ml-4 mt-1 list-decimal">
+                <li>Clique no 🔒 na barra de endereço</li>
+                <li>Permita o acesso à localização</li>
+                <li>Recarregue e tente novamente</li>
+              </ol>
+            </div>
+          `,
+          duration: 8000,
+        });
+        geolocationAttempt.current = 0;
+        break;
+
+      case error.POSITION_UNAVAILABLE:
+        toast.error('Localização indisponível', {
+          description: 'Não foi possível determinar sua posição. Use a busca manual.',
+          duration: 5000,
+        });
+        geolocationAttempt.current = 0;
+        break;
+
+      case error.TIMEOUT:
+        if (isFirstAttempt) {
+          toast.warning('Tentando com GPS...', {
+            description: 'A localização rápida falhou. Aguarde um momento.',
+            duration: 3000,
+          });
+          setTimeout(() => handleUseCurrentLocation(), 500);
+        } else {
+          toast.error('Tempo esgotado', {
+            description:
+              'Não foi possível obter sua localização. Verifique se o GPS está ativo ou use a busca manual.',
+            duration: 6000,
+          });
+          geolocationAttempt.current = 0;
+        }
+        break;
+
+      default:
+        toast.error('Erro ao obter localização', {
+          description: 'Use a busca manual para encontrar distribuidores próximos.',
+          duration: 5000,
+        });
+        geolocationAttempt.current = 0;
+    }
   };
 
   const handleUseCurrentLocation = async () => {
     if (!navigator.geolocation) {
-      alert('Geolocalização não é suportada pelo seu navegador');
+      toast.error('Geolocalização não suportada', {
+        description: 'Seu navegador não suporta geolocalização. Use a busca manual.',
+      });
       return;
     }
 
+    geolocationAttempt.current += 1;
+    const isFirstAttempt = geolocationAttempt.current === 1;
+
     setIsLoading(true);
 
-    const randomDelay = Math.random() * 2000 + 1500;
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setTimeout(() => {
-          const { latitude, longitude } = position.coords;
-
-          handleRadiusFilterAndSort(latitude, longitude);
-          setIsLoading(false);
-        }, randomDelay);
-      },
-      (error) => {
-        setIsLoading(false);
-
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            alert(
-              'Você negou o acesso à localização. Por favor, habilite nas configurações do navegador.',
-            );
-            break;
-          case error.POSITION_UNAVAILABLE:
-            alert('Localização indisponível no momento.');
-            break;
-          case error.TIMEOUT:
-            alert('Tempo esgotado ao obter localização.');
-            break;
-          default:
-            alert('Não foi possível obter sua localização: ' + error.message);
-        }
-      },
+    const loadingToast = toast.loading(
+      isFirstAttempt ? 'Obtendo sua localização...' : 'Tentando novamente com GPS...',
       {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
+        description: isFirstAttempt
+          ? 'Usando localização rápida'
+          : 'Aguarde enquanto localizamos você',
       },
     );
+
+    try {
+      const position = await requestGeolocation(!isFirstAttempt);
+      const { latitude, longitude, accuracy } = position.coords;
+
+      toast.dismiss(loadingToast);
+      toast.success('Localização obtida!', {
+        description: `Precisão: ~${Math.round(accuracy)}m`,
+        duration: 3000,
+      });
+
+      resetSearchState();
+      handleRadiusFilterAndSort(latitude, longitude);
+      setIsLoading(false);
+      geolocationAttempt.current = 0;
+    } catch (error) {
+      toast.dismiss(loadingToast);
+      setIsLoading(false);
+
+      if (error instanceof GeolocationPositionError) {
+        handleGeolocationError(error, isFirstAttempt);
+      } else {
+        toast.error('Erro desconhecido', {
+          description: 'Use a busca manual para encontrar distribuidores.',
+        });
+      }
+    }
   };
 
-  const handlePlaceSelect = async (place: google.maps.places.Place | null) => {
+  const handlePlaceSelect = (place: google.maps.places.Place | null) => {
     if (!place?.location || !map) return;
+
     const searchLat = place.location.lat();
     const searchLng = place.location.lng();
 
-    resetSearchFilters();
-
+    resetSearchState();
     handleRadiusFilterAndSort(searchLat, searchLng);
   };
 
   const handleReset = () => {
-    resetSearchFilters();
+    resetSearchState();
     map?.panTo(defaultPosition);
     map?.setZoom(16);
+    geolocationAttempt.current = 0;
+    setIsInitialState(true);
   };
 
   return {
@@ -145,5 +219,6 @@ export default function useGmapsActions({
     handlePlaceSelect,
     handleReset,
     isSearchLoading,
+    isInitialState,
   };
 }

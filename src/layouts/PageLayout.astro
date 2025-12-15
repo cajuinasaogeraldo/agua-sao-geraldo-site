@@ -6,21 +6,30 @@ import Footer from '@/components/Footer.astro';
 import { headerData, footerData } from '@/navigation';
 
 import type { MetaData } from '@/types';
+import ToastProvider from '@/components/react/common/ToastProvider';
 
 export interface Props {
   metadata?: MetaData;
 }
+
+const isHome = Astro.url.pathname === '/';
 
 const { metadata } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
   <slot name="header">
-    <Header {...headerData} />
+    <Header isFixed={isHome} {...headerData} />
   </slot>
-  <main>
+  <main
+    class:list={{
+      'pt-16 lg:pt-20': !isHome,
+    }}
+  >
     <slot />
+    <ToastProvider client:load />
   </main>
+
   <slot name="footer">
     <Footer {...footerData} />
   </slot>

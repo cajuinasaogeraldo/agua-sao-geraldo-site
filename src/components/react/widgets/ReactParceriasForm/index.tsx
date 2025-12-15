@@ -1,22 +1,20 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import { ESTADOS_BRASIL } from './constants';
-import { FormField } from './FormField';
 import { parceriasSchema, type ParceriasFormData } from './validators';
 import { GoogleReCaptchaProvider, GoogleReCaptchaCheckbox } from '@google-recaptcha/react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/pt-br';
+import { PrivacyPolicyModal } from '../../common/PrivacyPolicyModal';
+import { AllowedFormIds, ESTADOS_BRASIL } from '../../common/form-constants';
+import { FormField } from '../../common/FormField';
 
 interface Props {
   onSubmitSuccess?: () => void;
   recaptchaSiteKey?: string;
   apiUrl?: string;
 }
-import { PrivacyPolicyModal } from './PrivacyPolicyModal';
-
-const actions = { SOLICITACAO_PARCERIAS: 'SOLICITACAO_PARCERIAS' } as const;
 
 function Form({ onSubmitSuccess, apiUrl }: Props) {
   const [token, setToken] = useState<string | null>(null);
@@ -33,62 +31,43 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
     resolver: zodResolver(parceriasSchema),
   });
 
-  const validateCaptcha = async (token: string | null) => {
-    setToken(token);
-    setRecaptchaError(null);
-    const req = await fetch(`${apiUrl}/shared/recaptcha/validate`, {
-      method: 'POST',
-      body: JSON.stringify({ token, action: actions.SOLICITACAO_PARCERIAS }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!req.ok) {
-      setRecaptchaError('Falha ao validar reCAPTCHA. Por favor, tente novamente.');
-      return false;
-    }
-
-    return true;
-  };
-
   const onSubmit = async (data: ParceriasFormData) => {
     try {
       const formData = new FormData();
-      const captchaIsValid = await validateCaptcha(token);
+      // const captchaIsValid = await validateCaptcha(token);
 
-      if (captchaIsValid) {
-        Object.entries(data).forEach(([key, val]) => {
-          if (key === 'files' && val && val instanceof FileList) {
-            Array.from(val).forEach((file: File) => formData.append('files', file));
-          } else if (val !== null && typeof val !== 'boolean') {
-            formData.append(key, String(val));
-          } else if (typeof val === 'boolean') {
-            formData.append(key, val ? 'true' : 'false');
-          }
-        });
-
-        const response = await fetch(`${apiUrl}/shared/brevo-mail/submit-form`, {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          if (
-            errorData.message &&
-            (errorData.message.includes('reCAPTCHA') || errorData.message.includes('token'))
-          ) {
-            setRecaptchaError('Falha na validação do reCAPTCHA. Por favor, tente novamente.');
-            return;
-          }
-          throw new Error('Falha ao enviar formulário');
+      Object.entries(data).forEach(([key, val]) => {
+        if (key === 'files' && val && val instanceof FileList) {
+          Array.from(val).forEach((file: File) => formData.append('files', file));
+        } else if (val !== null && typeof val !== 'boolean') {
+          formData.append(key, String(val));
+        } else if (typeof val === 'boolean') {
+          formData.append(key, val ? 'true' : 'false');
         }
+      });
+      formData.append('captchaToken', token || '');
+      formData.append('formId', AllowedFormIds.CAJUINA_PARCERIAS);
 
-        alert('Formulário enviado com sucesso!');
-        onSubmitSuccess?.();
-        window.location.reload();
+      const response = await fetch(`${apiUrl}/forms/submit`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        if (
+          errorData.message &&
+          (errorData.message.includes('reCAPTCHA') || errorData.message.includes('token'))
+        ) {
+          setRecaptchaError('Falha na validação do reCAPTCHA. Por favor, tente novamente.');
+          return;
+        }
+        throw new Error('Falha ao enviar formulário');
       }
+
+      alert('Formulário enviado com sucesso!');
+      onSubmitSuccess?.();
+      reset();
     } catch (error) {
       console.error('Erro ao enviar formulário:', error);
       alert('Erro ao enviar formulário. Tente novamente.');
@@ -96,8 +75,11 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
   };
 
   return (
-    <div className="mx-auto w-full px-4 py-4 md:px-6 md:py-8">
-      <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl bg-white">
+    <div className="mx-auto w-full">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="rounded-2xl bg-white px-4 py-4 md:px-6 md:py-8"
+      >
         <div className="mb-6 flex flex-col gap-8 md:mb-8 md:gap-12">
           <FormField
             className="w-full md:w-96"
@@ -116,7 +98,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
           {/* Informações pessoais  */}
           <div>
-            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações Pessoais
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -150,7 +132,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
           {/* Instituições */}
           <div>
-            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Instituições
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -186,7 +168,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
           {/* Evento */}
           <div>
-            <h3 className="text-caju-heading-primary mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Evento/Projeto
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
@@ -320,27 +302,26 @@ esporte, meio ambiente ou social."
           </div>
 
           {/* Termos */}
-          <div className="font-poppins flex flex-col items-stretch gap-4 md:flex-row md:items-center">
+          <div className="font-inter flex flex-col items-stretch gap-4 md:flex-row md:items-center">
             <FormField
               register={register}
               errors={errors}
               name="acceptance"
               type="checkbox"
               label={
-                <span>
+                <>
                   Declaro que li e aceito a{' '}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsPrivacyModalOpen(true);
-                    }}
-                    className="text-caju-heading-primary hover:text-caju-red-primary cursor-pointer font-semibold underline"
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => setIsPrivacyModalOpen(true)}
+                    onKeyDown={(e) => e.key === 'Enter' && setIsPrivacyModalOpen(true)}
+                    className="text-caju-heading-primary hover:text-caju-secondary-orange cursor-pointer font-semibold underline"
                   >
-                    Política de Privacidade e Proteção de Dados
-                  </button>
+                    política de privacidade e proteção de dados
+                  </span>
                   .
-                </span>
+                </>
               }
               required
             />
@@ -351,7 +332,7 @@ esporte, meio ambiente ou social."
           <div className="flex flex-col gap-1">
             <GoogleReCaptchaCheckbox
               onChange={setToken}
-              action={actions.SOLICITACAO_PARCERIAS}
+              action={AllowedFormIds.CAJUINA_PARCERIAS}
               id="PARCERIA_FORM"
             />
             {recaptchaError && <span className="text-[#d32f2f]/70">{recaptchaError}</span>}
@@ -360,7 +341,7 @@ esporte, meio ambiente ou social."
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-secondary w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
+            className="btn-yellow w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
           >
             {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
           </button>

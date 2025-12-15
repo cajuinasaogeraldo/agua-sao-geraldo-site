@@ -5,6 +5,7 @@ import BannerSliderSkeleton from './BannerSliderSkeleton.astro';
 import type { Banner } from '@/types';
 
 const allBanners = (await getCollection('banner')) as Banner[];
+
 const banners = allBanners
   .filter((banner): banner is Banner => {
     if (!banner.data.active) return false;

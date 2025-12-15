@@ -38,17 +38,15 @@
   width: 100%;
   height: 70px;
   background: theme(--color-agua-primary-blue);
-  /* background: #202020; */
 }
 
 #about {
   position: relative;
-  z-index: 100;
+  z-index: 1;
 }
 
 #about::before {
   -webkit-mask: var(--wave-mask);
-
   mask: var(--wave-mask);
 
   content: '';
@@ -81,7 +79,6 @@
 /* ============================================
    TIPOGRAFIA GLOBAL – RESPONSIVE SYSTEM
    ============================================ */
-
 /* Headings - Hierarquia semântica */
 h1 {
   @apply text-2xl font-extrabold sm:text-3xl md:text-5xl lg:text-6xl;

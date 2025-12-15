@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=https://unpkg.com/@cajuinasi/sveltia-cms/schema/sveltia-cms.json
 backend:
   name: 'github'
-  repo: 'cajuinasaogeraldo/agua-sao-geraldo-site'
+  repo: 'cajuinasaogeraldo/cajuina-site'
   branch: 'development'
   base_url: 'https://cajuina-cms-auth.cadastro-cajuina.workers.dev/'
   squash_merges: true
-  preview_url: 'https://seagreen-squirrel-365460.hostingersite.com/'
+  preview_url: 'https://maroon-shark-519604.hostingersite.com/'
   commit_messages:
     create: '[cms] Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}>'
     update: '[cms] Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}>'
@@ -41,21 +41,11 @@ collections:
     slug: '{{slug}}'
     editor:
       preview: false
-    media_folder: '/src/assets/images/banner' # Location where files will be stored in the repo
-    public_folder: '/src/assets/images/banner' # The src attribute for uploaded media
+    media_folder: '/src/assets/images/banner'
+    public_folder: '/src/assets/images/banner'
     fields:
       - { name: title, label: Título, widget: string }
-      # - { name: subtitle, label: Subtítulo, widget: string, required: false }
-      # - { name: description, label: Descrição, widget: text, required: false }
-
       - { name: image, label: 'Imagem de Fundo', widget: image, required: true }
-      # - {
-      #     name: imageMobile,
-      #     label: 'Imagem Mobile (opcional)',
-      #     widget: image,
-      #     required: false,
-      #     hint: 'Imagem otimizada para dispositivos móveis',
-      #   }
       - name: cta
         label: Call to Action Link
         widget: string
@@ -106,17 +96,27 @@ collections:
       - { name: active, label: Ativo, widget: boolean, default: true }
 
   - name: distribuidores
-    icon: store
     label: Distribuidores
+    label_singular: Distribuidor
+    description: Gerenciar distribuidores autorizados
+    icon: store
     folder: src/data/distribuidor
     create: true
-    slug: '{{fields.nome}}'
-    media_folder: '/src/assets/images/distribuidor' # Location where files will be stored in the repo
-    public_folder: '/src/assets/images/distribuidor' # The src attribute for uploaded media
+    delete: true
+    slug: '{{nome}}'
+    extension: md
+    format: frontmatter
+    media_folder: /src/assets/images/distribuidor
+    public_folder: /src/assets/images/distribuidor
+    sortable_fields:
+      fields: [nome, endereco, active]
+      default:
+        field: nome
+        direction: ascending
     editor:
       preview: false
     fields:
-      - { name: nome, label: Nome, widget: string, required: true }
+      - { name: nome, label: Nome, widget: string, required: true, hint: 'Nome do distribuidor' }
       - {
           name: endereco,
           label: Endereço,
@@ -134,6 +134,13 @@ collections:
               '\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}',
               'Formato esperado: (88) 3512-3400 ou (88) 98765-4321',
             ],
+        }
+      - {
+          name: placeId,
+          label: 'Place ID',
+          widget: string,
+          required: false,
+          hint: 'ID do Google Places (preenchido automaticamente)',
         }
       - {
           name: lat,
@@ -157,7 +164,14 @@ collections:
           required: true,
           hint: 'Será preenchido automaticamente ao buscar coordenadas',
         }
-      - { name: active, label: Ativo, widget: boolean, default: true }
+      - {
+          name: active,
+          label: Ativo,
+          widget: boolean,
+          default: true,
+          required: true,
+          hint: 'Define se o distribuidor aparece no site',
+        }
 
   - divider: true
 

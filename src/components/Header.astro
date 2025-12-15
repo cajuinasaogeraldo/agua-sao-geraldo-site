@@ -51,8 +51,14 @@ const isHome = currentPath === '/';
   <!-- Gradiente de fundo verde (apenas mobile) -->
   <div
     aria-hidden="true"
-    data-isVisible={isHome}
-    class="from-agua-primary-blue via-agua-primary-blue/95 pointer-events-none absolute inset-0 h-full bg-linear-to-b from-0% via-70% to-transparent data-[isVisible=true]:hidden md:hidden"
+    class:list={[
+      'pointer-events-none absolute inset-0 h-full',
+      {
+        'md:hidden bg-linear-to-b from-agua-primary-blue from-0% via-agua-primary-blue/95 via-70% to-transparent':
+          !isHome,
+      },
+      { 'bg-black/30': isHome },
+    ]}
   >
   </div>
 
@@ -103,7 +109,7 @@ const isHome = currentPath === '/';
                   </button>
 
                   {/* Submenu que aparece ao clicar/hover */}
-                  <ul class="dropdown-menu dark:md:bg-dark rounded pl-4 font-medium drop-shadow-xl md:absolute md:hidden md:min-w-[200px] md:bg-white/90 md:pl-0 md:backdrop-blur-md">
+                  <ul class="dropdown-menu rounded pl-4 font-medium drop-shadow-xl md:absolute md:hidden md:min-w-[200px] md:bg-white/90 md:pl-0 md:backdrop-blur-md">
                     {links.map(({ text: text2, href: href2 }) => (
                       <li>
                         <a

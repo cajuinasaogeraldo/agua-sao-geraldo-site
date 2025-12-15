@@ -64,9 +64,7 @@ export function FormField<TFormData extends Record<string, any>>({
           />
           {label && <span className="text-caju-heading-primary text-sm select-none">{label}</span>}
         </label>
-        {errorMessage && (
-          <p className="font-poppins mt-1 text-sm text-red-600/75">{errorMessage}</p>
-        )}
+        {errorMessage && <p className="font-inter mt-1 text-sm text-red-600/75">{errorMessage}</p>}
       </div>
     );
   }
@@ -86,13 +84,13 @@ export function FormField<TFormData extends Record<string, any>>({
           rows={rows}
           maxLength={2000}
           placeholder={finalPlaceholder}
-          className={twMerge(baseInputClasses, 'font-poppins resize-y')}
+          className={twMerge(baseInputClasses, 'font-inter resize-y')}
         />
       ) : type === 'select' ? (
         <div className="relative">
           <select
             {...register(name)}
-            className={twMerge(baseInputClasses, 'font-poppins appearance-none')}
+            className={twMerge(baseInputClasses, 'font-inter appearance-none')}
           >
             {options?.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -118,7 +116,7 @@ export function FormField<TFormData extends Record<string, any>>({
           accept={accept}
           className={twMerge(
             baseInputClasses,
-            'font-poppins file:mr-4 file:rounded-md file:border-0 file:bg-gray-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-gray-700',
+            'font-inter file:mr-4 file:rounded-md file:border-0 file:bg-gray-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-gray-700',
           )}
         />
       ) : type === 'date' ? (
@@ -139,10 +137,10 @@ export function FormField<TFormData extends Record<string, any>>({
                     helperText: errorMessage,
                     InputProps: {
                       className:
-                        'text-caju-heading-primary! font-poppins! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
+                        'text-caju-heading-primary! font-inter! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
                     },
                     InputLabelProps: {
-                      className: 'text-gray-500! font-poppins! text-base! md:text-lg!',
+                      className: 'text-gray-500! font-inter! text-base! md:text-lg!',
                     },
                   },
                 }}
@@ -153,7 +151,7 @@ export function FormField<TFormData extends Record<string, any>>({
           <input
             type="date"
             {...register(name)}
-            className={twMerge(baseInputClasses, 'font-poppins')}
+            className={twMerge(baseInputClasses, 'font-inter')}
           />
         )
       ) : type === 'time' ? (
@@ -175,10 +173,10 @@ export function FormField<TFormData extends Record<string, any>>({
                     helperText: errorMessage,
                     InputProps: {
                       className:
-                        'text-caju-heading-primary! font-poppins! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
+                        'text-caju-heading-primary! font-inter! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
                     },
                     InputLabelProps: {
-                      className: 'text-gray-500! font-poppins! text-base! md:text-lg!',
+                      className: 'text-gray-500! font-inter! text-base! md:text-lg!',
                     },
                   },
                 }}
@@ -189,7 +187,7 @@ export function FormField<TFormData extends Record<string, any>>({
           <input
             type="time"
             {...register(name)}
-            className={twMerge(baseInputClasses, 'font-poppins')}
+            className={twMerge(baseInputClasses, 'font-inter')}
           />
         )
       ) : (
@@ -198,12 +196,12 @@ export function FormField<TFormData extends Record<string, any>>({
           {...register(name)}
           maxLength={400}
           placeholder={finalPlaceholder}
-          className={twMerge(baseInputClasses, 'font-poppins')}
+          className={twMerge(baseInputClasses, 'font-inter')}
         />
       )}
 
       {errorMessage && type !== 'date' && type !== 'time' && (
-        <p className="font-poppins mt-1 text-sm text-red-600/75">{errorMessage}</p>
+        <p className="font-inter mt-1 text-sm text-red-600/75">{errorMessage}</p>
       )}
     </div>
   );
