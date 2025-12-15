@@ -1,27 +1,10 @@
 rsync -av --delete --itemize-changes \
-  --exclude='.git' \
-  --exclude='.turbo' \
-  --exclude='.astro' \
-  --exclude='tailwind.config.ts' \
-  --exclude='node_modules' \
-  --exclude='dist/' \
-  --exclude='scripts/' \
-  --include='src/' \
-  --include='src/layouts/' \
-  --include='src/layouts/**' \
-  --include='src/components/' \
-  --include='src/components/common/' \
-  --include='src/components/react' \
-  --include='src/components/ui/' \
-  --include='src/components/widgets/' \
-  --include='src/components/common/**' \
-  --include='src/components/ui/**' \
-  --include='src/components/widgets/**' \
-  --include='src/utils/' \
-  --include='src/utils/**' \
-  --include='vendor/' \
-  --include='vendor/**' \
-  --include='public/' \
-  --include='public/**' \
-  --exclude='src/**' \
+  --filter='+ src/' \
+  --filter='+ src/layouts/**' \
+  --filter='+ src/components/**' \
+  --filter='+ src/utils/**' \
+  --filter='+ vendor/**' \
+  --filter='+ public/**' \
+  --filter='- src/data/' \
+  --filter='- *' \
   /home/psousaj/projects/cajuina-site/ /home/psousaj/projects/agua-sao-geraldo-site/
