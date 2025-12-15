@@ -1,0 +1,86 @@
+---
+import type { CallToAction } from '@/types';
+import Button from '@/components/ui/Button.astro';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  content?: string;
+  callToAction?: string | CallToAction;
+  callToAction2?: string | CallToAction;
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  content = await Astro.slots.render('content'),
+  callToAction = await Astro.slots.render('callToAction'),
+  callToAction2 = await Astro.slots.render('callToAction2'),
+} = Astro.props;
+---
+
+<section class="not-prose relative md:-mt-[76px]">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true"></div>
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="pointer-events-none pt-0 md:pt-[76px]"></div>
+    <div class="py-8">
+      <div class="mx-auto max-w-6xl text-center">
+        {
+          tagline && (
+            <p
+              class="text-overline text-secondary intersect-once intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 "
+              set:html={tagline}
+            />
+          )
+        }
+        {
+          title && (
+            <h1
+              class="text-white! intersect-once intersect-quarter motion-safe:md:intersect:animate-fade mb-4 text-5xl font-normal! md:text-6xl motion-safe:md:opacity-0"
+              set:html={title}
+            />
+          )
+        }
+        <div class="mx-auto max-w-3xl">
+          {
+            subtitle && (
+              <p
+                class="text-lead text-muted intersect-once intersect-quarter motion-safe:md:intersect:animate-fade mb-6 motion-safe:md:opacity-0 "
+                set:html={subtitle}
+              />
+            )
+          }
+          <div
+            class="intersect-once intersect-quarter motion-safe:md:intersect:animate-fade m-auto flex max-w-xs flex-col flex-nowrap gap-4 sm:max-w-md sm:flex-row sm:justify-center motion-safe:md:opacity-0"
+          >
+            {
+              callToAction && (
+                <div class="flex w-full sm:w-auto justify-center">
+                  {typeof callToAction === 'string' ? (
+                    <Fragment set:html={callToAction} />
+                  ) : (
+                    <Button variant="green" {...callToAction} />
+                  )}
+                </div>
+              )
+            }
+            {
+              callToAction2 && (
+                <div class="flex w-full sm:w-auto">
+                  {typeof callToAction2 === 'string' ? (
+                    <Fragment set:html={callToAction2} />
+                  ) : (
+                    <Button {...callToAction2} />
+                  )}
+                </div>
+              )
+            }
+          </div>
+        </div>
+        {content && <Fragment set:html={content} />}
+      </div>
+    </div>
+  </div>
+</section>

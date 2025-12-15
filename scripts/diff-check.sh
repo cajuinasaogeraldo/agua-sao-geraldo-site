@@ -11,6 +11,7 @@ rsync -av --delete --itemize-changes \
   --include='src/layouts/**' \
   --include='src/components/' \
   --include='src/components/common/' \
+  --include='src/components/react' \
   --include='src/components/ui/' \
   --include='src/components/widgets/' \
   --include='src/components/common/**' \

@@ -3,19 +3,29 @@ import type { Banner } from '@/types';
 import { getCollection } from 'astro:content';
 
 const allBanners = (await getCollection('banner')) as Banner[];
+
+const firstBanner = allBanners
+  .filter((banner) => banner.data.active)
+  .sort((a, b) => a.data.order - b.data.order)[0];
+
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
 ---
 
 <>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <link
-    rel="preload"
-    fetchpriority="high"
-    as="image"
-    href={allBanners[0].data.image.src}
-    crossorigin="anonymous"
-  />
+  {
+    isHome && firstBanner && (
+      <link
+        rel="preload"
+        fetchpriority="high"
+        as="image"
+        href={firstBanner.data.image.src}
+        crossorigin="anonymous"
+      />
+    )
+  }
   <link
     rel="preload"
     href="https://cdn.jsdelivr.net/npm/swiper@12.0.3/swiper-bundle.min.css"
