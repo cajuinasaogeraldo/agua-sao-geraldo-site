@@ -154,7 +154,7 @@ const id = `gallery-${Math.random().toString(36).substr(2, 9)}`;
   }
 </div>
 
-<script define:vars={{ id }}>
+<script is:inline define:vars={{ id }}>
   const gallery = document.getElementById(id);
   const overlay = gallery.querySelector('.overlay');
   const closeBtn = gallery.querySelector('.close-btn');

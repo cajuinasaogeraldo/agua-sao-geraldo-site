@@ -103,11 +103,23 @@ export default defineConfig({
     },
   },
 
+  build: {
+    inlineStylesheets: 'auto',
+    assets: '_astro',
+  },
+
   vite: {
     plugins: [tailwindcss()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
+      },
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          assetFileNames: 'assets/[name]-[hash][extname]',
+        },
       },
     },
   },

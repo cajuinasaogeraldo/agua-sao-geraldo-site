@@ -1,32 +1,26 @@
 site:
-  name: Cajuína São Geraldo - O tradicional refrigerante de Caju do Nordeste
-  site: 'https://cornflowerblue-wildcat-224161.hostingersite.com/'
+  name: Água Mineral Natural - São Geraldo
+  site: 'https://red-chamois-284776.hostingersite.com/'
   base: '/'
   trailingSlash: true
 
   googleSiteVerificationId: null
 
-# Default SEO metadata
 metadata:
   title:
-    default: Cajuína São Geraldo
-    template: '%s - Cajuína São Geraldo'
-  description: 'Refrigerante de Caju São Geraldo, o sabor do nordeste que virou tradição. Conheça nossa história, nossos produtos e muito mais. Acesse agora!'
+    default: São Geraldo
+    template: '%s - São Geraldo'
+  description: 'Gostaria de conhecer a Fábrica Água Mineral São Geraldo? Agora está mais simples. Solicite agora a sua visita!'
   robots:
     index: true
     follow: true
   openGraph:
     site_name: São Geraldo
     images:
-      - url: '@/assets/images/site/CajuinaTradicional.jpg'
+      - url: '@/assets/images/site/logo.webp'
         width: 1200
         height: 628
     type: website
-  twitter:
-    handle: '@saogeraldocaju'
-    site: '@saogeraldocaju'
-    cardType: summary_large_image
-    creator: '@saogeraldocaju'
 
 i18n:
   language: pt-BR
@@ -67,7 +61,7 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: null # or "G-XXXXXXXXXX"
+      id: 'G-BFYBHKNTQ7' # or "G-XXXXXXXXXX"
 
 ui:
-  theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
+  theme: 'light:only' # Values: "system" | "light"

@@ -12,17 +12,24 @@ export interface Props {
   metadata?: MetaData;
 }
 
+const isHome = Astro.url.pathname === '/';
+
 const { metadata } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
   <slot name="header">
-    <Header isFixed {...headerData} />
+    <Header isFixed={isHome} {...headerData} />
   </slot>
-  <main class="pt-16 lg:pt-20">
+  <main
+    class:list={{
+      'pt-16 lg:pt-20': !isHome,
+    }}
+  >
     <slot />
     <ToastProvider client:load />
   </main>
+
   <slot name="footer">
     <Footer {...footerData} />
   </slot>

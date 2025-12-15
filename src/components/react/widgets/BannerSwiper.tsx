@@ -52,8 +52,8 @@ export default function BannerSwiper({ banners }: BannerSwiperProps) {
         ))}
 
         {/* NAV BUTTONS */}
-        <div className="swiper-button-prev py-3 text-caju-heading-yellow! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
-        <div className="swiper-button-next py-3 text-caju-heading-yellow! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
+        <div className="swiper-button-prev py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
+        <div className="swiper-button-next py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
       </Swiper>
     </div>
   );
@@ -91,7 +91,7 @@ function BannerSlideContent({ banner, index }: { banner: BannerData; index: numb
   const hasCTA = !!cta;
 
   const content = (
-    <div className="relative size-full bg-caju-heading-primary">
+    <div className="relative size-full bg-agua-secondary-blue">
       <picture>
         {imageMobile && <source media="(max-width: 768px)" srcSet={imageMobile} />}
         <ImageOptimized

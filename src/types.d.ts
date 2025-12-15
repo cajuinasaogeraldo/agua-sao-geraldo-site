@@ -83,6 +83,7 @@ export interface Distribuidor {
   nome: string;
   endereco: string;
   telefone: string;
+  placeId?: string;
   lat: number;
   lng: number;
 }

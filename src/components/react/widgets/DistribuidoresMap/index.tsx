@@ -142,7 +142,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 
               {isSearchLoading && (
                 <div className="font-inter flex items-center justify-center gap-2 py-4">
-                  <div className="border-caju-heading-primary h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></div>
+                  <div className="border-agua-primary-blue h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></div>
                   <span className="text-sm text-gray-600">Buscando distribuidores próximos...</span>
                 </div>
               )}
@@ -154,7 +154,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
                   </p>
                   <button
                     onClick={handleUseCurrentLocation}
-                    className="btn-green px-6 py-3 whitespace-nowrap lg:text-base"
+                    className="btn-primary px-6 py-3 whitespace-nowrap lg:text-base"
                     title="Usar minha localização"
                   >
                     📍 Usar Minha Localização
@@ -183,10 +183,10 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 
             {/* Buttons */}
             <div className="[&_button]:font-inter! flex gap-3 self-start [&_button]:h-[45px] [&_button]:text-xs [&_button]:font-medium [&_button]:lg:h-[65px] [&_button]:lg:text-xl">
-              <button onClick={handleUseCurrentLocation} className="btn-green px-6">
+              <button onClick={handleUseCurrentLocation} className="btn-primary px-6">
                 VER MAIS
               </button>
-              <button className="btn-yellow max-w-80 flex-1">
+              <button className="btn-secondary max-w-80 flex-1">
                 <a className="uppercase" href="/solicite/seja-um-distribuidor/">
                   seja um distribuidor
                 </a>
