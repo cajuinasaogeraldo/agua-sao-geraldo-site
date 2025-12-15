@@ -6,7 +6,7 @@ on:
   repository_dispatch:
     types: [cms-publish, rebuild]
   workflow_run:
-    workflows: ['Create and Auto-Merge PR']
+    workflows: ["Create and Auto-Merge PR"]
     types:
       - completed
   workflow_dispatch:
@@ -31,22 +31,21 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.18.0'
-          cache: 'pnpm'
+          node-version: "20.18.0"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Cache Turborepo
+      - name: Cache Astro Optimized Images
         uses: actions/cache@v4
         with:
-          path: .turbo
-          key: turbo-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('src/**', 'public/**') }}
+          path: .astro
+          key: astro-images-${{ runner.os }}-${{ hashFiles('src/assets/**/*') }}
           restore-keys: |
-            turbo-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
-            turbo-${{ runner.os }}-
+            astro-images-${{ runner.os }}-
 
-      - name: Build with Turbo
+      - name: Build Astro
         env:
           NODE_ENV: production
           PUBLIC_GOOGLE_MAPS_KEY_PROD: ${{ secrets.PUBLIC_GOOGLE_MAPS_KEY_PROD }}
