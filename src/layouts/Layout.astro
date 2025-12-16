@@ -26,6 +26,7 @@ const { language, textDirection } = I18N;
 const analyticsId = ANALYTICS?.vendors?.googleAnalytics.id
   ? String(ANALYTICS?.vendors?.googleAnalytics.id)
   : undefined;
+const enableAnalytics = !!analyticsId && import.meta.env.PROD;
 ---
 
 <!doctype html>
@@ -47,24 +48,21 @@ const analyticsId = ANALYTICS?.vendors?.googleAnalytics.id
   </head>
 
   <body class="text-default bg-page tracking-tight antialiased">
-    {
-      analyticsId ? (
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${analyticsId}`}
-            height="0"
-            width="0"
-            style="display:none;visibility:hidden"
-          />
-        </noscript>
-      ) : null
-    }
+    <ShowIf condition={enableAnalytics}>
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${analyticsId}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"></iframe>
+      </noscript>
+    </ShowIf>
     <slot />
-    <ShowIf condition={!!analyticsId && import.meta.env.PROD}>
+    <ShowIf condition={enableAnalytics}>
       <div transition:persist="find-me-on-the-other-side" id="cc-container">
         <CookieConsent />
         <script async is:inline>
-          document.addEventListener('astro:before-preparation', (event) => {
+          document.addEventListener('astro:before-preparation', (_event) => {
             const htmlClassName = window.document.documentElement.className;
             const consentClassPresent = htmlClassName.includes('show--consent') ? true : false;
             window._showConsentClass = consentClassPresent;

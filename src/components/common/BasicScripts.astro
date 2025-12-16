@@ -1,42 +1,46 @@
 ---
 import { UI } from 'astrowind:config';
+import ShowIf from './ShowIf.astro';
 ---
 
-<script
-  is:inline
-  src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js"
-  defer></script>
+<ShowIf condition={import.meta.env.PROD}>
+  <script
+    is:inline
+    src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js"
+    defer></script>
 
-<script is:inline>
-  window.addEventListener('load', () => {
-    CookieConsent.run({
-      guiOptions: {
-        consentModal: {
-          layout: 'box',
-          position: 'bottom left',
-          equalWeightButtons: false,
-          flipButtons: true,
+  <script is:inline>
+    window.addEventListener('load', () => {
+      CookieConsent.run({
+        guiOptions: {
+          consentModal: {
+            layout: 'box',
+            position: 'bottom left',
+            equalWeightButtons: false,
+            flipButtons: true,
+          },
+          preferencesModal: {
+            layout: 'box',
+            position: 'right',
+            equalWeightButtons: false,
+            flipButtons: true,
+          },
         },
-        preferencesModal: {
-          layout: 'box',
-          position: 'right',
-          equalWeightButtons: false,
-          flipButtons: true,
+        categories: {
+          necessary: { readOnly: true },
+          analytics: {},
         },
-      },
-      categories: {
-        necessary: { readOnly: true },
-        analytics: {},
-      },
-      language: {
-        default: 'pt-BR',
-        autoDetect: 'browser',
-      },
+        language: {
+          default: 'pt-BR',
+          autoDetect: 'browser',
+        },
+      });
     });
-  });
-</script>
+  </script>
+</ShowIf>
 
 <script is:inline data-category="analytics">
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function updateConsents() {
     gtag('consent', 'update', {
       ad_storage: 'granted',
