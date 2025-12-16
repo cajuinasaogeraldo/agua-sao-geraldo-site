@@ -1,43 +1,43 @@
 {
-    "consentModal": {
-        "title": "Olá! Podemos usar cookies?",
-        "description": "Usamos cookies para melhorar sua experiência, entender como o site é utilizado e oferecer conteúdos personalizados. Você pode aceitar todos os cookies ou gerenciar suas preferências a qualquer momento.",
-        "acceptAllBtn": "Aceitar todos",
-        "acceptNecessaryBtn": "Rejeitar todos",
-        "showPreferencesBtn": "Gerenciar preferências",
-        "footer": "[Política de Privacidade](#link)\n[Termos e Condições](#link)"
-    },
-    "preferencesModal": {
-        "title": "Central de Preferências de Cookies",
-        "acceptAllBtn": "Aceitar todos",
-        "acceptNecessaryBtn": "Rejeitar todos",
-        "savePreferencesBtn": "Salvar preferências",
-        "closeIconLabel": "Fechar",
-        "serviceCounterLabel": "Serviço|Serviços",
-        "sections": [
-            {
-                "title": "Uso de Cookies",
-                "description": "Os cookies nos ajudam a garantir o funcionamento correto do site, melhorar o desempenho e oferecer uma experiência mais relevante para você."
-            },
-            {
-                "title": "Cookies Estritamente Necessários <span class=\"pm__badge\">Sempre ativos</span>",
-                "description": "Esses cookies são essenciais para o funcionamento do site e não podem ser desativados. Eles garantem recursos básicos como segurança, acessibilidade e navegação.",
-                "linkedCategory": "necessary"
-            },
-            {
-                "title": "Cookies de Funcionalidade",
-                "description": "Permitem que o site se lembre de escolhas feitas por você, como idioma ou região, proporcionando uma experiência mais personalizada.",
-                "linkedCategory": "functionality"
-            },
-            {
-                "title": "Cookies de Análise",
-                "description": "Esses cookies nos ajudam a entender como os visitantes interagem com o site, coletando informações de forma anônima para melhorar nossos serviços e conteúdos.",
-                "linkedCategory": "analytics"
-            },
-            {
-                "title": "Mais informações",
-                "description": "Se tiver qualquer dúvida sobre nossa política de cookies ou sobre suas escolhas, <a class=\"cc__link\" href=\"#yourdomain.com\">entre em contato conosco</a>."
-            }
-        ]
-    }
+  "consentModal": {
+    "title": "Olá! Podemos usar cookies?",
+    "description": "Usamos cookies para melhorar sua experiência, entender como o site é utilizado e oferecer conteúdos personalizados. Você pode aceitar todos os cookies ou gerenciar suas preferências a qualquer momento.",
+    "acceptAllBtn": "Aceitar todos",
+    "acceptNecessaryBtn": "Rejeitar todos",
+    "showPreferencesBtn": "Gerenciar preferências",
+    "footer": "[Política de Privacidade](#link)\n[Termos e Condições](#link)"
+  },
+  "preferencesModal": {
+    "title": "Central de Preferências de Cookies",
+    "acceptAllBtn": "Aceitar todos",
+    "acceptNecessaryBtn": "Rejeitar todos",
+    "savePreferencesBtn": "Salvar preferências",
+    "closeIconLabel": "Fechar",
+    "serviceCounterLabel": "Serviço|Serviços",
+    "sections": [
+      {
+        "title": "Uso de Cookies",
+        "description": "Os cookies nos ajudam a garantir o funcionamento correto do site, melhorar o desempenho e oferecer uma experiência mais relevante para você."
+      },
+      {
+        "title": "Cookies Estritamente Necessários <span class=\"pm__badge\">Sempre ativos</span>",
+        "description": "Esses cookies são essenciais para o funcionamento do site e não podem ser desativados. Eles garantem recursos básicos como segurança, acessibilidade e navegação.",
+        "linkedCategory": "necessary"
+      },
+      {
+        "title": "Cookies de Funcionalidade",
+        "description": "Permitem que o site se lembre de escolhas feitas por você, como idioma ou região, proporcionando uma experiência mais personalizada.",
+        "linkedCategory": "functionality"
+      },
+      {
+        "title": "Cookies de Análise",
+        "description": "Esses cookies nos ajudam a entender como os visitantes interagem com o site, coletando informações de forma anônima para melhorar nossos serviços e conteúdos.",
+        "linkedCategory": "analytics"
+      },
+      {
+        "title": "Mais informações",
+        "description": "Se tiver qualquer dúvida sobre nossa política de cookies ou sobre suas escolhas, <a class=\"cc__link\" href=\"#yourdomain.com\">entre em contato conosco</a>."
+      }
+    ]
+  }
 }
