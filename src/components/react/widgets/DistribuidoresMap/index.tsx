@@ -170,7 +170,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
                       key={dist.id + dist.lat + dist.nome}
                       onClick={() => handleCardClick(dist)}
                     >
-                      <p className="text-caju-heading-primary mb-0! text-base! font-bold">
+                      <p className="text-agua-secondary-green mb-0! text-base! font-bold">
                         {dist.nome}
                       </p>
                       <p>{dist.endereco}</p>
@@ -187,7 +187,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
                 VER MAIS
               </button>
               <button className="btn-secondary max-w-80 flex-1">
-                <a className="uppercase" href="/solicite/seja-um-distribuidor/">
+                <a className="uppercase" href="/solicite/seja-um-revendedor/">
                   seja um distribuidor
                 </a>
               </button>

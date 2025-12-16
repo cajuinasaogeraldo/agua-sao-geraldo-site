@@ -1,0 +1,60 @@
+---
+import ReactContatoForm from '@/components/react/widgets/ReactContatoForm';
+import WidgetWrapper from '@/components/ui/WidgetWrapper.astro';
+import PageLayout from '@/layouts/PageLayout.astro';
+import type { MetaData } from '@/types';
+
+const metadata: MetaData = {
+  title: 'Fale Conosco',
+  description: 'Entre em contato conosco para dúvidas, sugestões ou suporte.',
+};
+
+const siteKey = import.meta.env.PUBLIC_GOOGLE_CAPTCHA_SITEKEY;
+const apiUrl = import.meta.env.PUBLIC_API_BASE_URL;
+---
+
+<PageLayout metadata={metadata}>
+  <WidgetWrapper>
+    <section class="grid py-10 md:p-10 w-full min-h-screen! grid-cols-1 md:grid-cols-2">
+      <div class="p-2 flex flex-col gap-5">
+        <h1>Fale Conosco</h1>
+        <h3
+          class="border-b-2 pb-2 text-[#828282]! font-medium border-caju-heading-yellow max-w-fit"
+        >
+          Queremos escutar você
+        </h3>
+        <p>
+          Disponibilizamos este canal de comunicação para atendê-lo da melhor forma possível. Suas
+          críticas e sugestões são elementos importantes para o aperfeiçoamento e qualidade dos
+          nossos produtos e serviços. Estamos sempre à sua disposição!
+          <span class="block">
+            <br />
+          </span>
+          Após o envio das informações nossa equipe irá lhe responder em até 72h pelo e-mail informado
+          abaixo.
+        </p>
+        <div class="contatos [&_p>span]:block flex flex-col gap-2">
+          <p>
+            <span>SAC – Serviço de Atendimento ao Cliente</span>
+            <span>(11) 4003.6125</span>
+          </p>
+          <p>
+            <span> Telefone </span>
+            <span>(88) 2101.7654</span>
+          </p>
+          <p>
+            <span> Atendimento </span>
+            <span>Segunda à Sexta-feira – 09h às 17h</span>
+          </p>
+          <p>
+            <span> E-mail </span>
+            <span>sac@cajuinasaogeraldo.com.br</span>
+          </p>
+        </div>
+      </div>
+      <div>
+        <ReactContatoForm client:load recaptchaSiteKey={siteKey} apiUrl={apiUrl} />
+      </div>
+    </section>
+  </WidgetWrapper>
+</PageLayout>

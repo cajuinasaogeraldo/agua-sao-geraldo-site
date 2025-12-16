@@ -72,7 +72,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
   return (
     <div className="mx-auto w-full">
-      <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl p-4 md:px-6 md:py-8 bg-white">
+      <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl p-4 md:px-6 md:py-12 bg-white">
         <div className="flex flex-col gap-8">
           {/* Informações  */}
           <div className="grid grid-cols-1 gap-4 [&_div>label]:text-xl! [&_div>label]:font-bold">
@@ -170,7 +170,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn-yellow w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
+              className="btn-primary w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
             >
               {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
             </button>

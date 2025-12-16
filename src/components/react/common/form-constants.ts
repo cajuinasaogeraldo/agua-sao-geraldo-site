@@ -1,6 +1,7 @@
 export enum AllowedFormIds {
   CAJUINA_PARCERIAS = 'cajuina-site-solicitacoes',
   CAJUINA_DISTRIBUIDOR = 'cajuina-site-distribuidor',
+  AGUA_REVENDEDOR = 'agua-site-revendedor',
   CONTATO_FORM = 'site-contato-form',
 }
 

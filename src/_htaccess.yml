@@ -91,7 +91,7 @@ customRules: |
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set X-XSS-Protection "1; mode=block"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(self)"
   </IfModule>
 
   # Bloquear arquivos sensíveis ocultos (ex: .env, .git)
@@ -99,6 +99,8 @@ customRules: |
     Order allow,deny
     Deny from all
   </FilesMatch>
+
+  ErrorDocument 404 /404.html
 
   # Bloqueia acesso a wp-admin antigos (quando migrado do WordPress)
   RedirectMatch 403 ^/wp-admin

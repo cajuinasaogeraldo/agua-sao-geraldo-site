@@ -8,17 +8,22 @@ import {
   isUnpicCompatible,
   type ImageProps,
 } from '@/utils/images-optimization';
+import GalleryLightboxTrigger from '../react/common/GalleryLightBoxTrigger';
 
-type Props = ImageProps;
+type Props = ImageProps & {
+  showGallery?: boolean;
+};
+
 export type ImageType = {
   src: string;
   attributes: HTMLAttributes<'img'>;
 };
 
 const props = Astro.props;
+const { showGallery = false } = props;
 
 if (props.alt === undefined || props.alt === null) {
-  throw new Error();
+  throw new Error('Alt text is required');
 }
 
 if (typeof props.width === 'string') {
@@ -50,17 +55,32 @@ if (
 } else if (_image) {
   image = await getImagesOptimized(_image, props, astroAssetsOptimizer);
 }
+
+const imageId = showGallery ? `img-gallery-${Math.random().toString(36).slice(2, 11)}` : undefined;
 ---
 
 {
   !image ? (
     <Fragment />
   ) : (
-    <img
-      src={image.src}
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-      {...image.attributes}
-    />
+    <>
+      <img
+        id={imageId}
+        src={image.src}
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+        class:list={[
+          image.attributes.class,
+          showGallery && 'cursor-pointer hover:opacity-90 transition-opacity',
+        ]}
+        role={showGallery ? 'button' : undefined}
+        tabindex={showGallery ? 0 : undefined}
+        {...image.attributes}
+      />
+
+      {showGallery && imageId && (
+        <GalleryLightboxTrigger images={[image.src]} imageTriggerId={imageId} client:only="react" />
+      )}
+    </>
   )
 }

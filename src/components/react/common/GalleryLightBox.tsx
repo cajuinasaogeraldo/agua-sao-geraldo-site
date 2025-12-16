@@ -13,7 +13,7 @@ function GalleryBoxImage({ image, idx }: { image: SingleImage; idx: number }) {
     <ImageOptimized
       src={typeof image !== 'string' ? image.data.image : image}
       alt={`Galeria de fotos ${idx + 1}`}
-      layout="constrained"
+      layout="contained"
     />
   );
 }
@@ -55,7 +55,7 @@ export default function GalleryLightbox({
   const lightboxContent = (
     <div className="fixed inset-0 z-9999 flex flex-col items-center justify-center p-4">
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/95 cursor-pointer" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/75 cursor-pointer" onClick={onClose} />
 
       {/* Close Button */}
       <button
