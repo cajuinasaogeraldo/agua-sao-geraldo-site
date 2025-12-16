@@ -2,6 +2,51 @@
 import { UI } from 'astrowind:config';
 ---
 
+<script
+  is:inline
+  src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js"
+  defer></script>
+
+<script is:inline>
+  window.addEventListener('load', () => {
+    CookieConsent.run({
+      guiOptions: {
+        consentModal: {
+          layout: 'box',
+          position: 'bottom left',
+          equalWeightButtons: false,
+          flipButtons: true,
+        },
+        preferencesModal: {
+          layout: 'box',
+          position: 'right',
+          equalWeightButtons: false,
+          flipButtons: true,
+        },
+      },
+      categories: {
+        necessary: { readOnly: true },
+        analytics: {},
+      },
+      language: {
+        default: 'pt-BR',
+        autoDetect: 'browser',
+      },
+    });
+  });
+</script>
+
+<script is:inline data-category="analytics">
+  function updateConsents() {
+    gtag('consent', 'update', {
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'granted',
+    });
+  }
+</script>
+
 <script is:inline define:vars={{ defaultTheme: UI.theme }}>
   if (window.basic_script) {
     return;

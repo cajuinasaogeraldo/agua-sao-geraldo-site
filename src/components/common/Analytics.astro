@@ -1,0 +1,38 @@
+---
+import ShowIf from './ShowIf.astro';
+
+type Props = {
+  measurementId?: string;
+};
+const { measurementId } = Astro.props;
+
+declare global {
+  interface Window {
+    dataLayer: Record<string, any>[];
+    gtag: (...args: any[]) => void;
+  }
+}
+---
+
+<ShowIf condition={!!measurementId && import.meta.env.PROD}>
+  <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
+
+  <script is:inline define:vars={{ measurementId }}>
+    window.dataLayer = window.dataLayer || [];
+
+    window.gtag = function () {
+      window.dataLayer.push(arguments);
+    };
+
+    window.gtag('js', new Date());
+
+    window.gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+    });
+
+    window.gtag('config', measurementId);
+  </script>
+</ShowIf>
