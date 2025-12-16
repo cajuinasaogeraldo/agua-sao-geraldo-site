@@ -1,4 +1,6 @@
 import type { CookieConsentConfig } from 'vanilla-cookieconsent';
+import ptBR from './translations/pt-BR.json';
+import en from './translations/en.json';
 
 export const config: CookieConsentConfig = {
   root: '#cc-container',
@@ -44,14 +46,8 @@ export const config: CookieConsentConfig = {
     default: 'pt-BR',
     autoDetect: 'browser',
     translations: {
-      en: async () => {
-        const res = await fetch('/src/components/cookie-consent/translations/en.json');
-        return await res.json();
-      },
-      'pt-BR': async () => {
-        const res = await fetch('/src/components/cookie-consent/translations/pt-BR.json');
-        return await res.json();
-      },
+      en: () => en,
+      'pt-BR': () => ptBR,
     },
   },
 };
