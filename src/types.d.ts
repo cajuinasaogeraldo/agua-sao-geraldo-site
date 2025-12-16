@@ -3,6 +3,13 @@ import type { HTMLAttributes, ImageMetadata } from 'astro/types';
 
 declare module '@tailwindcss/typography';
 
+declare global {
+  interface Window {
+    dataLayer: Record<string, any>[];
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export interface News {
   /** A unique ID number that identifies a post. */
   id: string;
