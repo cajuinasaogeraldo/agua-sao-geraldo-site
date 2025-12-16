@@ -13,7 +13,6 @@ function GalleryBoxImage({ image, idx }: { image: SingleImage; idx: number }) {
     <ImageOptimized
       src={typeof image !== 'string' ? image.data.image : image}
       alt={`Galeria de fotos ${idx + 1}`}
-      sizes="(max-width: 640px) 90vw, 320px"
       layout="contained"
     />
   );

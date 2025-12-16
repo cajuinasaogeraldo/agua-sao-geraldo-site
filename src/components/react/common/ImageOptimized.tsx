@@ -7,14 +7,9 @@ import {
   unpicOptimizer,
 } from '@/utils/images-optimization-react';
 import type { ImageOptimizedProps } from '../types';
+import GalleryLightbox from './GalleryLightBox';
 
-/**
- * Encodes spaces and special characters in URLs for srcset
- * srcset format requires URLs with spaces to be encoded
- */
 const encodeSrcSetUrl = (url: string): string => {
-  // Only encode spaces to prevent srcset parsing issues
-  // Other characters are typically already encoded or safe
   return url.replace(/ /g, '%20');
 };
 
@@ -36,6 +31,7 @@ export default function ImageOptimized({
   ...rest
 }: ImageOptimizedProps) {
   const [srcSet, setSrcSet] = useState<string | undefined>(undefined);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false); // ✅ Estado local
 
   const baseConfig = useMemo(() => {
     if (!src) return null;
@@ -62,12 +58,10 @@ export default function ImageOptimized({
     };
   }, [src, width, height, layout, aspectRatio, objectFit, objectPosition, customSizes]);
 
-  // Try to use unpic optimizer for CDN images
   useEffect(() => {
     if (!baseConfig || !src) return;
 
     const optimize = async () => {
-      // Check if the image is from a supported CDN
       if (isUnpicCompatible(src)) {
         try {
           const optimized = await unpicOptimizer(src, baseConfig.breakpoints, width, height);
@@ -84,7 +78,6 @@ export default function ImageOptimized({
         }
       }
 
-      // Fallback: generate basic srcSet without CDN optimization
       if (baseConfig.breakpoints.length > 0) {
         const fallbackSrcSet = baseConfig.breakpoints
           .map((w: number) => `${encodeSrcSetUrl(src)} ${w}w`)
@@ -99,21 +92,45 @@ export default function ImageOptimized({
   if (!baseConfig) return null;
 
   return (
-    <img
-      src={encodeSrcSetUrl(baseConfig.src)}
-      alt={alt}
-      width={baseConfig.width}
-      height={baseConfig.height}
-      srcSet={srcSet}
-      sizes={baseConfig.sizes}
-      loading={loading}
-      decoding={decoding}
-      fetchPriority={fetchPriority}
-      className={className}
-      style={baseConfig.style}
-      crossOrigin="anonymous"
-      referrerPolicy="no-referrer"
-      {...rest}
-    />
+    <>
+      <img
+        src={encodeSrcSetUrl(baseConfig.src)}
+        alt={alt}
+        width={baseConfig.width}
+        height={baseConfig.height}
+        srcSet={srcSet}
+        sizes={baseConfig.sizes}
+        loading={loading}
+        decoding={decoding}
+        fetchPriority={fetchPriority}
+        className={`${className} ${showGallery ? 'cursor-pointer hover:opacity-90 transition-opacity' : ''}`}
+        style={baseConfig.style}
+        crossOrigin="anonymous"
+        referrerPolicy="no-referrer"
+        onClick={() => showGallery && setIsGalleryOpen(true)}
+        role={showGallery ? 'button' : undefined}
+        tabIndex={showGallery ? 0 : undefined}
+        onKeyDown={
+          showGallery
+            ? (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setIsGalleryOpen(true);
+                }
+              }
+            : undefined
+        }
+        {...rest}
+      />
+
+      {showGallery && (
+        <GalleryLightbox
+          images={[src]}
+          initialIndex={0}
+          isOpen={isGalleryOpen}
+          onClose={() => setIsGalleryOpen(false)}
+        />
+      )}
+    </>
   );
 }
