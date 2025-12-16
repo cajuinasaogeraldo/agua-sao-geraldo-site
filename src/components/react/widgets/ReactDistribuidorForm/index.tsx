@@ -42,7 +42,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
         }
       });
       formData.append('captchaToken', token || '');
-      formData.append('formId', AllowedFormIds.CAJUINA_DISTRIBUIDOR);
+      formData.append('formId', AllowedFormIds.AGUA_REVENDEDOR);
 
       const response = await fetch(`${apiUrl}/forms/submit`, {
         method: 'POST',
@@ -73,10 +73,10 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
   return (
     <div className="mx-auto w-full">
       <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl p-4 md:px-6 md:py-8 bg-white">
-        <div className="mb-6 flex flex-col gap-8 md:mb-8 md:gap-12">
+        <div className="flex flex-col gap-8 md:mb-8 md:gap-12">
           {/* Informações da Empresa  */}
           <div>
-            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className="font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações da Empresa
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -109,7 +109,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           </div>
           {/* Informações de Contato  */}
           <div>
-            <h3 className="text-caju-heading-primary font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
+            <h3 className=" font-bevan mb-4 text-2xl font-normal uppercase md:mb-6 md:text-4xl">
               Informações de Contato
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -155,7 +155,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
                     tabIndex={0}
                     onClick={() => setIsPrivacyModalOpen(true)}
                     onKeyDown={(e) => e.key === 'Enter' && setIsPrivacyModalOpen(true)}
-                    className="text-caju-heading-primary hover:text-caju-secondary-orange cursor-pointer font-semibold underline"
+                    className="hover:text-caju-secondary-orange cursor-pointer font-semibold underline"
                   >
                     política de privacidade e proteção de dados
                   </span>
@@ -166,7 +166,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
             />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-start gap-4 md:flex-row p-4 md:px-6 md:py-8">
+        <div className="flex flex-wrap items-center! justify-start gap-4 p-4 md:px-6 md:py-5">
           {/* reCAPTCHA */}
           <div className="flex flex-col gap-1">
             <GoogleReCaptchaCheckbox
@@ -180,7 +180,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="btn-yellow w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
+            className="btn-primary self-center! w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
           >
             {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
           </button>

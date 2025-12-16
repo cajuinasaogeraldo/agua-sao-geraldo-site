@@ -1,5 +1,4 @@
 import { useMemo, useEffect, useState } from 'react';
-import type { HTMLAttributes } from 'react';
 import {
   getSizes,
   getBreakpoints,
@@ -7,23 +6,7 @@ import {
   isUnpicCompatible,
   unpicOptimizer,
 } from '@/utils/images-optimization-react';
-import type { ImageLayout } from '@/types';
-
-interface ImageOptimizedProps extends Omit<HTMLAttributes<HTMLImageElement>, 'src' | 'style'> {
-  src: string;
-  alt: string;
-  width?: number;
-  height?: number;
-  loading?: 'lazy' | 'eager';
-  fetchPriority?: 'high' | 'low' | 'auto';
-  sizes?: string;
-  className?: string;
-  decoding?: 'sync' | 'async' | 'auto';
-  layout?: ImageLayout;
-  objectFit?: string;
-  objectPosition?: string;
-  aspectRatio?: string | number;
-}
+import type { ImageOptimizedProps } from '../types';
 
 /**
  * Encodes spaces and special characters in URLs for srcset
@@ -45,10 +28,11 @@ export default function ImageOptimized({
   decoding = 'async',
   sizes: customSizes,
   className = '',
-  layout = 'constrained',
+  layout = 'responsive',
   objectFit = 'cover',
   objectPosition = 'center',
   aspectRatio,
+  showGallery = false,
   ...rest
 }: ImageOptimizedProps) {
   const [srcSet, setSrcSet] = useState<string | undefined>(undefined);

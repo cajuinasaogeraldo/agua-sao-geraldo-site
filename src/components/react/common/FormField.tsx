@@ -51,7 +51,7 @@ export function FormField<TFormData extends Record<string, any>>({
   const finalPlaceholder = !label && required && placeholder ? `${placeholder} *` : placeholder;
 
   const baseInputClasses =
-    'w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base font-semibold text-caju-heading-primary placeholder-gray-400 transition-all duration-200 focus:border-caju-heading-primary focus:outline-none focus:ring-2 focus:ring-caju-heading-primary/20 md:px-4 md:py-3 md:text-lg';
+    'w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base font-semibold text-agua-primary-blue placeholder-gray-400 transition-all duration-200 focus:border-caju-heading-primary focus:outline-none focus:ring-2 focus:ring-caju-heading-primary/20 md:px-4 md:py-3 md:text-lg';
 
   if (type === 'checkbox') {
     return (
@@ -60,9 +60,9 @@ export function FormField<TFormData extends Record<string, any>>({
           <input
             type="checkbox"
             {...register(name)}
-            className="text-caju-heading-primary focus:ring-caju-heading-primary/20 mt-1 h-5 w-5 rounded border-gray-300 focus:ring-2"
+            className="text-agua-primary-blue focus:ring-caju-heading-primary/20 mt-1 h-5 w-5 rounded border-gray-300 focus:ring-2"
           />
-          {label && <span className="text-caju-heading-primary text-sm select-none">{label}</span>}
+          {label && <span className="text-agua-primary-blue text-sm select-none">{label}</span>}
         </label>
         {errorMessage && <p className="font-inter mt-1 text-sm text-red-600/75">{errorMessage}</p>}
       </div>
@@ -72,7 +72,7 @@ export function FormField<TFormData extends Record<string, any>>({
   return (
     <div className={twMerge('w-full', className)}>
       {!hideLabel && label && type !== 'date' && (
-        <label className="text-caju-heading-primary mb-2 block text-sm font-medium">
+        <label className="text-agua-primary-blue mb-2 block text-sm font-medium">
           {label}
           {required && <span className="text-red-500"> *</span>}
         </label>
@@ -137,7 +137,7 @@ export function FormField<TFormData extends Record<string, any>>({
                     helperText: errorMessage,
                     InputProps: {
                       className:
-                        'text-caju-heading-primary! font-inter! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
+                        'text-agua-primary-blue! font-inter! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
                     },
                     InputLabelProps: {
                       className: 'text-gray-500! font-inter! text-base! md:text-lg!',
@@ -173,7 +173,7 @@ export function FormField<TFormData extends Record<string, any>>({
                     helperText: errorMessage,
                     InputProps: {
                       className:
-                        'text-caju-heading-primary! font-inter! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
+                        'text-agua-primary-blue! font-inter! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
                     },
                     InputLabelProps: {
                       className: 'text-gray-500! font-inter! text-base! md:text-lg!',

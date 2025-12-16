@@ -43,6 +43,7 @@ export const footerData = {
         { text: 'Propriedades', href: '/#propriedades' },
         { text: 'Notícias', href: '/blog/' },
         { text: 'Revenda', href: '/#revenda' },
+        { text: 'Fale Conosco', href: '/fale-conosco/' },
         {
           text: 'Trabalhe Conosco',
           href: 'https://cajuinasaogeraldo.gupy.io/',

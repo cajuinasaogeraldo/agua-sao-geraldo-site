@@ -29,7 +29,7 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 // https://astro.build/config
 export default defineConfig({
-  site: import.meta.env.SITE_URL || 'https://aguasaogeraldo.com.br',
+  site: import.meta.env.SITE_URL || 'https://aguamineralsaogeraldo.com.br',
   trailingSlash: 'always',
   output: 'static',
   server: {
@@ -89,7 +89,7 @@ export default defineConfig({
   ],
 
   image: {
-    domains: ['cdn.pixabay.com', 'images.unsplash.com', 'cajuinasaogeraldo.com.br'],
+    domains: ['cdn.pixabay.com', 'images.unsplash.com', 'aguamineralsaogeraldo.com.br'],
   },
 
   markdown: {

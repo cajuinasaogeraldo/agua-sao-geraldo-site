@@ -33,6 +33,28 @@ const { id = 'header', links = [], actions = [], isSticky = false, isFixed = fal
 
 const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
 const isHome = currentPath === '/';
+
+const normalizePath = (path: string) => {
+  return '/' + trimSlash(path.split('#')[0]);
+};
+
+const shouldUnderline = (href?: string) => {
+  if (!href) return false;
+
+  // parallax não precisa de underline pra evitar bug visual
+  if (href.includes('#')) return false;
+
+  const current = normalizePath(currentPath);
+  const target = normalizePath(href);
+
+  // Home
+  if (target === '/') {
+    return current === '/';
+  }
+
+  // Path exato ou sub-rota
+  return current === target || current.startsWith(target + '/');
+};
 ---
 
 <header
@@ -130,17 +152,22 @@ const isHome = currentPath === '/';
               ) : (
                 /* Se não tem sub-links, cria um link simples */
                 <a
+                  href={href}
                   class:list={[
-                    'hover:text-link text-white flex items-center px-4 py-3 whitespace-nowrap',
+                    // base
+                    'flex items-center px-4 py-3 whitespace-nowrap hover:text-link',
+                    // cor baseada na página + link
                     {
-                      'md:text-agua-primary-blue!': !isHome,
+                      'text-agua-primary-green!': isHome && shouldUnderline(href || ''),
+                      'text-white!': isHome && !shouldUnderline(href || ''),
+                      'text-agua-primary-blue!': !isHome,
                     },
+                    // estado ativo (apenas underline)
                     {
-                      'text-agua-primary-green! underline! underline-offset-8!':
-                        href === currentPath,
+                      'underline! underline-offset-8! decoration-2! decoration-agua-primary-green!':
+                        shouldUnderline(href || ''),
                     },
                   ]}
-                  href={href}
                 >
                   {text}
                 </a>

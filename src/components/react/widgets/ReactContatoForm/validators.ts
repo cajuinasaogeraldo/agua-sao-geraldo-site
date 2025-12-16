@@ -8,9 +8,9 @@ export const contatoFormSchema = z.object({
   city: z.string().min(1, 'Cidade é obrigatória'),
   message: z.string().min(1, 'Digite sua mensagem'),
   acceptance: z.coerce.boolean().refine((val) => val === true, {
-    message: ' Vocé precisa aceitar a poiltica',
+    message: ' Vocé precisa aceitar a política',
   }),
-  _origin: z.string().default('Cajuína São Geraldo'),
+  _origin: z.string().default('Água Mineral São Geraldo'),
 });
 
 export type ContatoFormData = z.infer<typeof contatoFormSchema>;
