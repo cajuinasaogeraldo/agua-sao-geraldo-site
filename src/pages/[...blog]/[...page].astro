@@ -5,9 +5,10 @@ import Layout from '@/layouts/PageLayout.astro';
 import BlogList from '@/components/blog/List.astro';
 import Headline from '@/components/blog/Headline.astro';
 import Pagination from '@/components/blog/Pagination.astro';
-import { blogListRobots, fetchTags, getStaticPathsBlogList } from '@/utils/blog';
+import { blogListRobots, fetchPosts, fetchTags, getStaticPathsBlogList } from '@/utils/blog';
 import Tags from '@/components/blog/Tags.astro';
 import WidgetWrapper from '@/components/ui/WidgetWrapper.astro';
+import ToBlogLink from '@/components/blog/ToBlogLink.astro';
 
 export const prerender = true;
 
@@ -22,9 +23,25 @@ const currentPage = page.currentPage ?? 1;
 
 // const allCategories = await findCategories();
 const allTags = await fetchTags();
+const allPosts = await fetchPosts();
+
+// Serializa posts para client-side (apenas campos necessários para busca)
+const postsData = allPosts.map((post) => ({
+  title: post.title,
+  excerpt: post.excerpt || '',
+  permalink: post.permalink,
+  image: typeof post.image === 'string' ? post.image : post.image?.src || '',
+  category: post.category ? { title: post.category.title } : null,
+  tags: post.tags?.map((t) => ({ title: t.title })) || [],
+  author: post.author || '',
+  publishDate: post.publishDate.toISOString(),
+  readingTime: post.readingTime || 0,
+}));
 
 const metadata = {
   title: 'Notícias',
+  description:
+    'Fique por dentro das novidades da Cajuína São Geraldo. Busque e explore nossas notícias, eventos e atualizações.',
   robots: {
     index: blogListRobots?.index && currentPage === 1,
     follow: blogListRobots?.follow,
@@ -36,14 +53,380 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <section class="mx-auto w-full p-8">
-    <Headline class="my-5!" title="Notícias" />
-    <WidgetWrapper containerClass="pt-4!" id="noticias-page">
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_minmax(300px,400px)] gap-4">
-        <BlogList news={page.data} />
-        <Tags tags={allTags} />
+  <section class="mx-auto w-full px-6 sm:py-16">
+    <div class="flex items-center gap-3">
+      <div id="back-to-list" class="hidden self-start mt-1.75">
+        <ToBlogLink class="m-0! p-0!" buttonClass="m-0!" />
       </div>
-      <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+      <Headline class="mb-0!" title="Notícias" />
+    </div>
+    <WidgetWrapper containerClass="pt-4!" id="noticias-page">
+      <!-- Status da busca -->
+      <p id="search-status" class="text-muted mb-4 text-lg"></p>
+      <p id="no-results" class="py-8 text-center text-lg text-gray-500" style="display: none;">
+        Nenhum resultado encontrado para sua busca.
+      </p>
+
+      <!-- Listagem -->
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_minmax(300px,400px)] gap-4 lg:gap-6">
+        <!-- Campo de busca (mobile: topo, desktop: sidebar) -->
+        <div class="lg:hidden mb-6">
+          <form
+            name="Formulário de busca de notícias"
+            id="search_form"
+            class="flex gap-2"
+            action="/blog"
+            method="get"
+          >
+            <input
+              type="search"
+              name="s"
+              id="search-input"
+              placeholder="Buscar notícias..."
+              class="bg-white border-gray-300 focus:border-agua-primary-blue focus:ring-agua-primary-green/20 flex-1 rounded-lg border px-4 py-3 text-base focus:outline-none focus:ring-2 transition-colors"
+              autocomplete="off"
+            />
+            <button
+              type="submit"
+              class="btn-green px-6 py-3 mt-0! font-semibold text-white transition-colors"
+            >
+              Buscar
+            </button>
+          </form>
+        </div>
+
+        <div id="blog-list-container">
+          <BlogList news={page.data} />
+        </div>
+
+        <!-- Sidebar: Busca + Tags -->
+        <div class="space-y-4">
+          <!-- Campo de busca (desktop) -->
+          <div class="hidden lg:block border border-gray-200 p-4 rounded-lg bg-white">
+            <form
+              name="Formulário de busca de notícias"
+              id="search_form_desktop"
+              class="flex gap-2"
+              action="/blog"
+              method="get"
+            >
+              <input
+                type="search"
+                name="s"
+                id="search-input-desktop"
+                placeholder="Buscar notícias..."
+                class="bg-white border-gray-300 focus:border-agua-primary-blue focus:ring-agua-primary-green/20 flex-1 rounded-lg border px-4 py-3 text-base focus:outline-none focus:ring-2 transition-colors"
+                autocomplete="off"
+              />
+              <button
+                type="submit"
+                class="btn-green px-6 py-3 mt-0! font-semibold text-white transition-colors whitespace-nowrap"
+              >
+                Buscar
+              </button>
+            </form>
+          </div>
+
+          <Tags class="border border-gray-200 p-4 rounded-lg bg-white" tags={allTags} />
+        </div>
+      </div>
+
+      <div id="pagination-wrapper">
+        <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+      </div>
     </WidgetWrapper>
   </section>
 </Layout>
+
+<script is:inline define:vars={{ postsData }}>
+  // Posts vindos do server-side via define:vars
+  const allPosts = postsData;
+
+  function normalizeText(text) {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function filterPosts(query) {
+    if (!query || query.trim() === '') {
+      return null;
+    }
+
+    const normalizedQuery = normalizeText(query.trim());
+    const queryTerms = normalizedQuery.split(/\s+/).filter((term) => term.length > 1);
+
+    if (queryTerms.length === 0) {
+      return null;
+    }
+
+    return allPosts.filter((post) => {
+      const searchableText = normalizeText(
+        [
+          post.title,
+          post.excerpt,
+          post.category?.title,
+          post.tags?.map((t) => t.title).join(' '),
+          post.author,
+        ]
+          .filter(Boolean)
+          .join(' '),
+      );
+
+      return queryTerms.every((term) => searchableText.includes(term));
+    });
+  }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    });
+  }
+
+  function renderFilteredList(filteredPosts, query) {
+    const container = document.getElementById('blog-list-container');
+    const searchStatus = document.getElementById('search-status');
+    const noResults = document.getElementById('no-results');
+    const paginationWrapper = document.getElementById('pagination-wrapper');
+
+    // Esconde paginação
+    paginationWrapper.style.display = 'none';
+
+    // Sem resultados
+    if (filteredPosts.length === 0) {
+      container.innerHTML = '';
+      noResults.style.display = 'block';
+      searchStatus.textContent = `Buscando por "${query}"`;
+      return;
+    }
+
+    // Com resultados
+    noResults.style.display = 'none';
+    searchStatus.textContent = `${filteredPosts.length} resultado${filteredPosts.length !== 1 ? 's' : ''} para "${query}"`;
+
+    // Renderiza usando a mesma estrutura do BlogList/ListItem
+    container.innerHTML = `
+      <ul>
+        ${filteredPosts
+          .map(
+            (post) => `
+          <li class="mb-8 md:mb-10">
+            <article class="border border-gray-200 rounded-lg overflow-hidden transition-all hover:shadow-lg hover:border-agua-primary-blue/30 p-4 md:p-6 bg-white">
+              <div class="grid items-center gap-3 ${post.image ? 'md:grid-cols-[minmax(220px,300px)_1fr]' : ''} md:gap-4">
+                ${
+                  post.image
+                    ? `
+                  <a href="/${post.permalink}/" class="block overflow-hidden rounded-md w-full">
+                    <img 
+                      src="${post.image}" 
+                      alt="${post.title}"
+                      class="aspect-square w-full object-cover transition-transform duration-300 hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                `
+                    : ''
+                }
+                <div class="flex flex-col min-h-0">
+                  ${
+                    post.category
+                      ? `
+                    <span class="text-agua-primary-blue text-xs font-medium uppercase mb-1 inline-block">
+                      ${post.category.title}
+                    </span>
+                  `
+                      : ''
+                  }
+                  <div class="text-muted text-xs flex items-center gap-2 mb-1.5">
+                    <time datetime="${post.publishDate}">${formatDate(post.publishDate)}</time>
+                    ${post.author ? `<span>• ${post.author.replaceAll('-', ' ')}</span>` : ''}
+                    ${post.readingTime ? `<span>• ${post.readingTime} min</span>` : ''}
+                  </div>
+                  <h2 class="mb-2 text-base font-bold md:text-lg leading-tight!">
+                    <a href="/${post.permalink}/" class="text-agua-primary-green! hover:text-agua-secondary-green! transition-colors line-clamp-2 md:line-clamp-3">
+                      ${post.title}
+                    </a>
+                  </h2>
+                  ${post.excerpt ? `<p class="text-muted text-sm mb-2 leading-relaxed line-clamp-3">${post.excerpt}</p>` : ''}
+                  ${
+                    post.tags && post.tags.length > 0
+                      ? `
+                    <div class="flex flex-wrap gap-1.5">
+                      ${post.tags
+                        .map(
+                          (tag) =>
+                            `<span class="bg-agua-primary-blue text-white! px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-sm md:text-base font-medium hover:bg-agua-secondary-blue transition-colors cursor-pointer">#${tag.title}</span>`,
+                        )
+                        .join('')}
+                    </div>
+                  `
+                      : ''
+                  }
+                </div>
+              </div>
+            </article>
+          </li>
+        `,
+          )
+          .join('')}
+      </ul>
+    `;
+  }
+
+  // Armazena o HTML original para restauração
+  let originalListHTML = '';
+  let originalPaginationHTML = '';
+
+  function restoreOriginalList() {
+    const container = document.getElementById('blog-list-container');
+    const searchStatus = document.getElementById('search-status');
+    const noResults = document.getElementById('no-results');
+    const paginationWrapper = document.getElementById('pagination-wrapper');
+
+    // Restaura HTML original
+    if (originalListHTML) {
+      container.innerHTML = originalListHTML;
+    }
+    if (originalPaginationHTML) {
+      paginationWrapper.innerHTML = originalPaginationHTML;
+    }
+
+    // Mostra paginação
+    paginationWrapper.style.display = '';
+
+    // Limpa status
+    searchStatus.textContent = '';
+    noResults.style.display = 'none';
+  }
+
+  function toggleBackButton(show) {
+    const backButton = document.getElementById('back-to-list');
+    if (backButton) {
+      if (show) {
+        backButton.classList.remove('hidden');
+      } else {
+        backButton.classList.add('hidden');
+      }
+    }
+  }
+
+  function handleSearch(query) {
+    const filtered = filterPosts(query);
+
+    if (!filtered) {
+      restoreOriginalList();
+      toggleBackButton(false);
+      return;
+    }
+
+    renderFilteredList(filtered, query);
+    toggleBackButton(true);
+  }
+
+  function init() {
+    const searchInput = document.getElementById('search-input');
+    const searchInputDesktop = document.getElementById('search-input-desktop');
+    const searchForm = document.getElementById('search_form');
+    const searchFormDesktop = document.getElementById('search_form_desktop');
+    const container = document.getElementById('blog-list-container');
+    const paginationWrapper = document.getElementById('pagination-wrapper');
+    const backButton = document.getElementById('back-to-list');
+
+    // Armazena HTML original na primeira carga
+    originalListHTML = container.innerHTML;
+    originalPaginationHTML = paginationWrapper.innerHTML;
+
+    // Sincroniza os dois campos de busca
+    function syncSearchInputs(value) {
+      if (searchInput) searchInput.value = value;
+      if (searchInputDesktop) searchInputDesktop.value = value;
+    }
+
+    // Verifica query inicial da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialQuery = urlParams.get('s') || '';
+
+    if (initialQuery) {
+      syncSearchInputs(initialQuery);
+      handleSearch(initialQuery);
+    }
+
+    // Botão de voltar - previne navegação e limpa busca
+    if (backButton) {
+      const backLink = backButton.querySelector('a') || backButton.querySelector('button');
+      if (backLink) {
+        backLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          syncSearchInputs('');
+          handleSearch('');
+
+          // Remove query da URL
+          const url = new URL(window.location.href);
+          url.searchParams.delete('s');
+          window.history.pushState({}, '', url.toString());
+        });
+      }
+    }
+
+    // Função para processar busca
+    function processSearch(query, _source) {
+      syncSearchInputs(query);
+      handleSearch(query);
+
+      // Atualiza URL
+      const url = new URL(window.location.href);
+      if (query) {
+        url.searchParams.set('s', query);
+        window.history.replaceState({}, '', url.toString());
+      } else {
+        url.searchParams.delete('s');
+        window.history.replaceState({}, '', url.toString());
+      }
+    }
+
+    // Busca em tempo real - mobile
+    let debounceTimer;
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          processSearch(e.target.value, 'mobile');
+        }, 300);
+      });
+
+      // Submit do form - mobile
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        processSearch(searchInput.value, 'mobile');
+      });
+    }
+
+    // Busca em tempo real - desktop
+    if (searchInputDesktop) {
+      searchInputDesktop.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          processSearch(e.target.value, 'desktop');
+        }, 300);
+      });
+
+      // Submit do form - desktop
+      searchFormDesktop.addEventListener('submit', (e) => {
+        e.preventDefault();
+        processSearch(searchInputDesktop.value, 'desktop');
+      });
+    }
+  }
+
+  // Inicializa
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>

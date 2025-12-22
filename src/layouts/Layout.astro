@@ -57,7 +57,9 @@ const enableAnalytics = !!analyticsId && import.meta.env.PROD;
           style="display:none;visibility:hidden"></iframe>
       </noscript>
     </ShowIf>
+
     <slot />
+
     <ShowIf condition={enableAnalytics}>
       <div transition:persist="find-me-on-the-other-side" id="cc-container">
         <CookieConsent />
@@ -74,6 +76,7 @@ const enableAnalytics = !!analyticsId && import.meta.env.PROD;
         </script>
       </div>
     </ShowIf>
+    <div id="portal-container" style="position: relative;"></div>
     <BasicScripts />
   </body>
 </html>
