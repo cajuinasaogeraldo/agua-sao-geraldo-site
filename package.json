@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "pnpm run check:astro && pnpm run check:eslint && pnpm run check:prettier",
+    "check": "pnpm run '/^check:.*/'",
     "check:astro": "astro check",
     "check:config": "node scripts/validate-config.js",
     "check:eslint": "eslint .",
