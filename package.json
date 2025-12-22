@@ -11,6 +11,7 @@
     "astro": "astro",
     "check": "pnpm run check:astro && pnpm run check:eslint && pnpm run check:prettier",
     "check:astro": "astro check",
+    "check:config": "node scripts/validate-config.js",
     "check:eslint": "eslint .",
     "check:prettier": "prettier --check .",
     "check:knip": "knip -c knip.config.ts --no-exit-code",

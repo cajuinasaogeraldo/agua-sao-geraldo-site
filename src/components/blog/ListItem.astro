@@ -22,102 +22,69 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(news.permalink, 'news') : 
 ---
 
 <article
-  class={`*:font-poppins px-4 max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade shadow-2xl rounded-lg ${image ? 'md:grid-cols-2' : ''}`}
+  class="border border-gray-200 rounded-lg overflow-hidden transition-all hover:shadow-lg hover:border-agua-primary-blue/30 p-4 md:p-6 bg-white"
 >
-  {
-    image &&
-      (link ? (
-        <a class="group relative block self-center" href={link ?? 'javascript:void(0)'}>
-          <div class="relative h-0 overflow-hidden rounded-sm bg-gray-400 pb-[56.25%] shadow-lg md:h-72 md:pb-[75%] lg:pb-[56.25%] ">
-            {image && (
-              <Image
-                src={image}
-                class="absolute inset-0 mb-6 h-full w-full rounded-sm bg-gray-400 object-cover shadow-lg "
-                widths={[400, 900]}
-                width={900}
-                sizes="(max-width: 900px) 400px, 900px"
-                alt={news.title}
-                aspectRatio="16:9"
-                loading="lazy"
-                decoding="async"
-              />
-            )}
-          </div>
-        </a>
-      ) : (
-        <div class="relative h-0 overflow-hidden rounded-sm bg-gray-400 pb-[56.25%] shadow-lg md:h-72 md:pb-[75%] lg:pb-[56.25%] ">
-          {image && (
-            <Image
-              src={image}
-              class="absolute inset-0 mb-6 h-full w-full rounded-sm bg-gray-400 object-cover shadow-lg "
-              widths={[400, 900]}
-              width={900}
-              sizes="(max-width: 900px) 400px, 900px"
-              alt={news.title}
-              aspectRatio="16:9"
-              loading="lazy"
-              decoding="async"
-            />
-          )}
-        </div>
-      ))
-  }
-  <div class="mt-0">
-    <header>
-      <div class="mb-1">
-        <span class="text-caption">
-          <Icon name="tabler:clock" class="-mt-0.5 inline-block h-3.5 w-3.5" />
-          <time datetime={String(news.publishDate)} class="inline-block"
-            >{getFormattedDate(news.publishDate)}</time
-          >
-          {
-            news.author && (
-              <>
-                {' '}
-                · <Icon name="tabler:user" class="-mt-0.5 inline-block h-3.5 w-3.5 " />
-                <span>{news.author.replaceAll('-', ' ')}</span>
-              </>
-            )
-          }
-          {
-            news.category && (
-              <>
-                {' '}
-                ·{' '}
-                <a class="hover:underline" href={getPermalink(news.category.slug, 'category')}>
-                  {news.category.title}
-                </a>
-              </>
-            )
-          }
-        </span>
+  <div
+    class={`grid items-center gap-3 ${image ? 'md:grid-cols-[minmax(220px,300px)_1fr]' : ''} md:gap-4`}
+  >
+    <a href={link} class="block overflow-hidden rounded-md w-full">
+      <Image
+        src={image}
+        class="aspect-square! w-full transition-transform duration-300 hover:scale-105"
+        widths={[400, 900]}
+        width={900}
+        sizes="(max-width: 900px) 400px, 900px"
+        alt={news.title}
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
+    <div class="flex flex-col">
+      {
+        news.category && (
+          <span class="text-agua-primary-blue text-xs font-medium uppercase mb-1 inline-block">
+            {news.category.title}
+          </span>
+        )
+      }
+      <div class="text-muted text-xs flex items-center gap-2 mb-1.5">
+        <time datetime={String(news.publishDate)}>{getFormattedDate(news.publishDate)}</time>
+        {news.author && <span>• {news.author.replaceAll('-', ' ')}</span>}
+        {news.readingTime && <span>• {news.readingTime} min</span>}
       </div>
-      <div class="max-h-[100px] overflow-hidden max-w-full relative">
-        <h2
-          class="font-heading *:text-agua-primary-green! mb-2 text-xl! leading-tight! font-bold! md:text-2xl!"
-        >
-          {
-            link ? (
-              <a class="font-poppins inline-block transition duration-200 ease-in" href={link}>
-                {news.title}
+      <h3 class="mb-2 font-bold">
+        {
+          link ? (
+            <a
+              href={link}
+              class="text-agua-primary-green! hover:text-agua-secondary-green! transition-colors line-clamp-2 md:line-clamp-3"
+            >
+              {news.title}
+            </a>
+          ) : (
+            <span class="line-clamp-2 md:line-clamp-3">{news.title}</span>
+          )
+        }
+      </h3>
+      {
+        news.excerpt && (
+          <p class="text-muted text-sm mb-2 leading-relaxed line-clamp-3">{news.excerpt}</p>
+        )
+      }
+      {
+        news.tags && Array.isArray(news.tags) && news.tags.length > 0 && (
+          <div class="flex flex-wrap gap-1.5">
+            {news.tags.map((tag) => (
+              <a
+                href={getPermalink(tag.slug, 'tag')}
+                class="bg-agua-primary-blue text-white! px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-sm md:text-base font-medium hover:bg-agua-secondary-blue/80 transition-colors"
+              >
+                #{tag.title}
               </a>
-            ) : (
-              news.title
-            )
-          }
-        </h2>
-      </div>
-    </header>
-
-    {news.excerpt && <p class="text-body text-muted font-poppins grow">{news.excerpt}</p>}
-    {
-      news.tags && Array.isArray(news.tags) ? (
-        <footer class="mt-3">
-          <PostTags tags={news.tags} />
-        </footer>
-      ) : (
-        <Fragment />
-      )
-    }
+            ))}
+          </div>
+        )
+      }
+    </div>
   </div>
 </article>

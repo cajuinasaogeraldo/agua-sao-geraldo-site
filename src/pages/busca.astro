@@ -27,7 +27,7 @@ const postsForSearch = allPosts.map((post) => ({
 
 const metadata = {
   title: 'Buscar Notícias',
-  description: 'Busque por notícias e artigos no blog da Água São Geraldo',
+  description: 'Busque por notícias e artigos no blog da Cajuína São Geraldo',
   robots: {
     index: true,
     follow: true,
@@ -42,18 +42,24 @@ const metadata = {
     <WidgetWrapper containerClass="pt-4!" id="busca-page">
       <!-- Campo de busca -->
       <div class="mb-8">
-        <form id="search-form" class="flex gap-2" action="/busca" method="get">
+        <form
+          name="Formulário de busca de notícias"
+          id="search_form"
+          class="flex gap-2 justify-center max-w-3xl mx-auto"
+          action="/busca"
+          method="get"
+        >
           <input
             type="search"
             name="s"
             id="search-input"
             placeholder="Digite sua busca..."
-            class="border-agua-primary-blue focus:ring-agua-primary-green w-full rounded-lg border-2 px-4 py-3 text-lg focus:outline-none focus:ring-2"
+            class="border-agua-primary-blue/80 focus:ring-agua-primary-green flex-1 rounded-lg border-2 px-4 py-3 text-lg focus:outline-none focus:ring-2"
             autocomplete="off"
           />
           <button
             type="submit"
-            class="bg-agua-primary-green hover:bg-agua-primary-green/90 rounded-lg px-6 py-3 font-semibold text-white transition-colors"
+            class="btn-green px-6 py-3 mt-0! font-semibold text-white transition-colors"
           >
             Buscar
           </button>
@@ -159,10 +165,10 @@ const metadata = {
     container.innerHTML = `
       <ul>
         ${results.map((post) => `
-          <li class="mb-12 md:mb-20">
+          <li class="mb-12 md:mb-16 shadow-xl rounded-md p-2">
             <article class="grid gap-4 md:grid-cols-[280px_1fr] md:gap-8">
               ${post.image ? `
-                <a href="/${post.permalink}/" class="block overflow-hidden rounded-lg">
+                <a href="/${post.permalink}/" class="block overflow-hidden rounded-lg flex justify-center items-center">
                   <img 
                     src="${post.image}" 
                     alt="${post.title}"
@@ -171,17 +177,17 @@ const metadata = {
                   />
                 </a>
               ` : ''}
-              <div class="flex flex-col justify-center">
+              <div class="flex flex-col justify-start p-4">
                 ${post.category ? `
-                  <span class="text-agua-primary-green mb-2 text-sm font-medium uppercase">
+                  <span class="text-agua-primary-blue mb-2 text-sm font-medium uppercase">
                     ${post.category.title}
                   </span>
                 ` : ''}
-                <h2 class="mb-2 text-xl font-bold md:text-2xl">
-                  <a href="/${post.permalink}/" class="hover:text-agua-primary-green transition-colors">
+                <span class="mb-2 text-xl font-bold md:text-2xl">
+                  <a href="/${post.permalink}/" class="text-agua-primary-green! hover:text-agua-secondary-green! transition-colors">
                     ${post.title}
                   </a>
-                </h2>
+                </span>
                 ${post.excerpt ? `<p class="text-muted mb-3 line-clamp-2">${post.excerpt}</p>` : ''}
                 <div class="text-muted flex flex-wrap items-center gap-3 text-sm">
                   <time datetime="${post.publishDate}">${formatDate(post.publishDate)}</time>

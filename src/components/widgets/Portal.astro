@@ -1,0 +1,20 @@
+---
+type Props = {
+  targetSelector?: string;
+};
+
+const { targetSelector = '#portal-container' } = Astro.props;
+---
+
+<div data-portal>
+  <slot />
+</div>
+
+<script is:inline define:vars={{ targetSelector }} type="module">
+  const portal = document.querySelector('[data-portal]');
+  const target = document.querySelector(`${targetSelector}`);
+
+  if (portal && target) {
+    target.appendChild(portal);
+  }
+</script>

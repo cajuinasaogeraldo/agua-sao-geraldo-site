@@ -18,21 +18,23 @@ const { tags, class: className = 'text-sm', title = undefined, isCategory = fals
   tags && Array.isArray(tags) && (
     <>
       {title !== undefined && (
-        <span class="align-super font-normal underline decoration-2 underline-offset-4">
+        <span class="align-super font-normal underline decoration-2 underline-offset-4 ">
           {title}
         </span>
       )}
-      <ul class={className}>
+      <ul class={`flex flex-wrap gap-2 ${className}`}>
         {tags.map((tag) => (
-          <li class="mr-2 mb-2 inline-block bg-slate-700 px-2 py-0.5 font-medium lowercase rtl:mr-0 rtl:ml-2 rounded-md">
+          <li>
             {!APP_BLOG?.tag?.isEnabled ? (
-              tag.title
+              <span class="inline-flex items-center bg-agua-primary-blue text-white! px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-sm md:text-base font-medium">
+                #{tag.title}
+              </span>
             ) : (
               <a
                 href={getPermalink(tag.slug, isCategory ? 'category' : 'tag')}
-                class="text-muted hover:text-agua-secondary-green"
+                class="inline-flex items-center bg-agua-primary-blue text-white! px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-sm md:text-base font-medium hover:bg-agua-secondary-blue/80 transition-colors"
               >
-                {tag.title}
+                #{tag.title}
               </a>
             )}
           </li>
