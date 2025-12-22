@@ -1,5 +1,5 @@
 import type { CookieConsentConfig } from 'vanilla-cookieconsent';
-import CookieConsent from 'vanilla-cookieconsent';
+import * as CookieConsent from 'vanilla-cookieconsent';
 import ptBR from './translations/pt-BR.json';
 import en from './translations/en.json';
 import {
