@@ -4,8 +4,7 @@
     "description": "Usamos cookies para melhorar sua experiência, entender como o site é utilizado e oferecer conteúdos personalizados. Você pode aceitar todos os cookies ou gerenciar suas preferências a qualquer momento.",
     "acceptAllBtn": "Aceitar todos",
     "acceptNecessaryBtn": "Rejeitar todos",
-    "showPreferencesBtn": "Gerenciar preferências",
-    "footer": "[Política de Privacidade](#link)\n[Termos e Condições](#link)"
+    "showPreferencesBtn": "Gerenciar preferências"
   },
   "preferencesModal": {
     "title": "Central de Preferências de Cookies",
@@ -36,7 +35,7 @@
       },
       {
         "title": "Mais informações",
-        "description": "Se tiver qualquer dúvida sobre nossa política de cookies ou sobre suas escolhas, <a class=\"cc__link\" href=\"#yourdomain.com\">entre em contato conosco</a>."
+        "description": "Se tiver qualquer dúvida sobre nossa política de cookies ou sobre suas escolhas, <a class=\"cc__link\" href=\"/fale-conosco\">entre em contato conosco</a>."
       }
     ]
   }

@@ -101,7 +101,7 @@ export const config: CookieConsentConfig = {
       // See: https://cookieconsent.orestbida.com/reference/configuration-reference.html#category-services
       services: {
         [SERVICE_ANALYTICS_STORAGE]: {
-          label: 'Enables storage (such as cookies) related to analytics e.g. visit duration.',
+          label: 'Google Analytics',
         },
       },
     },
