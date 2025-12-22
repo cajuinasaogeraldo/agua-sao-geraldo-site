@@ -1,5 +1,6 @@
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { HTMLAttributes, ImageMetadata } from 'astro/types';
+import type { ImageProps } from './utils/images-optimization';
 
 declare module '@tailwindcss/typography';
 
@@ -320,6 +321,7 @@ export interface Hero extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' |
   image?:
     | string
     | ImageMetadata
+    | ImageProps
     | (ImageMetadata & { fullSize?: boolean; infiniteBorder?: boolean })
     | unknown;
 }
