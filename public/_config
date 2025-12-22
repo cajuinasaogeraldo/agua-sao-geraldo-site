@@ -62,7 +62,7 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: 'G-BFYBHKNTQ7' # or "G-XXXXXXXXXX"
+      id: 'GTM-PGHH42ZQ' # or "G-XXXXXXXXXX"
 
 ui:
   theme: 'light:only' # Values: "system" | "light"
