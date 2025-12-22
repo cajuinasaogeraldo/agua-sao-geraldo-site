@@ -1,17 +1,16 @@
 ---
 import ShowIf from './ShowIf.astro';
+import {
+  SERVICE_AD_STORAGE,
+  SERVICE_AD_USER_DATA,
+  SERVICE_ANALYTICS_STORAGE,
+  SERVICE_FUNCTIONALITY_STORAGE,
+} from '../cookie-consent/consts';
 
 type Props = {
   measurementId?: string;
 };
 const { measurementId } = Astro.props;
-
-declare global {
-  interface Window {
-    dataLayer: Record<string, any>[];
-    gtag: (...args: any[]) => void;
-  }
-}
 ---
 
 <ShowIf condition={!!measurementId && import.meta.env.PROD}>
@@ -31,7 +30,17 @@ declare global {
   </script>
   <!-- End Google Tag Manager -->
 
-  <script is:inline define:vars={{ measurementId }}>
+  <script
+    is:inline
+    define:vars={{
+      measurementId,
+      SERVICE_AD_STORAGE,
+      SERVICE_AD_USER_DATA,
+      SERVICE_ANALYTICS_STORAGE,
+      SERVICE_FUNCTIONALITY_STORAGE,
+    }}
+    defer
+  >
     window.dataLayer = window.dataLayer || [];
 
     window.gtag = function () {
@@ -42,10 +51,10 @@ declare global {
     window.gtag('js', new Date());
 
     window.gtag('consent', 'default', {
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied',
+      [SERVICE_AD_STORAGE]: 'denied',
+      [SERVICE_AD_USER_DATA]: 'denied',
+      [SERVICE_ANALYTICS_STORAGE]: 'denied',
+      [SERVICE_FUNCTIONALITY_STORAGE]: 'denied',
     });
 
     window.gtag('config', measurementId);
