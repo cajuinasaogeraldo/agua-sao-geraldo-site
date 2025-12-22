@@ -1,8 +1,12 @@
 ---
-// import favIcon from '@/assets/favicons/favicon.ico';
-import favIcon from '@/assets/favicons/logo.ico';
+import favIcon96x96 from '@/assets/icons/favicon/favicon-96x96.png';
+import favIconSvg from '@/assets/icons/favicon/favicon.svg';
+import favIcon from '@/assets/icons/favicon/favicon.ico';
+import favIconApple from '@/assets/icons/favicon/apple-touch-icon.png';
 ---
 
+<link rel="icon" type="image/png" href={favIcon96x96.src} sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href={favIconSvg.src} />
 <link rel="shortcut icon" href={favIcon} />
-<!-- <link rel="icon" type="image/svg+xml" href={favIconSvg.src} /> -->
-<link rel="mask-icon" href={favIcon} color="#8D46E7" />
+<link rel="apple-touch-icon" sizes="180x180" href={favIconApple.src} />
+<link rel="manifest" href="/site.webmanifest" />
