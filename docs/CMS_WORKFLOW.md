@@ -4,32 +4,46 @@ Documentação do fluxo de publicação de conteúdo via Sveltia CMS.
 
 ## Visão Geral
 
-```
+```any
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   Sveltia CMS   │────▶│   development   │────▶│      main       │────▶│    Hostinger    │
+│   Sveltia CMS   │────▶│    cms/push     │────▶│      main       │────▶│    Hostinger    │
 │   /admin/       │     │    (branch)     │     │    (branch)     │     │   (produção)    │
 └─────────────────┘     └─────────────────┘     └─────────────────┘     └─────────────────┘
         │                       │                       │                       │
-   Editor salva           Workflow cria            PR é mergeado          Deploy SSH/rsync
-   com [cms]              PR automático            automaticamente        via workflow
+   Editor publica         Workflow cria            PR é mergeado          Deploy SSH/rsync
+   via Editorial          PR automático            automaticamente        via workflow
+   Workflow
 ```
 
 ## Modo: Editorial Workflow
 
-O CMS está configurado com `publish_mode: editorial_workflow`, que permite:
+O CMS está configurado com `publish_mode: editorial_workflow`, que permite um fluxo de aprovação antes da publicação:
 
-- **Rascunhos**: Conteúdo salvo mas não publicado
-- **Em Revisão**: Conteúdo aguardando aprovação
-- **Publicado**: Conteúdo commitado na branch `development`
+### Estados do Conteúdo
+
+| Estado        | Descrição                                                        |
+| ------------- | ---------------------------------------------------------------- |
+| **Draft**     | Conteúdo salvo em branch temporária (ex: `cms/posts/meu-artigo`) |
+| **In Review** | Cria Pull Request para revisão                                   |
+| **Ready**     | Aprovado e pronto para publicar                                  |
+| **Published** | Mergeado na branch `cms/push`                                    |
+
+### Fluxo Técnico
+
+1. Editor cria/edita → branch temporária criada
+2. Editor muda para "In Review" → PR criado
+3. Editor publica → PR mergeado na `cms/push`
+4. Commit `[cms]` dispara workflows de CI/CD
 
 ## Fluxo Detalhado
 
 ### 1. Editor cria/edita conteúdo no CMS
 
 - Acessa `/admin/` (Sveltia CMS)
-- Autentica via GitHub OAuth (Cloudflare Worker: `cajuina-cms-auth`)
+- Autentica via GitHub OAuth (AWS Lambda: `sveltiaOauthCMS`)
 - Edita banners, notícias, distribuidores, etc.
-- Salva → commit na branch `development`
+- Salva como rascunho → branch temporária criada
+- Publica via Editorial Workflow → commit na branch `cms/push`
 
 ### 2. Commit com prefixo `[cms]`
 
@@ -47,13 +61,13 @@ commit_messages:
 
 **Triggers:**
 
-- Push na branch `development` com commit contendo `[cms]` ou `[ci]`
+- Push na branch `cms/push` com commit contendo `[cms]` ou `[ci]`
 - `repository_dispatch` do tipo `sveltia-cms-publish`
 - Manual via `workflow_dispatch`
 
 **Ações:**
 
-1. Cria PR de `development` → `main`
+1. Cria PR de `cms/push` → `main`
 2. Adiciona PR à merge queue com `--auto`
 
 ```yaml
@@ -85,21 +99,13 @@ commit_messages:
 | `.github/workflows/create-and-merge-pr.yml` | Cria PR e auto-merge          |
 | `.github/workflows/deploy-ssh.yml`          | Build e deploy para Hostinger |
 
-## Collections do CMS
-
-| Collection       | Pasta                     | Descrição                                            |
-| ---------------- | ------------------------- | ---------------------------------------------------- |
-| `banners`        | `src/data/banner/`        | Slides do banner principal                           |
-| `middle-banner`  | `src/data/middle-banner/` | Banner intermediário                                 |
-| `distribuidores` | `src/data/distribuidor/`  | Pontos de venda com geolocalização                   |
-| `config`         | `public/`                 | Arquivos de configuração (headers, robots, htaccess) |
-
 ## Autenticação
 
-- **OAuth Provider**: Cloudflare Worker
-- **URL**: `https://cajuina-cms-auth.cadastro-cajuina.workers.dev/`
+- **OAuth Provider**: AWS Lambda (`sveltiaOauthCMS`)
+- **GitHub App**: `Sveltia CMS` na organização (permissões: contents: write, pull_requests: write)
+- **URL**: `https://hub.cajuinasaogeraldo.com.br:8444/`
 - **Repo**: `cajuinasaogeraldo/agua-sao-geraldo-site`
-- **Branch padrão**: `development`
+- **Branch padrão**: `cms/push`
 
 ## Ambiente de Preview
 

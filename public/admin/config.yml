@@ -3,7 +3,7 @@ backend:
   name: 'github'
   repo: 'cajuinasaogeraldo/cajuina-site'
   branch: 'development'
-  base_url: 'https://cajuina-cms-auth.cadastro-cajuina.workers.dev/'
+  base_url: 'https://hub.cajuinasaogeraldo.com.br:8444/'
   squash_merges: true
   preview_url: 'https://maroon-shark-519604.hostingersite.com/'
   commit_messages:
