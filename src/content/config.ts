@@ -101,16 +101,6 @@ const banner = defineCollection({
       imageMobile: image().optional(),
 
       cta: z.string().nullish().optional(),
-      // cta: z
-      //   .object({
-      //     text: z.string(),
-      //     url: z.string(),
-      //     variant: z
-      //       .enum(['primary', 'secondary', 'outline'])
-      //       .default('primary'),
-      //   })
-      //   .nullish()
-      //   .optional(),
 
       textPosition: z.enum(['left', 'center', 'right']).default('center'),
       textAlign: z.enum(['top', 'middle', 'bottom']).default('middle'),
@@ -162,19 +152,6 @@ const distribuidor = defineCollection({
   }),
 });
 
-// --- PAGES ---
-const pages = defineCollection({
-  loader: glob({ base: './src/data/pages', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
-    title: z.string(),
-    draft: z.boolean().default(true),
-    layout: z.string(),
-    body: z.string().optional(),
-    description: z.string().optional(),
-    metadata: metadataDefinition(),
-  }),
-});
-
 // --- EXPORT COLLECTIONS ---
 export const collections = {
   post: news,
@@ -184,5 +161,4 @@ export const collections = {
   middleBanner,
   distribuidor,
   aboutGallery,
-  pages,
 };

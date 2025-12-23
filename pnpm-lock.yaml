@@ -22,9 +22,6 @@ importers:
       '@astrolib/seo':
         specifier: 1.0.0-beta.8
         version: 1.0.0-beta.8(astro@5.16.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.3)(terser@5.39.0)(typescript@5.9.3)(yaml@2.8.1))
-      '@cajuinasi/sveltia-cms':
-        specifier: ^0.123.1
-        version: 0.123.1
       '@google-recaptcha/react':
         specifier: ^2.3.2
         version: 2.3.2(@types/react@19.2.7)(react@19.2.0)
@@ -113,9 +110,6 @@ importers:
       '@cajuinasi/prettier-config':
         specifier: ^2.0.1
         version: 2.0.1(prettier-plugin-astro@0.14.1)(prettier-plugin-tailwindcss@0.6.14(prettier-plugin-astro@0.14.1)(prettier@3.7.1))(prettier@3.7.1)
-      '@eslint/js':
-        specifier: ^9.39.1
-        version: 9.39.1
       '@iconify-json/flat-color-icons':
         specifier: ^1.2.3
         version: 1.2.3
@@ -473,12 +467,6 @@ packages:
       prettier: ^3.3.3
       prettier-plugin-astro: ^0.14.1
       prettier-plugin-tailwindcss: ^0.6.0
-
-  '@cajuinasi/sveltia-cms@0.123.1':
-    resolution:
-      {
-        integrity: sha512-TVkVDammB8LIdX5jUm/DRv7XBjDtackaM4D5Uu9V6REn8ONRG3gyXtHkfeTPDopCiI/TqDlaMsXO3vw5OQpuWQ==,
-      }
 
   '@capsizecss/unpack@3.0.1':
     resolution:
@@ -7329,8 +7317,6 @@ snapshots:
       prettier-plugin-astro: 0.14.1
       prettier-plugin-react: 0.0.1
       prettier-plugin-tailwindcss: 0.6.14(prettier-plugin-astro@0.14.1)(prettier@3.7.1)
-
-  '@cajuinasi/sveltia-cms@0.123.1': {}
 
   '@capsizecss/unpack@3.0.1':
     dependencies:

@@ -139,6 +139,7 @@ const processHrefValue = (hrefValue: string | PermalinkHref): string | undefined
   return undefined;
 };
 
+// @knip-ignore
 export const applyGetPermalinks = (menu: PermalinksInput = {}): PermalinksInput => {
   // Handle arrays
   if (Array.isArray(menu)) {

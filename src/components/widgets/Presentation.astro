@@ -1,7 +1,7 @@
 ---
 import Image from '@/components/common/Image.astro';
 import Button from '@/components/ui/Button.astro';
-
+import type { ImageMetadata } from 'astro';
 import type { Hero } from '@/types';
 import { twMerge } from 'tailwind-merge';
 
@@ -19,6 +19,10 @@ const {
   contentWrapperClass,
   id,
 } = Astro.props as Hero;
+
+function isImageProps(image: unknown): image is ImageMetadata & { fullSize?: boolean } {
+  return typeof image === 'object' && image !== null && 'src' in image;
+}
 ---
 
 <section class="not-prose relative md:-mt-[76px]" {...id ? { id } : {}}>
@@ -34,7 +38,7 @@ const {
             class:list={[
               'intersect-once intersect-no-queue intersect-quarter motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0',
               'relative m-auto',
-              { '-mx-4 sm:-mx-6': image.fullSize },
+              { '-mx-4 sm:-mx-6': isImageProps(image) && image.fullSize },
               imageWrapperClass,
             ]}
           >

@@ -1,18 +1,11 @@
 import type { KnipConfig } from 'knip';
 
 const config: KnipConfig = {
-  project: ['**/*.ts', '**/*.tsx', '**/*.md', '**/*.mdx', '**/**/*.astro'],
   ignore: ['**/node_modules/**', '**/dist/**', '*.config.ts'],
-  entry: [
-    'src/content/config.ts',
-    'src/pages/**/*.{astro,mdx,js,ts}',
-    '!src/pages/**/_*',
-    '!src/pages/**/_*/**',
-    'src/data/**/*.mdx',
-  ],
+  entry: ['src/**/*.{astro,md,mdx,tsx,js,ts}'],
   tags: ['-@lintignore', '-@knip-ignore'],
   rules: {
-    dependencies: 'off',
+    dependencies: 'warn',
     unlisted: 'warn',
   },
   paths: {
@@ -22,6 +15,7 @@ const config: KnipConfig = {
     mdx: true,
     astro: true,
   },
+  ignoreDependencies: ['astrowind', 'vite'],
 };
 
 export default config;

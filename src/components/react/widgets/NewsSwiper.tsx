@@ -74,7 +74,7 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
             {post.image && (
               <a className="cursor-pointer" href={post.permalink}>
                 <ImageOptimized
-                  src={post.image}
+                  src={String(post.image)}
                   alt={post.title!}
                   width={350}
                   height={280}
