@@ -1,11 +1,5 @@
 import React, { useCallback } from 'react';
-import {
-  AdvancedMarker,
-  AdvancedMarkerAnchorPoint,
-  InfoWindow,
-  Pin,
-  useAdvancedMarkerRef,
-} from '@vis.gl/react-google-maps';
+import { AdvancedMarker, InfoWindow, Pin, useAdvancedMarkerRef } from '@vis.gl/react-google-maps';
 import { PlaceOverview } from '@googlemaps/extended-component-library/react';
 import type { Distribuidor } from '@/types';
 
@@ -69,7 +63,7 @@ const DistribuidorMarker: React.FC<DistribuidorMarkerProps> = ({
         className="distribuidor-marker"
         style={{
           transform: `scale(${scale})`,
-          transformOrigin: AdvancedMarkerAnchorPoint.BOTTOM.join(' '),
+          transformOrigin: 'bottom center',
           transition: 'transform 0.2s ease-in-out',
         }}
       >

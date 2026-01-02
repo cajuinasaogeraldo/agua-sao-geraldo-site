@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import ImageOptimized from '@/components/react/common/ImageOptimized';
-import logoSaoGeraldo from '@/assets/images/site/logo.png';
-import logoAguaMineral from '@/assets/images/site/logoAgua.webp';
+import logoSaoGeraldo from '@/assets/images/site/logoCajuina.png';
+import logoAguaMineral from '@/assets/images/site/logo.webp';
 import merge from 'lodash.merge';
 
 interface WhatsAppContact {

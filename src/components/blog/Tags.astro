@@ -24,7 +24,7 @@ const { tags, class: className = 'text-sm', title = undefined, isCategory = fals
       )}
       <ul class={`flex flex-wrap gap-2 ${className}`}>
         {tags.map((tag) => (
-          <li>
+          <li class="inline-block">
             {!APP_BLOG?.tag?.isEnabled ? (
               <span class="inline-flex items-center bg-agua-primary-blue text-white! px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-sm md:text-base font-medium">
                 #{tag.title}

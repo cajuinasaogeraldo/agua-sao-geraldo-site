@@ -1,9 +1,5 @@
-import type { UseFormRegister, FieldErrors, Path, Control } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import type { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
-import dayjs from 'dayjs';
 
 interface Option {
   value: string;
@@ -12,7 +8,6 @@ interface Option {
 
 interface FormFieldProps<TFormData extends Record<string, any>> {
   register: UseFormRegister<TFormData>;
-  control?: Control<TFormData>;
   errors: FieldErrors<TFormData>;
   name: Path<TFormData>;
   label?: React.ReactNode | null;
@@ -29,7 +24,6 @@ interface FormFieldProps<TFormData extends Record<string, any>> {
 
 export function FormField<TFormData extends Record<string, any>>({
   register,
-  control,
   errors,
   name,
   label = null,
@@ -71,7 +65,7 @@ export function FormField<TFormData extends Record<string, any>>({
 
   return (
     <div className={twMerge('w-full', className)}>
-      {!hideLabel && label && type !== 'date' && (
+      {!hideLabel && label && type !== 'date' && type !== 'time' && (
         <label className="text-agua-primary-blue mb-2 block text-sm font-medium">
           {label}
           {required && <span className="text-red-500"> *</span>}
@@ -120,76 +114,33 @@ export function FormField<TFormData extends Record<string, any>>({
           )}
         />
       ) : type === 'date' ? (
-        control ? (
-          <Controller
-            name={name}
-            control={control}
-            render={({ field }) => (
-              <DatePicker
-                label={label || 'Data'}
-                value={field.value ? dayjs(field.value) : null}
-                onChange={(date) => field.onChange(date?.format('YYYY-MM-DD'))}
-                format="DD/MM/YYYY"
-                slotProps={{
-                  textField: {
-                    fullWidth: true,
-                    error: !!errorMessage,
-                    helperText: errorMessage,
-                    InputProps: {
-                      className:
-                        'text-agua-primary-blue! font-inter! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
-                    },
-                    InputLabelProps: {
-                      className: 'text-gray-500! font-inter! text-base! md:text-lg!',
-                    },
-                  },
-                }}
-              />
-            )}
-          />
-        ) : (
+        <>
+          {!hideLabel && label && (
+            <label className="text-agua-primary-blue mb-2 block text-sm font-medium">
+              {label}
+              {required && <span className="text-red-500"> *</span>}
+            </label>
+          )}
           <input
             type="date"
             {...register(name)}
             className={twMerge(baseInputClasses, 'font-inter')}
           />
-        )
+        </>
       ) : type === 'time' ? (
-        control ? (
-          <Controller
-            name={name}
-            control={control}
-            render={({ field }) => (
-              <TimePicker
-                label={label || 'Hora'}
-                value={field.value ? dayjs(field.value, 'HH:mm') : null}
-                onChange={(time) => field.onChange(time?.format('HH:mm'))}
-                format="HH:mm"
-                ampm={false}
-                slotProps={{
-                  textField: {
-                    fullWidth: true,
-                    error: !!errorMessage,
-                    helperText: errorMessage,
-                    InputProps: {
-                      className:
-                        'text-agua-primary-blue! font-inter! text-base! md:text-lg! font-semibold! rounded-lg! bg-white!',
-                    },
-                    InputLabelProps: {
-                      className: 'text-gray-500! font-inter! text-base! md:text-lg!',
-                    },
-                  },
-                }}
-              />
-            )}
-          />
-        ) : (
+        <>
+          {!hideLabel && label && (
+            <label className="text-agua-primary-blue mb-2 block text-sm font-medium">
+              {label}
+              {required && <span className="text-red-500"> *</span>}
+            </label>
+          )}
           <input
             type="time"
             {...register(name)}
             className={twMerge(baseInputClasses, 'font-inter')}
           />
-        )
+        </>
       ) : (
         <input
           type={type}
@@ -200,9 +151,7 @@ export function FormField<TFormData extends Record<string, any>>({
         />
       )}
 
-      {errorMessage && type !== 'date' && type !== 'time' && (
-        <p className="font-inter mt-1 text-sm text-red-600/75">{errorMessage}</p>
-      )}
+      {errorMessage && <p className="font-inter mt-1 text-sm text-red-600/75">{errorMessage}</p>}
     </div>
   );
 }

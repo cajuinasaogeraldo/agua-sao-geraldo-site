@@ -1,13 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import {
-  AdvancedMarker,
-  AdvancedMarkerAnchorPoint,
-  InfoWindow,
-  Pin,
-  useAdvancedMarkerRef,
-} from '@vis.gl/react-google-maps';
+import { AdvancedMarker, InfoWindow, Pin, useAdvancedMarkerRef } from '@vis.gl/react-google-maps';
 import { PlaceOverview } from '@googlemaps/extended-component-library/react';
-import { useIsMobile } from '../../hooks/useIsMobile';
 
 // Cores do projeto Cajuína
 const PIN_COLORS = {
@@ -23,13 +16,12 @@ interface DefaultLocationMarkerProps {
 }
 
 const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({ position, placeId }) => {
-  const isMobile = useIsMobile();
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [isHovered, setIsHovered] = useState(false);
-  const [showInfoWindow, setShowInfoWindow] = useState(!isMobile);
+  const [showInfoWindow, setShowInfoWindow] = useState(window.innerWidth > 768);
 
   const handleClick = useCallback(() => {
-    setShowInfoWindow((prev) => (isMobile ? false : !prev));
+    setShowInfoWindow((prev) => !prev);
   }, []);
 
   const handleMouseEnter = useCallback(() => {
@@ -58,7 +50,7 @@ const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({ position,
         className="default-location-marker"
         style={{
           transform: `scale(${scale})`,
-          transformOrigin: AdvancedMarkerAnchorPoint.BOTTOM.join(' '),
+          transformOrigin: 'bottom center',
           transition: 'transform 0.2s ease-in-out',
         }}
       >

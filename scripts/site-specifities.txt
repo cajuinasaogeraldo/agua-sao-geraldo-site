@@ -10,6 +10,7 @@ src/components/ui/WhatsIcon.astro
 src/components/ui/Headline.astro
 src/components/react/widgets/ProductsPageCarrousel.tsx
 src/components/react/widgets/ProductsCarrousel.tsx
+src/components/react/widgets/ReactContatoForm/validators.ts
 src/components/widgets/SocialReponsability.astro
 src/components/blog/ListItem.astro
 src/components/SocialResponsabilityLinks.astro

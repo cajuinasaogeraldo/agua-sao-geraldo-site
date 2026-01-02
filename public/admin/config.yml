@@ -128,12 +128,8 @@ collections:
           name: telefone,
           label: Telefone,
           widget: string,
-          required: true,
-          pattern:
-            [
-              '\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}',
-              'Formato esperado: (88) 3512-3400 ou (88) 98765-4321',
-            ],
+          required: false,
+          hint: 'Formato sugerido: (88) 3512-3400 ou (88) 98765-4321',
         }
       - {
           name: placeId,

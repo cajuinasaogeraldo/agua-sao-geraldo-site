@@ -15,13 +15,6 @@ collections:
         direction: descending # default: ascending
     fields:
       - { label: 'Título', name: 'title', widget: 'string' }
-      # - {
-      #     label: 'Descrição',
-      #     name: 'excerpt',
-      #     widget: compute,
-      #     required: false,
-      #     value: '{{fields.title}}',
-      #   }
       - { label: 'Rascunho', name: 'draft', widget: 'boolean', default: false }
       - {
           name: categories,

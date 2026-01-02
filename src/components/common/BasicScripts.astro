@@ -1,15 +1,18 @@
 ---
-import { UI } from 'astrowind:config';
+import { ANALYTICS, UI } from 'astrowind:config';
 import ShowIf from './ShowIf.astro';
+const analyticsId = ANALYTICS?.vendors?.googleAnalytics.id
+  ? String(ANALYTICS?.vendors?.googleAnalytics.id)
+  : null;
 ---
 
-<ShowIf condition={import.meta.env.PROD}>
+<ShowIf condition={!!analyticsId && import.meta.env.PROD}>
   <script
     is:inline
     src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js"
     defer></script>
 
-  <script is:inline>
+  <script type="text/partytown" is:inline>
     window.addEventListener('load', () => {
       CookieConsent.run({
         guiOptions: {
@@ -162,7 +165,6 @@ import ShowIf from './ShowIf.astro';
   window.onpageshow = onPageShow;
 
   document.addEventListener('astro:after-swap', () => {
-    // initTheme();
     onLoad();
     onPageShow();
   });

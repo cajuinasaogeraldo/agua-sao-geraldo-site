@@ -16,18 +16,21 @@ export const AutoCompleteSearchBox = ({ onPlaceSelect, onReset }: Props) => {
     if (!el) return;
 
     const handleClick = (ev: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      const x = ev.clientX - rect.left;
-      const y = ev.clientY - rect.top;
+      // Cache rect para evitar múltiplas leituras
+      requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
 
-      // margem clicável do lado direito (ex: 40px)
-      const clickableWidth = 40;
+        // margem clicável do lado direito (ex: 40px)
+        const clickableWidth = 40;
 
-      // se o clique for no último pedacinho do input → "clear"
-      if (x >= rect.width - clickableWidth && y >= 0 && y <= rect.height) {
-        onPlaceSelect(null);
-        onReset?.();
-      }
+        // se o clique for no último pedacinho do input → "clear"
+        if (x >= rect.width - clickableWidth && y >= 0 && y <= rect.height) {
+          onPlaceSelect(null);
+          onReset?.();
+        }
+      });
     };
 
     el.addEventListener('click', handleClick);
