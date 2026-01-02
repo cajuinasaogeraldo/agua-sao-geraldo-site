@@ -44,17 +44,17 @@ const overlayStyle = color
 const overlayBgClass = !color ? 'bg-agua-primary-blue' : '';
 ---
 
-<div class={twMerge('relative overflow-hidden w-full h-full', className)}>
+<div class={twMerge('relative overflow-hidden min-w-full h-full', className)}>
   <!-- Imagem de fundo -->
   {
     image && (
-      <div class={twMerge('absolute inset-0 -z-10 h-full w-full', imageClass)}>
+      <div class={twMerge('absolute inset-0 -z-10 h-full min-w-full', imageClass)}>
         {typeof image === 'string' ? (
           <img
             src={image}
             alt="Background"
             loading="lazy"
-            class="h-full min-h-full w-full object-cover"
+            class="h-full min-h-full min-w-full object-cover"
             style="display: block;"
           />
         ) : (
@@ -62,7 +62,7 @@ const overlayBgClass = !color ? 'bg-agua-primary-blue' : '';
             src={image}
             alt="Background"
             loading="lazy"
-            class="h-full min-h-full w-full object-cover"
+            class="h-full min-h-full min-w-full object-cover"
             style="display: block;"
           />
         )}
@@ -72,7 +72,12 @@ const overlayBgClass = !color ? 'bg-agua-primary-blue' : '';
 
   <!-- Overlay de cor -->
   <div
-    class={twMerge('absolute inset-0 w-full h-full', overlayBgClass, blendModeClass, overlayClass)}
+    class={twMerge(
+      'absolute inset-0 min-w-full h-full',
+      overlayBgClass,
+      blendModeClass,
+      overlayClass,
+    )}
     style={overlayStyle}
   >
   </div>
@@ -80,7 +85,7 @@ const overlayBgClass = !color ? 'bg-agua-primary-blue' : '';
   <!-- Conteúdo -->
   <div
     class={twMerge(
-      'relative z-10 w-full h-full flex justify-center items-center py-4',
+      'relative z-10 max-w-full h-full flex justify-center items-center py-4',
       contentClass,
     )}
   >

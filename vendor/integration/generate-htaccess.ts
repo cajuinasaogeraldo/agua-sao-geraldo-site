@@ -260,7 +260,7 @@ function buildCachingSection(rules?: CacheRule[]): string {
 
   const lines = [
     `# ------------------------------------------------------
-# BROWSER CACHING
+# BROWSER CACHING (Expires + Cache-Control headers)
 # ------------------------------------------------------
 <IfModule mod_expires.c>
   ExpiresActive On
@@ -272,6 +272,24 @@ function buildCachingSection(rules?: CacheRule[]): string {
   });
 
   lines.push(`</IfModule>
+
+# Cache-Control headers para melhor compatibilidade
+<IfModule mod_headers.c>
+  # Imagens e fontes - cache agressivo (1 ano)
+  <FilesMatch "\\.(jpg|jpeg|png|gif|webp|avif|svg|ico|woff|woff2|ttf|eot)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  
+  # CSS e JS - cache moderado (1 mês)
+  <FilesMatch "\\.(css|js)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  
+  # HTML - cache curto (1 hora)
+  <FilesMatch "\\.(html|htm)$">
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
+  </FilesMatch>
+</IfModule>
 `);
 
   return lines.join('\n');
@@ -287,18 +305,30 @@ function buildCompressionSection(compression: NonNullable<HtaccessConfig['compre
 
   if (compression.gzip) {
     lines.push(`<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/plain text/xml
-  AddOutputFilterByType DEFLATE text/css application/javascript application/json
-  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
 </IfModule>
 `);
   }
 
   if (compression.brotli) {
     lines.push(`<IfModule mod_brotli.c>
-  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml
-  AddOutputFilterByType BROTLI_COMPRESS text/css application/javascript application/json
-  AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+  AddOutputFilterByType BROTLI_COMPRESS text/plain
+  AddOutputFilterByType BROTLI_COMPRESS text/html
+  AddOutputFilterByType BROTLI_COMPRESS text/xml
+  AddOutputFilterByType BROTLI_COMPRESS text/css
+  AddOutputFilterByType BROTLI_COMPRESS application/xml
+  AddOutputFilterByType BROTLI_COMPRESS application/xhtml+xml
+  AddOutputFilterByType BROTLI_COMPRESS application/rss+xml
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript
+  AddOutputFilterByType BROTLI_COMPRESS application/x-javascript
 </IfModule>
 `);
   }

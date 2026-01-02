@@ -5,7 +5,7 @@
 
 ## Contexto
 
-O marketing precisa publicar conteúdo sem acesso direto ao código, mantendo histórico, rollback e revisão automatizada.
+O time editorial precisa publicar conteúdo sem acesso direto ao código, mantendo histórico, rollback e revisão automatizada.
 
 ## Decisão
 
@@ -13,7 +13,7 @@ O CMS utilizado é git-based (Sveltia), operando na branch `cms/push`, com merge
 
 ## Alternativas Consideradas
 
-- **CMS externo com API:** Rejeitado por aumentar dependência externa complexidade e custo.
+- **CMS externo com API:** Rejeitado por aumentar dependência externa e complexidade.
 - **Publicação direta em `main`:** Rejeitado por reduzir controle e rastreabilidade.
 
 ## Consequências

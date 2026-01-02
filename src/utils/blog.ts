@@ -1,3 +1,6 @@
+/**
+ * @lintignore
+ */
 import type { PaginateFunction } from 'astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
@@ -124,39 +127,46 @@ const load = async function (): Promise<Array<News>> {
 let _posts: Array<News>;
 let _tags: Array<Taxonomy>;
 
-// @knip-ignore
+// ==================== CONFIGURAÇÕES DO BLOG ====================
+
+/** Verifica se o blog está habilitado globalmente */
 export const isBlogEnabled = APP_BLOG.isEnabled;
 
-// @knip-ignore
+/** Verifica se posts relacionados estão habilitados */
 export const isRelatedPostsEnabled = APP_BLOG.isRelatedPostsEnabled;
 
-// @knip-ignore
+/** Verifica se a rota de listagem do blog está habilitada */
 export const isBlogListRouteEnabled = APP_BLOG.list.isEnabled;
 
-// @knip-ignore
+/** Verifica se a rota de posts individuais está habilitada */
 export const isBlogPostRouteEnabled = APP_BLOG.post.isEnabled;
 
-// @knip-ignore
+/** Verifica se a rota de categorias está habilitada */
 export const isBlogCategoryRouteEnabled = APP_BLOG.category.isEnabled;
 
-// @knip-ignore
+/** Verifica se a rota de tags está habilitada */
 export const isBlogTagRouteEnabled = APP_BLOG.tag.isEnabled;
 
-// @knip-ignore
+/** Configuração robots.txt para listagem do blog */
 export const blogListRobots = APP_BLOG.list.robots;
 
-// @knip-ignore
+/** Configuração robots.txt para posts */
 export const blogPostRobots = APP_BLOG.post.robots;
 
-// @knip-ignore
+/** Configuração robots.txt para categorias */
 export const blogCategoryRobots = APP_BLOG.category.robots;
 
-// @knip-ignore
+/** Configuração robots.txt para tags */
 export const blogTagRobots = APP_BLOG.tag.robots;
 
-// @knip-ignore
+/** Número de posts por página na listagem */
 export const blogPostsPerPage = APP_BLOG?.postsPerPage;
 
+/**
+ * Busca todos os posts normalizados do blog (não-draft, ordenados por data)
+ * Usa cache interno para evitar reprocessamento
+ * @returns Array de posts publicados ordenados por data decrescente
+ */
 export const fetchPosts = async (): Promise<Array<News>> => {
   if (!_posts) {
     _posts = await load();
@@ -165,6 +175,10 @@ export const fetchPosts = async (): Promise<Array<News>> => {
   return _posts;
 };
 
+/**
+ * Busca todas as tags únicas utilizadas nos posts
+ * @returns Array de tags extraídas dos posts
+ */
 export const fetchTags = async (): Promise<typeof _tags> => {
   if (!_tags) {
     _tags = (await fetchPosts())
@@ -175,7 +189,11 @@ export const fetchTags = async (): Promise<typeof _tags> => {
   return _tags;
 };
 
-// @knip-ignore
+/**
+ * Busca posts específicos por seus slugs
+ * @param slugs - Array de slugs para buscar
+ * @returns Array de posts correspondentes aos slugs fornecidos
+ */
 export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<News>> => {
   if (!Array.isArray(slugs)) return [];
 
@@ -189,6 +207,11 @@ export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<News
   }, []);
 };
 
+/**
+ * Busca posts específicos por seus IDs internos
+ * @param ids - Array de IDs para buscar
+ * @returns Array de posts correspondentes aos IDs fornecidos
+ */
 export const findPostsByIds = async (ids: Array<string>): Promise<Array<News>> => {
   if (!Array.isArray(ids)) return [];
 
@@ -202,7 +225,12 @@ export const findPostsByIds = async (ids: Array<string>): Promise<Array<News>> =
   }, []);
 };
 
-// @knip-ignore
+/**
+ * Busca os posts mais recentes
+ * @param options - Opções de busca
+ * @param options.count - Número de posts para retornar (padrão: 4)
+ * @returns Array dos posts mais recentes
+ */
 export const findLatestPosts = async ({ count }: { count?: number }): Promise<Array<News>> => {
   const _count = count || 4;
   const posts = await fetchPosts();
@@ -210,7 +238,13 @@ export const findLatestPosts = async ({ count }: { count?: number }): Promise<Ar
   return posts ? posts.slice(0, _count) : [];
 };
 
-// @knip-ignore
+/**
+ * Gera static paths paginados para a listagem do blog
+ * Usado em `[...blog]/[...page].astro`
+ * @param options - Opções do Astro
+ * @param options.paginate - Função de paginação do Astro
+ * @returns Array de páginas paginadas
+ */
 export const getStaticPathsBlogList = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogListRouteEnabled) return [];
   return paginate(await fetchPosts(), {
@@ -219,6 +253,11 @@ export const getStaticPathsBlogList = async ({ paginate }: { paginate: PaginateF
   });
 };
 
+/**
+ * Gera static paths para posts individuais do blog
+ * Usado em `[...blog]/[post].astro`
+ * @returns Array de rotas com params e props de cada post
+ */
 export const getStaticPathsBlogPost = async () => {
   if (!isBlogEnabled || !isBlogPostRouteEnabled) return [];
   return (await fetchPosts()).flatMap((post) => ({
@@ -229,6 +268,13 @@ export const getStaticPathsBlogPost = async () => {
   }));
 };
 
+/**
+ * Gera static paths paginados para páginas de categoria
+ * Usado em `[...blog]/category/[category]/[...page].astro`
+ * @param options - Opções do Astro
+ * @param options.paginate - Função de paginação do Astro
+ * @returns Array de páginas paginadas por categoria
+ */
 export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogCategoryRouteEnabled) return [];
 
@@ -254,6 +300,13 @@ export const getStaticPathsBlogCategory = async ({ paginate }: { paginate: Pagin
   );
 };
 
+/**
+ * Gera static paths paginados para páginas de tag
+ * Usado em `[...blog]/tag/[tag]/[...page].astro`
+ * @param options - Opções do Astro
+ * @param options.paginate - Função de paginação do Astro
+ * @returns Array de páginas paginadas por tag
+ */
 export const getStaticPathsBlogTag = async ({ paginate }: { paginate: PaginateFunction }) => {
   if (!isBlogEnabled || !isBlogTagRouteEnabled) return [];
 
@@ -283,6 +336,13 @@ export const getStaticPathsBlogTag = async ({ paginate }: { paginate: PaginateFu
   );
 };
 
+/**
+ * Encontra posts relacionados com base em categoria e tags compartilhadas
+ * Usa sistema de pontuação: +5 por categoria igual, +1 por tag compartilhada
+ * @param originalPost - Post de referência
+ * @param maxResults - Número máximo de posts relacionados (padrão: 4)
+ * @returns Array de posts relacionados ordenados por relevância
+ */
 export async function getRelatedPosts(originalPost: News, maxResults: number = 4): Promise<News[]> {
   const allPosts = await fetchPosts();
   const originalTagsSet = new Set(

@@ -40,7 +40,7 @@ O CMS está configurado com `publish_mode: editorial_workflow`, que permite um f
 ### 1. Editor cria/edita conteúdo no CMS
 
 - Acessa `/admin/` (Sveltia CMS)
-- Autentica via GitHub OAuth (AWS Lambda: `sveltiaOauthCMS`)
+- Autentica via GitHub OAuth (Cloudflare Worker: `cajuina-cms-auth`)
 - Edita banners, notícias, distribuidores, etc.
 - Salva como rascunho → branch temporária criada
 - Publica via Editorial Workflow → commit na branch `cms/push`
@@ -99,17 +99,30 @@ commit_messages:
 | `.github/workflows/create-and-merge-pr.yml` | Cria PR e auto-merge          |
 | `.github/workflows/deploy-ssh.yml`          | Build e deploy para Hostinger |
 
+## Collections do CMS
+
+| Collection             | Pasta                            | Descrição                                            |
+| ---------------------- | -------------------------------- | ---------------------------------------------------- |
+| `about-gallery`        | `src/data/about-gallery/`        | Galeria de imagens sobre a empresa                   |
+| `banners`              | `src/data/banner/`               | Slides do banner principal                           |
+| `distribuidores`       | `src/data/distribuidor/`         | Pontos de venda com geolocalização                   |
+| `middle-banner`        | `src/data/middle-banner/`        | Banner intermediário                                 |
+| `news`                 | `src/data/news/`                 | Notícias                                             |
+| `pages`                | `src/data/pages/`                | Páginas estáticas                                    |
+| `product`              | `src/data/product/`              | Produtos                                             |
+| `socialResponsability` | `src/data/socialResponsability/` | Responsabilidade social                              |
+| `config`               | `public/`                        | Arquivos de configuração (headers, robots, htaccess) |
+
 ## Autenticação
 
-- **OAuth Provider**: AWS Lambda (`sveltiaOauthCMS`)
-- **GitHub App**: `Sveltia CMS` na organização (permissões: contents: write, pull_requests: write)
+- **OAuth Provider**: Cloudflare Worker
 - **URL**: `https://hub.cajuinasaogeraldo.com.br:8444/`
-- **Repo**: `cajuinasaogeraldo/agua-sao-geraldo-site`
+- **Repo**: `cajuinasaogeraldo/cajuina-site`
 - **Branch padrão**: `cms/push`
 
 ## Ambiente de Preview
 
-- **URL**: `https://seagreen-squirrel-365460.hostingersite.com/`
+- **URL**: `https://maroon-shark-519604.hostingersite.com/`
 - Configurado em `backend.preview_url` no CMS
 
 ## Troubleshooting

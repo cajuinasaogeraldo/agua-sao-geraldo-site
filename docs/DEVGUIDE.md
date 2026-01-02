@@ -11,7 +11,9 @@ Guia para configurar o ambiente e desenvolver localmente.
 - [Instalação](#instalação)
 - [Comandos Disponíveis](#comandos-disponíveis)
 - [Variáveis de Ambiente](#variáveis-de-ambiente)
+- [Configuração do Astro](#configuração-do-astro)
 - [Trabalhando com Imagens](#trabalhando-com-imagens)
+- [Trabalhando com Content Collections](#trabalhando-com-content-collections)
 - [Plugins Markdown](#plugins-markdown)
 - [Tailwind CSS](#tailwind-css)
 - [CI/CD Pipelines](#cicd-pipelines)
@@ -61,9 +63,9 @@ cd cajuina-site
 pnpm install
 ```
 
-### 3. Configure as variáveis de ambiente
+### 3. Configure as variáveis de ambiente (opcional)
 
-Crie um arquivo `.env` na raiz usando o env.example como base.:
+Crie um arquivo `.env` na raiz:
 
 ```bash
 # .env
@@ -102,7 +104,7 @@ pnpm preview      # Preview do build local (após pnpm build)
 ### Qualidade de Código
 
 ```bash
-pnpm check        # Roda todos os checks (Astro + ESLint + Prettier + Configs YAML)
+pnpm check        # Roda todos os checks (Astro + ESLint + Prettier)
 pnpm check:astro  # Verifica tipos do Astro
 pnpm check:eslint # Verifica regras do ESLint
 pnpm check:prettier # Verifica formatação
@@ -135,12 +137,12 @@ pnpm astro check  # Type checking
 
 Disponíveis apenas durante o build:
 
-| Variável                   | Descrição                           | Exemplo                            |
-| -------------------------- | ----------------------------------- | ---------------------------------- |
-| `SITE_URL`                 | URL de produção                     | `https://cajuinasaogeraldo.com.br` |
-| `GOOGLE_SITE_VERIFICATION` | Verificação Google Search Console   | `abc123...`                        |
-| `GOOGLE_ANALYTICS_ID`      | ID do GA4                           | `G-XXXXXXXXXX`                     |
-| `API_BASE_URL`             | URL base da API dos forms (backend) | `https://api.exemplo.com`          |
+| Variável                   | Descrição                         | Exemplo                            |
+| -------------------------- | --------------------------------- | ---------------------------------- |
+| `SITE_URL`                 | URL de produção                   | `https://cajuinasaogeraldo.com.br` |
+| `GOOGLE_SITE_VERIFICATION` | Verificação Google Search Console | `abc123...`                        |
+| `GOOGLE_ANALYTICS_ID`      | ID do GA4                         | `G-XXXXXXXXXX`                     |
+| `API_BASE_URL`             | URL base da API (backend)         | `https://api.exemplo.com`          |
 
 ### Client-side (prefixo `PUBLIC_`)
 
@@ -232,6 +234,45 @@ schema: ({ image }) =>
 
 ---
 
+## Tailwind CSS
+
+### Configuração
+
+O Tailwind 4 é integrado via `@tailwindcss/vite`:
+
+```typescript
+// astro.config.ts
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  vite: {
+    plugins: [tailwindcss()],
+  },
+});
+```
+
+### Cores Customizadas
+
+Definidas em `src/ui/colors.ts` com prefixo `caju`:
+
+```typescript
+export const colors = {
+  caju: {
+    secondary: {
+      yellow: '#f7a421',
+      orange: '#ea5426',
+    },
+    heading: {
+      primary: '#09863C',
+      secondary: '#00422a',
+    },
+    // ...
+  },
+};
+```
+
+---
+
 ## CI/CD Pipelines
 
 ### Fluxo de Deploy
@@ -250,7 +291,7 @@ development → PR automático → main → Deploy Hostinger
 
 #### 2. `create-and-merge-pr.yml` - Auto-merge CMS
 
-**Triggers:** Push em `development` ou `cms/push` com `[cms]` ou `[ci]` na mensagem de commit
+**Triggers:** Push em `development` com `[cms]` ou `[ci]`
 
 #### 3. `preview-deploy.yml` - Preview
 
@@ -375,10 +416,17 @@ pnpm astro sync
 
 ## Links Úteis
 
+### Documentação Oficial
+
+- [Astro Docs](https://docs.astro.build)
+- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+- [React Docs](https://react.dev)
+- [Zod Docs](https://zod.dev)
+
 ### Projeto
 
 - [Arquitetura do Projeto](./ARCHITECTURE.md)
-- [Fluxo do CMS](./CMS_WORKFLOW.md)
+- [Fluxo do CMS](../CMS_WORKFLOW.md)
 - [Architecture Decision Records](./adr/)
 
 ### Ferramentas

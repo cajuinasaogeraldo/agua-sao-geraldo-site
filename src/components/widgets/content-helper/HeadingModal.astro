@@ -17,9 +17,7 @@
 
     <div class="space-y-4">
       <label class="block">
-        <span class="mb-2 block text-sm font-medium text-neutral-300">
-          Texto
-        </span>
+        <span class="mb-2 block text-sm font-medium text-neutral-300"> Texto </span>
         <input
           type="text"
           id="headingTextInput"
@@ -29,9 +27,7 @@
       </label>
 
       <div class="grid gap-4 sm:grid-cols-[1fr_auto]">
-        <label class="mb-2 block text-sm font-medium text-neutral-300">
-          Cor
-        </label>
+        <label class="mb-2 block text-sm font-medium text-neutral-300"> Cor </label>
         <!-- <input
           type="text"
           id="headingColorHex"
@@ -51,9 +47,7 @@
       </div>
 
       <label class="block">
-        <span class="mb-2 block text-sm font-medium text-neutral-300">
-          Nível
-        </span>
+        <span class="mb-2 block text-sm font-medium text-neutral-300"> Nível </span>
         <select
           id="headingLevelSelect"
           class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-3 text-sm text-neutral-200 transition-colors focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50 focus:outline-none"
@@ -85,24 +79,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  @keyframes heading-in {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .animate-in {
-    animation: heading-in 0.2s ease-out;
-  }
-
-  #headingModal.active {
-    display: flex;
-  }
-</style>

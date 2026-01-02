@@ -41,7 +41,7 @@ dist/.htaccess (gerado no build)
 2. **Sempre editar** `public/_htaccess` para mudanças de configuração.
 3. Regras customizadas que não couberem no schema YAML devem ir em `customRules`.
 4. Testar localmente requer Apache (XAMPP/MAMP) ou validar direto no preview.
-5. Validar esquema YAML com `pnpm check:config`.
+5. Validar esquema YAML com `yarn validate-htaccess`.
 
 ## Compatibilidade
 
@@ -51,3 +51,4 @@ dist/.htaccess (gerado no build)
 ## Relação com Outros ADRs
 
 - **ADR-001 (SSG)**: `.htaccess` gerado é essencial para redirects em SSG puro.
+- **ADR-003 (Permalinks)**: Redirects mantêm compatibilidade quando URLs mudam.

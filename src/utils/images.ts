@@ -20,13 +20,25 @@ const load = async function () {
 
 let _images: Record<string, () => Promise<unknown>> | undefined = undefined;
 
-/** */
+/**
+ * Busca todas as imagens locais com cache
+ * @private
+ */
 const fetchLocalImages = async () => {
   _images = _images || (await load());
   return _images;
 };
 
-/** */
+/**
+ * Resolve o caminho de uma imagem, suportando:
+ * - URLs absolutas (http://, https://)
+ * - Caminhos relativos
+ * - ImageMetadata do Astro
+ * - Paths do tipo @/assets/images
+ *
+ * @param imagePath - Caminho ou objeto da imagem
+ * @returns ImageMetadata resolvido ou string de URL
+ */
 export const findImage = async (
   imagePath?: string | ImageMetadata | null,
 ): Promise<string | ImageMetadata | undefined | null> => {
@@ -57,7 +69,14 @@ export const findImage = async (
     : null;
 };
 
-/** */
+/**
+ * Adapta imagens do OpenGraph para uso com otimizadores (unpic/astro)
+ * Resolve ImageMetadata e aplica dimensões padrão (1200x626)
+ *
+ * @param openGraph - Objeto OpenGraph com imagens
+ * @param astroSite - URL base do site
+ * @returns OpenGraph com imagens processadas
+ */
 export const adaptOpenGraphImages = async (
   openGraph: OpenGraph = {},
   astroSite: URL | undefined = new URL(''),

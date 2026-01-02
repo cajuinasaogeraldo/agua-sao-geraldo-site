@@ -391,7 +391,9 @@ export async function getImagesOptimized(
     aspectRatio,
     objectPosition,
     widths,
+    loading = 'lazy',
     layout = 'constrained',
+    fetchpriority = 'auto',
     style = '',
     format,
     ...rest
@@ -456,6 +458,8 @@ export async function getImagesOptimized(
       height: height,
       srcset: srcset || undefined,
       sizes: sizes,
+      loading: loading,
+      fetchpriority: fetchpriority,
       style: `${getStyle({
         width: width,
         height: height,

@@ -4,6 +4,13 @@ import { visit } from 'unist-util-visit';
 import type { RehypePlugin, RemarkPlugin } from '@astrojs/markdown-remark';
 import path from 'path';
 
+/**
+ * Plugin Remark que calcula tempo de leitura estimado
+ * Adiciona `readingTime` ao frontmatter do arquivo
+ * @example
+ * // No frontmatter do post ficará disponível:
+ * // readingTime: 5 (minutos)
+ */
 export const readingTimeRemarkPlugin: RemarkPlugin = () => {
   return function (tree, file) {
     const textOnPage = toString(tree);
@@ -15,7 +22,11 @@ export const readingTimeRemarkPlugin: RemarkPlugin = () => {
   };
 };
 
-// Plugin remark para converter paths absolutos de imagens em relativos
+/**
+ * Plugin Remark que converte paths absolutos de imagens para relativos
+ * Transforma `/src/assets/...` em paths relativos ao arquivo markdown
+ * Necessário para que o Astro processe as imagens corretamente
+ */
 export const resolveImagePathsRemarkPlugin: RemarkPlugin = () => {
   return function (tree, file) {
     // Pega o caminho do arquivo atual
@@ -44,6 +55,10 @@ export const resolveImagePathsRemarkPlugin: RemarkPlugin = () => {
   };
 };
 
+/**
+ * Plugin Rehype que torna tabelas responsivas
+ * Envolve tabelas em div com scroll horizontal em mobile
+ */
 export const responsiveTablesRehypePlugin: RehypePlugin = () => {
   return function (tree) {
     if (!tree.children) return;
@@ -66,8 +81,10 @@ export const responsiveTablesRehypePlugin: RehypePlugin = () => {
     }
   };
 };
-
-export const lazyImagesRehypePlugin: RehypePlugin = () => {
+/**
+ * Plugin Rehype que adiciona lazy loading em imagens
+ * Adiciona `loading="lazy"` em todas as tags `<img>`
+ */ export const lazyImagesRehypePlugin: RehypePlugin = () => {
   return function (tree) {
     if (!tree.children) return;
 

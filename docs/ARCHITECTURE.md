@@ -67,7 +67,7 @@ cajuina-site/
 │   │   ├── ui/               # Componentes de UI base
 │   │   └── widgets/          # Widgets Astro
 │   │
-│   ├── content/              # Configuração das Coleções do CMS
+│   ├── content/              # Configuração de Content Collections
 │   │   └── config.ts         # Schemas Zod das collections
 │   │
 │   ├── data/                 # Conteúdo Markdown (gerenciado pelo CMS)
@@ -78,6 +78,8 @@ cajuina-site/
 │   │   ├── middle-banner/    # Banner do meio do site
 │   │   ├── news/             # Posts do blog
 │   │   ├── pages/            # Páginas dinâmicas
+│   │   ├── product/          # Produtos
+│   │   ├── socialResponsability/ # Responsabilidade social
 │   │   └── tag/              # Tags do blog
 │   │
 │   ├── layouts/              # Templates de página
@@ -86,22 +88,28 @@ cajuina-site/
 │   │   ├── index.astro       # Home
 │   │   ├── 404.astro         # Página de erro
 │   │   ├── sobre.astro       # Página Sobre
+│   │   ├── busca.astro       # Página de busca
 │   │   ├── [...blog]/        # Rotas dinâmicas do blog
+│   │   ├── [...produtos]/    # Rotas dinâmicas de produtos
 │   │   ├── admin/            # Painel do CMS
+│   │   ├── empresa/          # Páginas institucionais
 │   │   ├── fale-conosco/     # Formulário de contato
-│   │   └── solicite/         # Formulários (revendedor, parcerias)
+│   │   └── solicite/         # Formulários (distribuidor, parcerias)
 │   │
 │   ├── styles/               # CSS global
 │   │
 │   ├── ui/                   # Configuração de UI
-│   │   └── colors.ts         # Paleta de cores (prefixo agua.*)
+│   │   └── colors.ts         # Paleta de cores (prefixo caju.*)
 │   │
 │   ├── utils/                # Funções utilitárias
 │   │   ├── blog.ts           # Helpers para posts
+│   │   ├── products.ts       # Helpers para produtos
 │   │   ├── permalinks.ts     # Geração de URLs
 │   │   ├── images.ts         # Manipulação de imagens
 │   │   ├── images-optimization.ts
 │   │   ├── images-optimization-react.ts
+│   │   ├── frontmatter.ts    # Plugins Remark/Rehype
+│   │   ├── pages.ts          # Helpers para páginas
 │   │   ├── utils.ts          # Utilitários gerais
 │   │   └── remark-plugins/   # Plugins customizados do editor Markdown
 │   │       └── shortcodes.ts
@@ -156,15 +164,18 @@ Definidas em [src/content/config.ts](../src/content/config.ts) usando **Astro Co
 
 ### Collections Disponíveis
 
-| Collection           | Pasta em `src/data/` | Uso                        |
-| -------------------- | -------------------- | -------------------------- |
-| `post` (alias: news) | `news/`              | Posts do blog              |
-| `banner`             | `banner/`            | Slides do banner principal |
-| `middleBanner`       | `middle-banner/`     | Banner intermediário       |
-| `distribuidor`       | `distribuidor/`      | Pontos de distribuição     |
-| `tag`                | `tag/`               | Tags do blog               |
-| `category`           | `category/`          | Categorias do blog         |
-| `aboutGallery`       | `about-gallery/`     | Galeria da página Sobre    |
+| Collection             | Pasta em `src/data/`    | Uso                        |
+| ---------------------- | ----------------------- | -------------------------- |
+| `post` (alias: news)   | `news/`                 | Posts do blog              |
+| `product`              | `product/`              | Produtos                   |
+| `banner`               | `banner/`               | Slides do banner principal |
+| `middleBanner`         | `middle-banner/`        | Banner intermediário       |
+| `distribuidor`         | `distribuidor/`         | Pontos de distribuição     |
+| `tag`                  | `tag/`                  | Tags do blog               |
+| `category`             | `category/`             | Categorias do blog         |
+| `aboutGallery`         | `about-gallery/`        | Galeria da página Sobre    |
+| `socialResponsability` | `socialResponsability/` | Responsabilidade social    |
+| `pages`                | `pages/`                | Páginas dinâmicas          |
 
 > **Nota:** A collection `post` carrega de `src/data/news/` por compatibilidade com template astrowind.
 
@@ -188,11 +199,20 @@ src/components/react/
 
 Templates de página em `src/layouts/`:
 
-| Layout              | Uso                               |
-| ------------------- | --------------------------------- |
-| `Layout.astro`      | Layout base (HTML, head, scripts) |
-| `PageLayout.astro`  | Páginas com header/footer         |
-| `AdminLayout.astro` | Painel do editor avançado do CMS  |
+| Layout                   | Uso                                       |
+| ------------------------ | ----------------------------------------- |
+| `Layout.astro`           | Layout base (HTML, head, scripts)         |
+| `PageLayout.astro`       | Páginas com header/footer                 |
+| `StaticPageLayout.astro` | Páginas estáticas simples (como-usar-CMS) |
+| `AdminLayout.astro`      | Painel do editor avançado do CMS          |
+
+### Hierarquia
+
+```any
+Layout.astro (base)
+└── PageLayout.astro (header + footer)
+    └── Páginas específicas
+```
 
 ---
 
@@ -214,9 +234,11 @@ Funções auxiliares TypeScript em `src/utils/`. Cada arquivo possui documentaç
 | --------------------------- | ------------------------------------------------------ |
 | `permalinks.ts`             | Geração de URLs e padrões de permalink                 |
 | `blog.ts`                   | Funções para buscar, filtrar e paginar posts           |
+| `products.ts`               | Funções para buscar e processar produtos               |
 | `images.ts`                 | Resolução e otimização de imagens                      |
 | `frontmatter.ts`            | Plugins Remark/Rehype (tempo leitura, lazy load, etc.) |
 | `remark-plugins/shortcodes` | Shortcodes customizados para Markdown                  |
+| `pages.ts`                  | Helpers para páginas dinâmicas                         |
 
 > **Dica:** Passe o mouse sobre as funções na IDE para ver documentação completa com exemplos.
 
@@ -226,42 +248,36 @@ Funções auxiliares TypeScript em `src/utils/`. Cada arquivo possui documentaç
 
 ### Sveltia CMS Customizado
 
-Este projeto conta com uma versão customizada do CMS, distribuída via **npm** e carregada no site através do **unpkg**, garantindo controle de versão previsível e independência em relação às releases da versão oficial.
-
-O CMS foi estendido para atender necessidades específicas do fluxo editorial, incorporando **workflow editorial**, **preview configurável**, **observabilidade do tempo de build dos previews**, **templates personalizados de mensagens de commit**, **consulta automática dos últimos releases** e **tradução completa para pt-BR**.  
-Essa abordagem proporciona maior previsibilidade, flexibilidade e controle sobre o processo de publicação, sem comprometer a estabilidade do CMS base.
-
-#### Funcionalidades adicionadas
-
-- Workflow editorial (`publish_mode: editorial_workflow`)
-- Configuração de URL de preview (`preview_url`)
-- Monitoramento do tempo de build dos previews
-- Templates personalizados de mensagens de commit
-- Consulta automática dos últimos releases
-- Tradução completa para pt-BR
+O projeto utiliza uma **versão customizada do Sveltia CMS** mantida pela equipe da Cajuína São Geraldo.
 
 **Repositório:** <https://github.com/cajuinasaogeraldo/sveltia-cms>
 
-#### Distribuição
+**Distribuição:**
 
-- O CMS customizado é publicado no **npm** após uma release no github
-- É carregado no site via **unpkg**
+- O CMS customizado é publicado no **npm** após modificações
+- É carregado no site via **unpkg** para garantir controle de versão
 - Permite customizações específicas do projeto sem depender da versão oficial
 
-#### Configuração
+**Configuração:**
 
 - Arquivo de configuração: `public/admin/config.yml`
 - Documentação do fluxo de trabalho: [CMS_WORKFLOW.md](../CMS_WORKFLOW.md)
 
 ### Integrações Vendor
 
-Localizadas em `vendor/integration/`. Este diretório contém código que integra-se ao ciclo de vida de build do Astro.
+Localizadas em `vendor/integration/`. Este diretório contém código **próprio** (não dependências de terceiros) que integra-se ao ciclo de vida de build do Astro.
 
 #### `astrowind` (`index.ts`)
 
 **Responsabilidade:** Carrega `public/_config` (YAML) e expõe como módulo virtual `astrowind:config`.
 
-**Por que existe:** Permitir que configuração global (site name, metadata, analytics) seja editada sem tocar código TypeScript e até mesmo pelo CMS.
+**Por que existe:** Permitir que configuração global (site name, metadata, analytics) seja editada sem tocar código TypeScript.
+
+**Trade-offs:**
+
+- ✅ Configuração declarativa e versionada
+- ⚠️ Mudanças exigem rebuild (não hot-reload)
+- ⚠️ Config malformado quebra build silenciosamente
 
 #### `generate-htaccess` (`generate-htaccess.ts`)
 
@@ -288,6 +304,10 @@ Configuração do `.htaccess` em YAML: redirects, CORS, compression, caching.
 ### `public/admin/config.yml`
 
 Configuração do Sveltia CMS. Documentação em [CMS_WORKFLOW.md](../CMS_WORKFLOW.md).
+
+### `src/config.yaml`
+
+Configuração alternativa carregada pelo Astro.
 
 ---
 

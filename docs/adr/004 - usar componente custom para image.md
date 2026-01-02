@@ -18,6 +18,6 @@ Todas as imagens devem ser renderizadas via componente `Image.astro`.
 ## Consequências
 
 - Performance e SEO mais previsíveis.
-- Padronização visual e técnica (lazy loading, formatos modernos, responsive images, galeria de imagens).
+- Padronização visual e técnica (lazy loading, formatos modernos, responsive images).
 - Uso de `<img>` direto indica violação de padrão.
 - Aumento inicial de verbosidade no código.

@@ -1,5 +1,7 @@
 # Água Mineral São Geraldo - Site Institucional
 
+[![Deploy via SSH Rsync](https://github.com/cajuinasaogeraldo/cajuina-site/actions/workflows/deploy-ssh.yml/badge.svg)](https://github.com/cajuinasaogeraldo/cajuina-site/actions/workflows/deploy-ssh.yml)
+
 Site institucional da Água Mineral São Geraldo, desenvolvido com Astro 5.
 
 [![Container Diagram](/docs/images/containerDiagram.jpg 'Container Diagram')](https://miro.com/app/board/uXjVGZnH8xw=/)
