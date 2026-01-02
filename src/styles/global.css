@@ -1,5 +1,6 @@
 @import './tailwind.css';
 @import './pages.css';
+@import './components.css';
 
 body {
   font-family: 'Poppins', 'Inter';
