@@ -14,5 +14,6 @@ rsync -avn --delete --itemize-changes \
   --include='vendor/***' \
   --include='public/***' \
   --exclude='*' \
-  "$SOURCE/" "$DEST/" \
+  "$SOURCE/" \
+  "$DEST/" \
   | scripts/pretty-rsync.sh

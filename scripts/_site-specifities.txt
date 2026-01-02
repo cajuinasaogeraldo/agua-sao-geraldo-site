@@ -1,5 +1,9 @@
-public/fonts/Bevan.woff2
 public/fonts/
+public/_config
+public/site.webmanifest
+public/web-app-manifest-192x192.png
+public/web-app-manifest-512x512.png
+public/admin/collections/pages.yml
 src/components/Team.astro
 src/components/SocialResponsabilityLinks.astro
 src/components/Products.astro
@@ -11,12 +15,7 @@ src/utils/social-responsability.ts
 src/utils/products.ts
 src/utils/pages.ts
 src/components/ui/Headline.astro
-public/_config
-public/site.webmanifest
-public/web-app-manifest-192x192.png
-public/web-app-manifest-512x512.png
-public/admin/collections/news.yml
-public/admin/collections/pages.yml
+
    ≠ src/components/About.astro
    ≠ src/components/Footer.astro
    ≠ src/components/Header.astro
