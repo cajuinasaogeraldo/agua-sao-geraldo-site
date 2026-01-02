@@ -19,7 +19,7 @@ const { prevUrl, nextUrl, prevText = 'Mais recentes', nextText = 'Mais antigos' 
       <div class="container mx-auto flex flex-row justify-between">
         <Button
           variant="primary"
-          class={`mr-2 px-3 md:px-3 ${!prevUrl ? 'invisible' : ''}`}
+          class={`p-2 ${!prevUrl ? 'invisible' : ''}`}
           href={getPermalink(prevUrl)}
         >
           <Icon name="tabler:chevron-left" class="h-6 w-6" />
@@ -28,10 +28,10 @@ const { prevUrl, nextUrl, prevText = 'Mais recentes', nextText = 'Mais antigos' 
 
         <Button
           variant="primary"
-          class={`px-3 md:px-3 ${!nextUrl ? 'invisible' : ''}`}
+          class={`p-2 ${!nextUrl ? 'invisible' : ''}`}
           href={getPermalink(nextUrl)}
         >
-          <span class="mr-2">{nextText}</span>
+          <p class="mr-2">{nextText}</p>
           <Icon name="tabler:chevron-right" class="h-6 w-6" />
         </Button>
       </div>

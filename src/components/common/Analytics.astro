@@ -5,6 +5,9 @@ import {
   SERVICE_AD_USER_DATA,
   SERVICE_ANALYTICS_STORAGE,
   SERVICE_FUNCTIONALITY_STORAGE,
+  SERVICE_AD_PERSONALIZATION,
+  SERVICE_PERSONALIZATION_STORAGE,
+  SERVICE_SECURITY_STORAGE,
 } from '../cookie-consent/consts';
 
 type Props = {
@@ -36,8 +39,11 @@ const { measurementId } = Astro.props;
       measurementId,
       SERVICE_AD_STORAGE,
       SERVICE_AD_USER_DATA,
+      SERVICE_AD_PERSONALIZATION,
       SERVICE_ANALYTICS_STORAGE,
       SERVICE_FUNCTIONALITY_STORAGE,
+      SERVICE_PERSONALIZATION_STORAGE,
+      SERVICE_SECURITY_STORAGE,
     }}
     defer
   >
@@ -53,8 +59,11 @@ const { measurementId } = Astro.props;
     window.gtag('consent', 'default', {
       [SERVICE_AD_STORAGE]: 'denied',
       [SERVICE_AD_USER_DATA]: 'denied',
+      [SERVICE_AD_PERSONALIZATION]: 'denied',
       [SERVICE_ANALYTICS_STORAGE]: 'denied',
       [SERVICE_FUNCTIONALITY_STORAGE]: 'denied',
+      [SERVICE_PERSONALIZATION_STORAGE]: 'denied',
+      [SERVICE_SECURITY_STORAGE]: 'granted',
     });
 
     window.gtag('config', measurementId);

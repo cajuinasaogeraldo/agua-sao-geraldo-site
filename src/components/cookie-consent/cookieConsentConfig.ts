@@ -1,7 +1,7 @@
 import type { CookieConsentConfig } from 'vanilla-cookieconsent';
 import * as CookieConsent from 'vanilla-cookieconsent';
-import ptBR from './translations/pt-BR.json';
-import en from './translations/en.json';
+import ptBR from './translations/pt-BR';
+import en from './translations/en';
 import {
   CAT_ADVERTISEMENT,
   CAT_ANALYTICS,
@@ -18,7 +18,7 @@ import {
 } from './consts';
 
 function updateGtagConsent() {
-  window.gtag('consent', 'update', {
+  const consent = {
     [SERVICE_ANALYTICS_STORAGE]: CookieConsent.acceptedService(
       SERVICE_ANALYTICS_STORAGE,
       CAT_ANALYTICS,
@@ -55,11 +55,16 @@ function updateGtagConsent() {
     )
       ? 'granted'
       : 'denied',
-  });
-}
+  };
 
+  window.gtag('consent', 'update', consent);
+}
 export const config: CookieConsentConfig = {
   root: '#cc-container',
+  disablePageInteraction: true,
+  cookie: {
+    name: 'caju_cc_cookie',
+  },
   guiOptions: {
     consentModal: {
       layout: 'box inline',
@@ -72,22 +77,27 @@ export const config: CookieConsentConfig = {
       flipButtons: false,
     },
   },
-  // Trigger consent update when user choices change
-  onFirstConsent: () => {
-    updateGtagConsent();
-  },
-  onConsent: () => {
-    updateGtagConsent();
-  },
-  onChange: () => {
-    updateGtagConsent();
-  },
   categories: {
     [CAT_NECESSARY]: {
       enabled: true, // this category is enabled by default
       readOnly: true, // this category cannot be disabled
     },
+    [CAT_SECURITY]: {
+      enabled: true,
+      readOnly: true,
+      services: {
+        [SERVICE_SECURITY_STORAGE]: {
+          label:
+            'Habilita armazenamento relacionado a segurança, como autenticação, prevenção de fraudes e outras proteções ao usuário.',
+        },
+      },
+    },
     [CAT_ANALYTICS]: {
+      services: {
+        [SERVICE_ANALYTICS_STORAGE]: {
+          label: 'Habilita armazenamento relacionado a análises, como duração da visita.',
+        },
+      },
       autoClear: {
         cookies: [
           {
@@ -98,11 +108,25 @@ export const config: CookieConsentConfig = {
           },
         ],
       },
-      // See: https://cookieconsent.orestbida.com/reference/configuration-reference.html#category-services
+    },
+    [CAT_ADVERTISEMENT]: {
       services: {
-        [SERVICE_ANALYTICS_STORAGE]: {
-          label: 'Google Analytics',
+        [SERVICE_AD_STORAGE]: {
+          label: 'Habilita armazenamento (como cookies) relacionado a publicidade.',
         },
+        [SERVICE_AD_USER_DATA]: {
+          label:
+            'Define consentimento para enviar dados do usuário relacionados a publicidade ao Google.',
+        },
+        [SERVICE_AD_PERSONALIZATION]: {
+          label: 'Define consentimento para publicidade personalizada.',
+        },
+      },
+    },
+    [CAT_FUNCTIONALITY]: {
+      services: {
+        [SERVICE_FUNCTIONALITY_STORAGE]: {},
+        [SERVICE_PERSONALIZATION_STORAGE]: {},
       },
     },
   },
@@ -113,5 +137,14 @@ export const config: CookieConsentConfig = {
       en: () => en,
       'pt-BR': () => ptBR,
     },
+  },
+  onFirstConsent: function () {
+    window.dataLayer.push({ event: 'client-consent-update' });
+  },
+  onConsent: () => {
+    updateGtagConsent();
+  },
+  onChange: ({ changedCategories: _ }) => {
+    updateGtagConsent();
   },
 };

@@ -7,7 +7,7 @@ import { headerData, footerData } from '@/navigation';
 
 import type { MetaData } from '@/types';
 import ToastProvider from '@/components/react/common/ToastProvider';
-import WhatsappButton from '@/components/widgets/WhatsappButton.astro';
+import WhatsappButton from '@/components/react/widgets/WhatsappButton';
 
 export interface Props {
   metadata?: MetaData;
@@ -33,5 +33,5 @@ const { metadata } = Astro.props;
   <slot name="footer">
     <Footer {...footerData} />
   </slot>
-  <WhatsappButton />
+  <WhatsappButton client:only="react" />
 </Layout>

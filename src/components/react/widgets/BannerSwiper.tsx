@@ -52,8 +52,8 @@ export default function BannerSwiper({ banners }: BannerSwiperProps) {
         ))}
 
         {/* NAV BUTTONS */}
-        <div className="swiper-button-prev py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
-        <div className="swiper-button-next py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
+        <div className="swiper-button-prev py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
+        <div className="swiper-button-next py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
       </Swiper>
     </div>
   );
@@ -67,11 +67,14 @@ function BannerSlideContent({ banner, index }: { banner: BannerData; index: numb
   useEffect(() => {
     const img = new Image();
     img.onload = () => {
-      const aspectRatio = img.width / img.height;
-      setImageRatio(aspectRatio);
-      // Se aspect ratio >= 2.5 (panorâmica tipo 3:1 ou mais), usa contain
-      // Senão (quadrado/vertical), usa cover para não cortar
-      setObjectFit(aspectRatio >= 2.5 ? 'contain' : 'cover');
+      // Usa requestAnimationFrame para evitar forced reflow
+      requestAnimationFrame(() => {
+        const aspectRatio = img.width / img.height;
+        setImageRatio(aspectRatio);
+        // Se aspect ratio >= 2.5 (panorâmica tipo 3:1 ou mais), usa contain
+        // Senão (quadrado/vertical), usa cover para não cortar
+        setObjectFit(aspectRatio >= 2.5 ? 'contain' : 'cover');
+      });
     };
     img.src = banner.image;
   }, [banner.image]);

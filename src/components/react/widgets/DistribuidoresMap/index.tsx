@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { Distribuidor } from '@/types';
 import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
 import { AutoCompleteSearchBox } from './AutoCompleteSearchBox';
@@ -6,7 +6,6 @@ import DistribuidorMarker from './DistribuidorMarker';
 import DefaultLocationMarker from './DefaultLocationMarker';
 import { useDistribuidorMarkers } from '../../hooks/useDistribuidorMarkers';
 import useGmapsActions from '../../hooks/useGmapsActions';
-import { useIsMobile } from '../../hooks/useIsMobile';
 
 interface Props {
   distribuidores: Distribuidor[];
@@ -17,7 +16,7 @@ interface Props {
 function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
   const [sortedDistribuidores, setSortedDistribuidores] = useState<Distribuidor[]>([]);
   const [infoWindowShown, setInfoWindowShown] = useState(false);
-  const isMobile = useIsMobile();
+  const isMobile = window.innerWidth <= 768;
 
   const map = useMap();
 
@@ -62,15 +61,17 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 
     // Volta para os bounds de todos os distribuidores
     if (map && sortedDistribuidores.length > 1) {
-      const bounds = new google.maps.LatLngBounds();
-      sortedDistribuidores.forEach((d) => bounds.extend({ lat: d.lat, lng: d.lng }));
-      map.fitBounds(bounds, 90);
+      requestAnimationFrame(() => {
+        const bounds = new google.maps.LatLngBounds();
+        sortedDistribuidores.forEach((d) => bounds.extend({ lat: d.lat, lng: d.lng }));
+        map.fitBounds(bounds, 90);
 
-      google.maps.event.addListenerOnce(map, 'bounds_changed', () => {
-        const currentZoom = map.getZoom();
-        if (currentZoom && currentZoom > 18) {
-          map.setZoom(18);
-        }
+        google.maps.event.addListenerOnce(map, 'bounds_changed', () => {
+          const currentZoom = map.getZoom();
+          if (currentZoom && currentZoom > 18) {
+            map.setZoom(18);
+          }
+        });
       });
     }
   };
@@ -83,7 +84,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
   return (
     <section id="nos-encontre" className="min-h-[521px] w-full px-4 lg:px-12">
       {isMobile && (
-        <h2 className="text-xxs text-caju-heading-primary scale-95 font-bold uppercase">
+        <h2 className="text-xxs text-agua-secondary-blue scale-95 font-bold uppercase">
           Nos encontre perto de você
         </h2>
       )}
@@ -96,7 +97,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
             className="h-full w-full rounded-md!"
             defaultCenter={defaultPosition}
             defaultZoom={16}
-            renderingType="VECTOR"
+            renderingType="RASTER"
             gestureHandling="cooperative"
             mapTypeControl={false}
             cameraControl={false}
@@ -128,7 +129,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
           <div className="flex w-full flex-col">
             {/* Title Desktop */}
             {!isMobile && (
-              <h2 className="text-xxs text-caju-heading-primary scale-95 font-bold uppercase">
+              <h2 className="text-xxs text-agua-secondary-blue scale-95 font-bold uppercase">
                 Nos encontre
                 <br />
                 perto de você
@@ -166,11 +167,11 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
                 <div className="hide-scrollbar flex cursor-grab gap-2 my-2 lg:flex-col max-h-[300px] max-w-[650px] overflow-y-scroll">
                   {sortedDistribuidores.map((dist) => (
                     <div
-                      className="font-inter min-w-[225px] cursor-pointer border-2 border-gray-200 bg-[#FEF7FF] px-4 py-1 font-medium hover:border-gray-300 hover:shadow-md lg:max-h-24 lg:max-w-[650px]"
+                      className="font-inter min-w-[225px] cursor-pointer border-2 border-gray-200 bg-[#FEF7FF] px-4 py-1 font-medium hover:border-gray-300 hover:shadow-md lg:max-h-28 lg:max-w-[650px]"
                       key={dist.id + dist.lat + dist.nome}
                       onClick={() => handleCardClick(dist)}
                     >
-                      <p className="text-agua-secondary-green mb-0! text-base! font-bold">
+                      <p className="text-agua-secondary-blue mb-0! text-base! font-bold">
                         {dist.nome}
                       </p>
                       <p>{dist.endereco}</p>
@@ -187,7 +188,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
                 VER MAIS
               </button>
               <button className="btn-secondary max-w-80 flex-1">
-                <a className="uppercase" href="/solicite/seja-um-revendedor/">
+                <a className="uppercase" href="/solicite/seja-um-distribuidor/">
                   seja um distribuidor
                 </a>
               </button>
@@ -203,6 +204,27 @@ export default function DistribuidoresGmaps({
   distribuidores = [],
   apiKey,
 }: Omit<Props, 'defaultPosition'>) {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const saoGeraldoPosition = {
     lat: -7.225938,
     lng: -39.329313,
@@ -210,14 +232,22 @@ export default function DistribuidoresGmaps({
   };
 
   return (
-    <APIProvider
-      language="pt-BR"
-      apiKey={apiKey}
-      region="BR"
-      version="beta"
-      authReferrerPolicy="origin"
-    >
-      <Gmaps distribuidores={distribuidores} defaultPosition={saoGeraldoPosition} />
-    </APIProvider>
+    <div ref={ref} className="min-h-[521px] w-full">
+      {isVisible ? (
+        <APIProvider
+          language="pt-BR"
+          apiKey={apiKey}
+          region="BR"
+          version="beta"
+          authReferrerPolicy="origin"
+        >
+          <Gmaps distribuidores={distribuidores} defaultPosition={saoGeraldoPosition} />
+        </APIProvider>
+      ) : (
+        <div className="min-h-[521px] w-full bg-gray-200 flex items-center justify-center">
+          <p>Carregando mapa...</p>
+        </div>
+      )}
+    </div>
   );
 }

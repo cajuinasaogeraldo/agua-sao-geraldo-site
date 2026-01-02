@@ -13,6 +13,7 @@ const distribuidores: Distribuidor[] = distribuidoresCollection
     nome: dist.data.nome,
     endereco: dist.data.endereco,
     telefone: dist.data.telefone,
+    placeId: dist.data.placeId,
     lat: dist.data.lat,
     lng: dist.data.lng,
   }));
@@ -23,6 +24,6 @@ const apiKey =
     : import.meta.env.PUBLIC_GOOGLE_MAPS_KEY_DEV;
 ---
 
-<WidgetWrapper containerClass="pb-12" id="revenda">
+<WidgetWrapper id="distribuidores-map">
   <DistribuidoresGmaps client:only="react" distribuidores={distribuidores} apiKey={apiKey} />
 </WidgetWrapper>

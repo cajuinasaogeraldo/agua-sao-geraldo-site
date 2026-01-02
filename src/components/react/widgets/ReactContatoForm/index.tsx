@@ -3,9 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { contatoFormSchema, type ContatoFormData } from './validators';
 import { GoogleReCaptchaProvider, GoogleReCaptchaCheckbox } from '@google-recaptcha/react';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import 'dayjs/locale/pt-br';
 import { PrivacyPolicyModal } from '../../common/PrivacyPolicyModal';
 import { AllowedFormIds, ESTADOS_BRASIL } from '../../common/form-constants';
 import { FormField } from '../../common/FormField';
@@ -58,7 +55,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           setRecaptchaError('Falha na validação do reCAPTCHA. Por favor, tente novamente.');
           return;
         }
-        throw new Error('Falha ao enviar formulário', errorData);
+        throw new Error(`Falha ao enviar formulário: \n${errorData}`);
       }
 
       alert('Formulário enviado com sucesso!');
@@ -72,7 +69,12 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 
   return (
     <div className="mx-auto w-full">
-      <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl p-4 md:px-6 md:py-12 bg-white">
+      <form
+        id="contact_form"
+        name="Formulário de Contato"
+        onSubmit={handleSubmit(onSubmit)}
+        className="rounded-2xl p-4 md:px-6 md:py-8 bg-white"
+      >
         <div className="flex flex-col gap-8">
           {/* Informações  */}
           <div className="grid grid-cols-1 gap-4 [&_div>label]:text-xl! [&_div>label]:font-bold">
@@ -189,9 +191,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
 export default function ReactContatoForm({ recaptchaSiteKey, apiUrl }: Props) {
   return (
     <GoogleReCaptchaProvider type="v2-checkbox" siteKey={recaptchaSiteKey!} isEnterprise>
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
-        <Form apiUrl={apiUrl} />
-      </LocalizationProvider>
+      <Form apiUrl={apiUrl} />
     </GoogleReCaptchaProvider>
   );
 }

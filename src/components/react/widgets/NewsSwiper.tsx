@@ -3,7 +3,6 @@ import type { Swiper as SwiperType } from 'swiper';
 import { Navigation, Autoplay } from 'swiper/modules';
 import ImageOptimized from '@/components/react/common/ImageOptimized';
 import { useState } from 'react';
-import { useIsMobile } from '../hooks/useIsMobile';
 import type { News } from '@/types';
 
 interface NewsSwiperProps {
@@ -15,7 +14,7 @@ interface NewsSwiperProps {
 export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperProps) {
   if (!news || news.length === 0) return null;
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
-  const isMobile = useIsMobile();
+  const isMobile = window.innerWidth <= 768;
 
   const handlePause = () => {
     if (swiperInstance?.autoplay) {
@@ -30,11 +29,7 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
   };
 
   return (
-    <div
-      className="relative mt-6 w-full px-2"
-      onMouseEnter={handlePause}
-      onMouseLeave={handleResume}
-    >
+    <div className="relative w-full px-2" onMouseEnter={handlePause} onMouseLeave={handleResume}>
       <Swiper
         onSwiper={setSwiperInstance}
         modules={[Navigation, Autoplay]}
@@ -69,7 +64,7 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
             onMouseOut={isMobile ? handleResume : () => {}}
             onClick={isMobile ? handlePause : () => {}}
             key={post.id}
-            className="bg-white rounded-xl p-3 md:p-5"
+            className="bg-white p-3 md:p-5 rounded-xl"
           >
             {post.image && (
               <a className="cursor-pointer" href={post.permalink}>
@@ -91,13 +86,13 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
                 {post.title}
               </p>
 
-              <p className="font-inter line-clamp-2! h-14 md:h-20 px-1 text-sm">
-                {post.excerpt || post.content || post.title}
+              <p className="font-inter line-clamp-2 h-14 md:h-20 px-1 text-sm">
+                {post.excerpt || post.content}
               </p>
 
               <a
                 href={post.permalink}
-                className="btn-primary inline-block h-fit w-fit rounded text-sm font-medium text-white transition-all duration-300"
+                className="btn-primary mx-1 inline-block h-fit w-fit rounded text-sm text-white transition-all duration-300 "
               >
                 Leia Mais
               </a>

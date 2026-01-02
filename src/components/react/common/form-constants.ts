@@ -6,7 +6,7 @@ export enum AllowedFormIds {
 }
 
 export const ESTADOS_BRASIL = [
-  { value: '', label: 'Selecione um estado' },
+  { value: '', label: 'Selecione' },
   { value: 'AC', label: 'Acre (AC)' },
   { value: 'AL', label: 'Alagoas (AL)' },
   { value: 'AP', label: 'Amapá (AP)' },

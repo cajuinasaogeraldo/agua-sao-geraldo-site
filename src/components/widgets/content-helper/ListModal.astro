@@ -16,9 +16,7 @@
 
     <div class="space-y-4">
       <label class="block">
-        <span class="mb-2 block text-sm font-medium text-neutral-300">
-          Tipo de Lista
-        </span>
+        <span class="mb-2 block text-sm font-medium text-neutral-300"> Tipo de Lista </span>
         <select
           id="listModeSelect"
           class="w-full rounded-lg border border-neutral-700 bg-neutral-950 px-4 py-3 text-sm text-neutral-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50 focus:outline-none"
@@ -30,9 +28,7 @@
       </label>
 
       <label class="block">
-        <span class="mb-2 block text-sm font-medium text-neutral-300">
-          Itens
-        </span>
+        <span class="mb-2 block text-sm font-medium text-neutral-300"> Itens </span>
 
         <div id="listItems" class="space-y-2"></div>
 
@@ -62,24 +58,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  @keyframes list-in {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .animate-in {
-    animation: list-in 0.2s ease-out;
-  }
-
-  #listModal.active {
-    display: flex;
-  }
-</style>
