@@ -1,0 +1,13 @@
+public/fonts/Bevan.woff2
+public/fonts/
+src/components/Team.astro
+src/components/SocialResponsabilityLinks.astro
+src/components/Products.astro
+src/components/react/widgets/ProductsPageCarrousel.tsx
+src/components/react/widgets/ProductsCarrousel.tsx
+src/components/ui/WhatsIcon.astro
+src/components/widgets/SocialReponsability.astro
+src/utils/social-responsability.ts
+src/utils/products.ts
+src/utils/pages.ts
+src/components/ui/Headline.astro

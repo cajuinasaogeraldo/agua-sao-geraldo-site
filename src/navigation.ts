@@ -31,6 +31,11 @@ export const headerData = {
       href: '/solicite/seja-um-revendedor/',
       class: 'text-agua-primary-green!',
     },
+    {
+      text: 'Fale Conosco',
+      variant: 'primary',
+      href: '/fale-conosco/',
+    },
   ] as CallToAction[],
 };
 

@@ -146,6 +146,7 @@ const distribuidor = defineCollection({
     nome: z.string(),
     endereco: z.string(),
     telefone: z.string(),
+    placeId: z.string().optional(),
     lat: z.number(),
     lng: z.number(),
     active: z.boolean().default(true),
