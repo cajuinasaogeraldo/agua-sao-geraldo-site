@@ -2,7 +2,7 @@
 backend:
   name: 'github'
   repo: 'cajuinasaogeraldo/agua-sao-geraldo-site'
-  branch: 'cms/push'
+  branch: 'development'
   base_url: 'https://hub.cajuinasaogeraldo.com.br:8444/'
   squash_merges: true
   preview_url: 'https://seagreen-squirrel-365460.hostingersite.com/'
