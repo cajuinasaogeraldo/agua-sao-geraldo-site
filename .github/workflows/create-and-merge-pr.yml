@@ -2,7 +2,7 @@ name: Create and Auto-Merge PR
 
 on:
   push:
-    branches: [cms/push, development]
+    branches: [development]
   repository_dispatch:
     types: [sveltia-cms-publish]
   workflow_dispatch:
