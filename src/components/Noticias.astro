@@ -23,11 +23,16 @@ const newsForReact = news.map((news: News) => ({
 
 <WidgetWrapper id="noticias" containerClass="flex min-h-[340px] w-full flex-col text-center">
   <h2 class="text-caju-heading-primary uppercase">Notícias</h2>
-
-  <NewsSwiper
-    news={newsForReact}
-    arrowNext={arrowNext.src}
-    arrowPrev={arrowPrev.src}
-    client:only="react"
-  />
+  {
+    newsForReact.length === 0 ? (
+      <p class="text-muted mx-auto mt-7">Nenhuma notícia encontrada.</p>
+    ) : (
+      <NewsSwiper
+        news={newsForReact}
+        arrowNext={arrowNext.src}
+        arrowPrev={arrowPrev.src}
+        client:only="react"
+      />
+    )
+  }
 </WidgetWrapper>

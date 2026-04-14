@@ -67,7 +67,7 @@ const config = {
       {
         title: 'Publicidade',
         description:
-          'O Google usa cookies para publicidade, incluindo exibição e renderização de anúncios, personalização de anúncios (dependendo de suas configurações em <a href="https://g.co/adsettings">g.co/adsettings</a>), limitação do número de vezes que um anúncio é exibido para um usuário, ocultação de anúncios que você escolheu parar de ver e medição da eficácia dos anúncios.',
+          'O Google usa cookies para publicidade, incluindo exibição e renderização de anúncios, personalização de anúncios (dependendo de suas configurações em <a rel="noopener noreferrer" href="https://g.co/adsettings">g.co/adsettings</a>), limitação do número de vezes que um anúncio é exibido para um usuário, ocultação de anúncios que você escolheu parar de ver e medição da eficácia dos anúncios.',
         linkedCategory: CAT_ADVERTISEMENT,
       },
       {
