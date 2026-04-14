@@ -37,16 +37,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Cache Astro Optimized Images
-        uses: actions/cache@v4
+      - name: Restore Astro Build Cache
+        uses: actions/cache/restore@v4
+        id: cache-restore
         with:
-          path: .astro
-          key: astro-images-${{ runner.os }}-${{ hashFiles('src/assets/**/*') }}
+          path: |
+            .astro
+            dist
+            node_modules
+          key: astro-build-${{ runner.os }}-${{ hashFiles('package.json') }}
           restore-keys: |
-            astro-images-${{ runner.os }}-
+            astro-build-${{ runner.os }}-
 
       - name: Build Astro
         env:
+          ASTRO_TELEMETRY_DISABLED: 1
           NODE_ENV: production
           PUBLIC_GOOGLE_MAPS_KEY_PROD: ${{ secrets.PUBLIC_GOOGLE_MAPS_KEY_PROD }}
           PUBLIC_GOOGLE_MAPS_GEOCODING_PROD: ${{ secrets.PUBLIC_GOOGLE_MAPS_GEOCODING_PROD }}
@@ -56,6 +61,16 @@ jobs:
           GOOGLE_ANALYTICS_ID: ${{ vars.GOOGLE_ANALYTICS_ID }}
           SITE_URL: ${{ vars.SITE_URL }}
         run: pnpm build
+
+      - name: Save Astro Build Cache
+        uses: actions/cache/save@v4
+        if: always() && steps.cache-restore.outputs.cache-hit != 'true'
+        with:
+          path: |
+            .astro
+            dist
+            node_modules
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
 
       - name: Deploy via SSH/rsync
         uses: burnett01/rsync-deployments@7.0.1

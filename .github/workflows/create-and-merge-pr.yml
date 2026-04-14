@@ -11,10 +11,6 @@ permissions:
   contents: write
   pull-requests: write
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   create-and-merge-pr:
     if: ${{ github.event_name == 'repository_dispatch' || contains(github.event.head_commit.message, '[cms]') || contains(github.event.head_commit.message, '[ci]') }}
