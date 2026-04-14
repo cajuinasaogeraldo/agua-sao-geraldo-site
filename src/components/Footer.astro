@@ -28,6 +28,9 @@ export interface Props {
 }
 
 const { socialLinks = [], links = [], footNote = '' } = Astro.props;
+
+const isExternalHref = (href: unknown): boolean =>
+  typeof href === 'string' && /^https?:\/\//i.test(href);
 ---
 
 <footer
@@ -60,6 +63,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
                       href={href}
                       class="text-agua-secondary-green!"
                       aria-label={ariaLabel}
+                      {...(isExternalHref(href) ? { rel: 'noopener noreferrer' } : {})}
                       {...rest}
                     >
                       {text}
@@ -85,6 +89,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
                     class="text-muted bg-agua-primary-green inline-flex items-center rounded-full p-2 text-sm"
                     aria-label={ariaLabel}
                     href={href}
+                    {...(isExternalHref(href) ? { rel: 'noopener noreferrer' } : {})}
                   >
                     {icon && <Icon name={icon} class="size-8 text-white" />}
                     <Fragment set:html={text} />
@@ -96,6 +101,7 @@ const { socialLinks = [], links = [], footNote = '' } = Astro.props;
           <Button
             variant="primary"
             href="https://web.whatsapp.com/send?phone=558892527344&text=Oi,%20vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
+            rel="noopener noreferrer"
             aria-label="Entre em contato"
             class="mt-0! rounded-2xl flex max-w-[350px] items-center justify-center gap-2 text-lg"
           >

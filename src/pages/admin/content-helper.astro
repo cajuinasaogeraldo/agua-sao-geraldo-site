@@ -280,6 +280,10 @@ const metadata = {
         return div.innerHTML;
       }
 
+      function isExternalUrl(url) {
+        return /^https?:\/\//i.test(url.trim());
+      }
+
       // ============================================
       // ESTADO GLOBAL
       // ============================================
@@ -863,9 +867,11 @@ const metadata = {
         html = html.replace(
           /\[\[link:([^|]+)\|([^\]]+)\]\]([\s\S]*?)\[\[\/link\]\]/g,
           (_, url, target, text) => {
-            const targetAttr =
-              target.trim() === '_blank' ? 'target="_blank" rel="noopener noreferrer"' : '';
-            return `<a href="${url.trim()}" ${targetAttr} class="text-blue-600 hover:text-blue-800 underline">${text.trim()}</a>`;
+            const href = url.trim();
+            const relAttr = isExternalUrl(href) ? 'rel="noopener noreferrer"' : '';
+            const targetAttr = target.trim() === '_blank' ? 'target="_blank"' : '';
+            const attrs = [targetAttr, relAttr].filter(Boolean).join(' ');
+            return `<a href="${href}" ${attrs} class="text-blue-600 hover:text-blue-800 underline">${text.trim()}</a>`;
           },
         );
 

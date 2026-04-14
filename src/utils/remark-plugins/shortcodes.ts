@@ -43,6 +43,8 @@ interface RenderMarkdownOptions {
   rewriteAssets?: boolean;
 }
 
+const isExternalUrl = (url: string): boolean => /^https?:\/\//i.test(url.trim());
+
 async function renderMarkdownBase(
   markdown: string,
   filePath?: string,
@@ -596,9 +598,10 @@ async function generateHTML(
       if (!params) return content;
       const [urlRaw, targetRaw] = params.split('|').map((item) => item.trim());
       const href = urlRaw || '#';
-      const targetAttr = targetRaw === '_blank' ? ' target="_blank" rel="noopener noreferrer"' : '';
+      const targetAttr = targetRaw === '_blank' ? ' target="_blank"' : '';
+      const relAttr = isExternalUrl(href) ? ' rel="noopener noreferrer"' : '';
       const inner = await renderInlineMarkdown(content, filePath);
-      return `<a href="${href}"${targetAttr} class="text-blue-600 hover:text-blue-800 underline">${inner}</a>`;
+      return `<a href="${href}"${targetAttr}${relAttr} class="text-blue-600 hover:text-blue-800 underline">${inner}</a>`;
     }
 
     case 'two-columns': {

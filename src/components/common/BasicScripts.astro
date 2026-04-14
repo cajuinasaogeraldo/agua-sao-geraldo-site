@@ -126,6 +126,7 @@ const analyticsId = ANALYTICS?.vendors?.googleAnalytics.id
 
       const newlink = document.createElement('a');
       newlink.target = '_blank';
+      newlink.rel = 'noopener noreferrer';
       newlink.href = href;
       newlink.click();
     });

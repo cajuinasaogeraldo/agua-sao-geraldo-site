@@ -67,7 +67,7 @@ const config = {
       {
         title: 'Advertising',
         description:
-          'Google uses cookies for advertising, including serving and rendering ads, personalizing ads (depending on your ad settings at <a href="https://g.co/adsettings">g.co/adsettings</a>), limiting the number of times an ad is shown to a user, muting ads you have chosen to stop seeing, and measuring the effectiveness of ads.',
+          'Google uses cookies for advertising, including serving and rendering ads, personalizing ads (depending on your ad settings at <a rel="noopener noreferrer" href="https://g.co/adsettings">g.co/adsettings</a>), limiting the number of times an ad is shown to a user, muting ads you have chosen to stop seeing, and measuring the effectiveness of ads.',
         linkedCategory: CAT_ADVERTISEMENT,
       },
       {
@@ -85,7 +85,7 @@ const config = {
       {
         title: 'More information',
         description:
-          'For any queries in relation to the policy on cookies and your choices, please <a href="https://www.example.com/contacts">contact us</a>.',
+          'For any queries in relation to the policy on cookies and your choices, please <a rel="noopener noreferrer" href="/fale-conosco/">contact us</a>.',
       },
     ],
   },
