@@ -115,6 +115,9 @@ customRules: |
     RewriteEngine On
     RewriteCond %{REQUEST_URI} ^/admin/.+$
     RewriteCond %{REQUEST_URI} !^/admin/$
+    RewriteCond %{REQUEST_URI} !^/admin/Y29uZmlneW1sc29xdWVlbWJhc2U2NHByYWZyZXNjYXI-config\.yml$
+    RewriteCond %{REQUEST_URI} !^/admin/collections/news\.yml$
+    RewriteCond %{REQUEST_URI} !^/admin/collections/pages\.yml$
     RewriteCond %{HTTP_COOKIE} !(^|;[[:space:]]*)cms_auth=1(;|$) [NC]
     RewriteRule ^admin/ /admin/ [R=302,L]
   </IfModule>
