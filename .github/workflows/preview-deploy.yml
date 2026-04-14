@@ -1,16 +1,19 @@
 name: Preview Deploy
 
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: [sveltia-cms-preview]
 
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
+    env:
+      PREVIEW_BRANCH: ${{ github.event.client_payload.branch || 'main' }}
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.client_payload.branch }}
+          ref: ${{ env.PREVIEW_BRANCH }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -24,20 +27,27 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --force
+        run: pnpm install --frozen-lockfile
 
-      - name: Cache Astro Optimized Images
-        uses: actions/cache@v4
+      - name: Restore Astro Build Cache
+        uses: actions/cache/restore@v4
+        id: cache-restore
         with:
-          path: .astro
-          key: astro-images-${{ runner.os }}-${{ hashFiles('src/assets/**/*') }}
+          path: |
+            .astro
+          key: astro-build-${{ runner.os }}-${{ env.PREVIEW_BRANCH }}-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            astro-images-${{ runner.os }}-
+            astro-build-${{ runner.os }}-${{ env.PREVIEW_BRANCH }}-
+            astro-build-${{ runner.os }}-main-
+            astro-build-${{ runner.os }}-
+
+      - name: Clean dist
+        run: rm -rf dist
 
       - name: Build site
         env:
+          ASTRO_TELEMETRY_DISABLED: 1
           NODE_ENV: production
-          PREVIEW_BRANCH: ${{ github.event.client_payload.branch }}
           PUBLIC_GOOGLE_MAPS_KEY_PROD: ${{ secrets.PUBLIC_GOOGLE_MAPS_KEY_PROD }}
           PUBLIC_GOOGLE_CAPTCHA_SITEKEY: ${{ vars.PUBLIC_GOOGLE_CAPTCHA_SITEKEY }}
           PUBLIC_API_BASE_URL: ${{ vars.PUBLIC_API_BASE_URL }}
@@ -45,6 +55,14 @@ jobs:
           GOOGLE_ANALYTICS_ID: ${{ vars.GOOGLE_ANALYTICS_ID }}
           SITE_URL: ${{ vars.SITE_URL }}
         run: pnpm build
+
+      - name: Save Astro Build Cache
+        uses: actions/cache/save@v4
+        if: always() && steps.cache-restore.outputs.cache-hit != 'true'
+        with:
+          path: |
+            .astro
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
 
       - name: Deploy to preview environment
         uses: burnett01/rsync-deployments@7.0.1
@@ -60,7 +78,7 @@ jobs:
       - name: Output preview info
         run: |
           echo "🚀 Deploying preview for:"
-          echo "  Branch: ${{ github.event.client_payload.branch }}"
+          echo "  Branch: ${{ env.PREVIEW_BRANCH }}"
           echo "  Collection: ${{ github.event.client_payload.collection }}"
           echo "  Slug: ${{ github.event.client_payload.slug }}"
           echo "  PR: #${{ github.event.client_payload.pr_number }}"
