@@ -203,7 +203,7 @@ collections:
 
       - name: htaccess
         label: Apache Settings
-        file: public/_htaccess
+        file: src/_htaccess
         fields:
           - {
               name: body,
@@ -216,7 +216,7 @@ collections:
 
       - name: siteConfig
         label: Configurações Gerais
-        file: public/_config
+        file: src/_config
         fields:
           - {
               name: body,
