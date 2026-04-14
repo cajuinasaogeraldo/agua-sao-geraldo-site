@@ -1,6 +1,6 @@
 site:
   name: Água Mineral Natural - São Geraldo
-  site: 'https://red-chamois-284776.hostingersite.com/'
+  site: 'https://aguamineralsaogeraldo.com.br'
   base: '/'
   trailingSlash: true
 
@@ -62,7 +62,7 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: 'GTM-PGHH42ZQ' # or "G-XXXXXXXXXX"
+      id: 'GTM-PKQ66NGR' # or "G-XXXXXXXXXX"
 
 ui:
   theme: 'light:only' # Values: "system" | "light"

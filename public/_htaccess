@@ -104,6 +104,10 @@ customRules: |
     Order allow,deny
     Deny from all
   </FilesMatch>
+  <FilesMatch "^\_">
+    Order allow,deny
+    Deny from all
+  </FilesMatch>
 
   # Bloqueia acesso a wp-admin antigos (quando migrado do WordPress)
   RedirectMatch 403 ^/wp-admin
