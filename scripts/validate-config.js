@@ -2,7 +2,7 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
 
-const files = ['public/_config', 'public/_htaccess'];
+const files = ['src/_config', 'src/_htaccess'];
 
 let hasError = false;
 

@@ -104,15 +104,20 @@ customRules: |
     Order allow,deny
     Deny from all
   </FilesMatch>
-  # SEGURANÇA TEMPORÁRIA: Bloquear toda a pasta /admin
-  # TODO: Implementar geração de config.yml em build-time e auth segura
+  
   <FilesMatch "^\_">
     Order allow,deny
     Deny from all
   </FilesMatch>
 
-  # Bloqueia qualquer acesso à URL /admin e tudo abaixo dela
-  RedirectMatch 403 ^/admin(/|$)
+  # Protege páginas internas do admin usando cookie sincronizado pelo front
+  <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} ^/admin/.+$
+    RewriteCond %{REQUEST_URI} !^/admin/$
+    RewriteCond %{HTTP_COOKIE} !(^|;[[:space:]]*)cms_auth=1(;|$) [NC]
+    RewriteRule ^admin/ /admin/ [R=302,L]
+  </IfModule>
 
   ErrorDocument 404 /404.html
 

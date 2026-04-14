@@ -1,12 +1,16 @@
+---
+const gmapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_GEOCODING_PROD || '';
+---
+
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
-    <link href="/admin/collections/news.yml" type="text/yaml" rel="cms-config-url" />
-    <link href="/admin/collections/pages.yml" type="text/yaml" rel="cms-config-url" />
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+    <link href="/admin/collections/pages.yml" type="text/yaml" rel="cms-config-url" />
+    <link href="/admin/collections/news.yml" type="text/yaml" rel="cms-config-url" />
     <title>Agua São Geraldo CMS</title>
     <style>
       .geocode-button {
@@ -49,11 +53,56 @@
   </head>
   <body>
     <!-- Google Maps API Key -->
-    <script>
-      window.GMAPS_API_KEY = '%%GMAPS_API_KEY%%';
+    <script is:inline set:html={`window.GMAPS_API_KEY = ${JSON.stringify(gmapsApiKey)};`} />
+    <script is:inline>
+      (function () {
+        const userDataKey = 'sveltia-cms.user';
+        const authCookieName = 'cms_auth';
+        const authCookieMaxAgeSeconds = 60 * 60 * 8;
+        const cookieFlags = `Path=/; SameSite=Lax${window.location.protocol === 'https:' ? '; Secure' : ''}`;
+
+        const setAuthCookie = (isAuthenticated) => {
+          if (isAuthenticated) {
+            document.cookie = `${authCookieName}=1; Max-Age=${authCookieMaxAgeSeconds}; ${cookieFlags}`;
+            return;
+          }
+
+          document.cookie = `${authCookieName}=; Max-Age=0; ${cookieFlags}`;
+        };
+
+        const hasSveltiaToken = () => {
+          try {
+            const raw = localStorage.getItem(userDataKey);
+
+            if (!raw) {
+              return false;
+            }
+
+            const parsed = JSON.parse(raw);
+            return Boolean(parsed && parsed.token);
+          } catch (_error) {
+            return false;
+          }
+        };
+
+        const syncAuthCookie = () => {
+          setAuthCookie(hasSveltiaToken());
+        };
+
+        syncAuthCookie();
+
+        window.addEventListener('storage', (event) => {
+          if (!event.key || event.key === userDataKey) {
+            syncAuthCookie();
+          }
+        });
+
+        setInterval(syncAuthCookie, 1500);
+      })();
     </script>
-    <script src="https://unpkg.com/@cajuinasi/sveltia-cms/dist/sveltia-cms.js"></script>
-    <script>
+    <script is:inline async defer src="https://unpkg.com/@cajuinasi/sveltia-cms/dist/sveltia-cms.js"
+    ></script>
+    <script is:inline>
       // Esperar o CMS carregar completamente
       window.addEventListener('load', function () {
         setTimeout(function () {
@@ -127,12 +176,13 @@
           statusDiv.style.display = 'none';
 
           try {
-            const GMAPS_API_KEY = window.GMAPS_API_KEY;
+            let gmapsApiKey = window.GMAPS_API_KEY;
 
-            if (!GMAPS_API_KEY || GMAPS_API_KEY.includes('%%')) {
+            if (!gmapsApiKey || gmapsApiKey.includes('%%')) {
               // Fallback para localStorage (útil em dev)
               const storedKey = localStorage.getItem('GMAPS_API_KEY');
               if (storedKey) {
+                gmapsApiKey = storedKey;
                 window.GMAPS_API_KEY = storedKey;
               } else {
                 const userKey = prompt(
@@ -140,6 +190,7 @@
                 );
                 if (userKey) {
                   localStorage.setItem('GMAPS_API_KEY', userKey);
+                  gmapsApiKey = userKey;
                   window.GMAPS_API_KEY = userKey;
                 } else {
                   showStatus('❌ API Key do Google Maps não configurada.', 'error');
@@ -150,7 +201,7 @@
 
             const query = encodeURIComponent(endereco);
             const response = await fetch(
-              `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${GMAPS_API_KEY}`,
+              `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${gmapsApiKey}`,
             );
             const data = await response.json();
 
@@ -199,7 +250,7 @@
             if (!latInput || !lngInput) {
               const allSections = document.querySelectorAll('section[role="group"]');
 
-              allSections.forEach((section, idx) => {
+              allSections.forEach((section) => {
                 const header = section.querySelector('h4');
                 if (header) {
                   const text = header.textContent.trim().toLowerCase();
@@ -305,9 +356,8 @@
     </script>
 
     <!-- Botão de Ajuda de Layout para Editor Markdown -->
-    <script>
+    <script is:inline>
       let lastPath = '';
-      let checkInterval;
 
       function injectLayoutHelperButton() {
         // Verificar se está em uma página de coleção (edição/criação de post)
@@ -368,7 +418,7 @@
         });
 
         button.addEventListener('click', () => {
-          window.open('/admin/content-helper', '_blank');
+          window.open('/admin/content-helper/', '_blank');
         });
 
         // Info text
@@ -417,7 +467,7 @@
         injectLayoutHelperButton();
 
         // Monitorar mudanças de path a cada 500ms
-        checkInterval = setInterval(checkPathChange, 500);
+        setInterval(checkPathChange, 500);
 
         // Também observar mudanças no DOM
         const observer = new MutationObserver(() => {

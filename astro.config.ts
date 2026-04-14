@@ -32,15 +32,6 @@ export default defineConfig({
   site: import.meta.env.SITE_URL || 'https://aguamineralsaogeraldo.com.br',
   trailingSlash: 'always',
   output: 'static',
-  server: {
-    headers: {
-      'Cache-Control':
-        import.meta.env.mode === 'production'
-          ? 'public, max-age=31536000, s-maxage=31536000'
-          : 'no-cache revalidate=0',
-    },
-  },
-
   integrations: [
     sitemap(),
     mdx(),
@@ -82,9 +73,9 @@ export default defineConfig({
       Logger: 1,
     }),
     astrowind({
-      config: './public/_config',
+      config: './src/_config',
     }),
-    generateHtaccess({ config: './public/_htaccess' }),
+    generateHtaccess({ config: './src/_htaccess' }),
     react(),
   ],
 
