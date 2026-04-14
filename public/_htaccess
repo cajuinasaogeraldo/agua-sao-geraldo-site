@@ -104,10 +104,18 @@ customRules: |
     Order allow,deny
     Deny from all
   </FilesMatch>
+  # SEGURANÇA TEMPORÁRIA: Bloquear toda a pasta /admin
+  # TODO: Implementar geração de config.yml em build-time e auth segura
   <FilesMatch "^\_">
     Order allow,deny
     Deny from all
   </FilesMatch>
+  <DirectoryMatch "^/admin">
+    Order allow,deny
+    Deny from all
+  </DirectoryMatch>
+
+  ErrorDocument 404 /404.html
 
   # Bloqueia acesso a wp-admin antigos (quando migrado do WordPress)
   RedirectMatch 403 ^/wp-admin
