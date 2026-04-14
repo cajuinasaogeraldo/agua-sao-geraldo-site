@@ -10,7 +10,7 @@ forceHttps: false
 forceWww: remove
 
 # Domínio principal (importante para redirects absolutos)
-domain: red-chamois-284776.hostingersite.com/blog/
+domain: aguamineralsaogeraldo.com.br
 
 # ---------------------------------------------------
 # Redirects
@@ -20,10 +20,10 @@ redirects:
     to: /blog/
     code: 301
   - from: /propriedades/
-    to: /
+    to: /#propriedades
     code: 302
   - from: /revenda
-    to: /
+    to: /#revenda
     code: 302
 
 # ---------------------------------------------------
@@ -110,10 +110,9 @@ customRules: |
     Order allow,deny
     Deny from all
   </FilesMatch>
-  <DirectoryMatch "^/admin">
-    Order allow,deny
-    Deny from all
-  </DirectoryMatch>
+
+  # Bloqueia qualquer acesso à URL /admin e tudo abaixo dela
+  RedirectMatch 403 ^/admin(/|$)
 
   ErrorDocument 404 /404.html
 
