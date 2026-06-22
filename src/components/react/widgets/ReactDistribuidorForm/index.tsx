@@ -6,6 +6,7 @@ import { GoogleReCaptchaProvider, GoogleReCaptchaCheckbox } from '@google-recapt
 import { PrivacyPolicyModal } from '../../common/PrivacyPolicyModal';
 import { AllowedFormIds } from '../../common/form-constants';
 import { FormField } from '../../common/FormField';
+import { useFormSubmit } from '../../hooks/useFormSubmit';
 
 interface Props {
   onSubmitSuccess?: () => void;
@@ -16,54 +17,36 @@ interface Props {
 function Form({ onSubmitSuccess, apiUrl }: Props) {
   const [token, setToken] = useState<string | null>(null);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
-  const [recaptchaError, setRecaptchaError] = useState<string | null>(null);
+  const [recaptchaInstanceKey, setRecaptchaInstanceKey] = useState(0);
 
   const {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<DistribuidorFormData>({
     resolver: zodResolver(distribuidorSchema),
   });
 
-  const onSubmit = async (data: DistribuidorFormData) => {
-    try {
-      const formData = new FormData();
-
-      Object.entries(data).forEach(([key, val]) => {
-        if (val !== null && typeof val !== 'boolean') {
-          formData.append(key, String(val));
-        } else if (typeof val === 'boolean') {
-          formData.append(key, val ? 'true' : 'false');
-        }
-      });
-      formData.append('captchaToken', token || '');
-      formData.append('formId', AllowedFormIds.AGUA_REVENDEDOR);
-
-      const response = await fetch(`${apiUrl}/forms/submit`, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        if (
-          errorData.message &&
-          (errorData.message.includes('reCAPTCHA') || errorData.message.includes('token'))
-        ) {
-          setRecaptchaError('Falha na validação do reCAPTCHA. Por favor, tente novamente.');
-          return;
-        }
-        throw new Error('Falha ao enviar formulário');
-      }
-
-      alert('Formulário enviado com sucesso!');
+  const { submit, recaptchaError } = useFormSubmit({
+    apiUrl,
+    formId: AllowedFormIds.AGUA_REVENDEDOR,
+    onSuccess: () => {
       onSubmitSuccess?.();
+      setToken(null);
+      setRecaptchaInstanceKey((previous) => previous + 1);
+    },
+  });
+
+  const onSubmit = async (data: DistribuidorFormData) => {
+    const result = await submit(data, token);
+    if (result.success) {
       reset();
-    } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
-      alert('Erro ao enviar formulário. Tente novamente.');
+    } else if (result.fieldErrors) {
+      Object.entries(result.fieldErrors).forEach(([field, message]) => {
+        setError(field as keyof DistribuidorFormData, { message });
+      });
     }
   };
 
@@ -172,6 +155,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
           {/* reCAPTCHA */}
           <div className="flex flex-col gap-1">
             <GoogleReCaptchaCheckbox
+              key={recaptchaInstanceKey}
               onChange={setToken}
               action={AllowedFormIds.CAJUINA_DISTRIBUIDOR}
               id="DISTRIBUIDOR_FORM"

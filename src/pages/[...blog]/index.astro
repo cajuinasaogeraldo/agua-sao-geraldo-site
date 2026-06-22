@@ -6,6 +6,7 @@ import type { ImageMetadata } from 'astro';
 import Layout from '@/layouts/PageLayout.astro';
 import SinglePost from '@/components/blog/SinglePost.astro';
 import ToBlogLink from '@/components/blog/ToBlogLink.astro';
+import BlogPostingSchema from "@/components/schema/BlogPostingSchema.astro";
 
 import { getCanonical, getPermalink } from '@/utils/permalinks';
 import { getStaticPathsBlogPost, blogPostRobots } from '@/utils/blog';
@@ -58,9 +59,28 @@ const defaultMetadata = {
 
 // Merge: valores padrão + metadata customizado do post
 const metadata = merge(defaultMetadata, post?.metadata || {}) as MetaData;
+
+// Extract keywords from tags for schema
+const schemaKeywords = post.tags?.map((tag) => tag.title) || [];
+const articleSection = post.category?.title || "Noticias";
+
+// Calculate word count from content
+const wordCount = post.content ? post.content.split(/\s+/).length : undefined;
 ---
 
 <Layout metadata={metadata}>
+    <BlogPostingSchema
+    title={post.title}
+    description={post.excerpt}
+    canonical={String(url)}
+    image={typeof image === 'string' ? image : image?.src}
+    datePublished={post.publishDate.toISOString()}
+    dateModified={post.updateDate?.toISOString()}
+    author={post.author}
+    keywords={schemaKeywords}
+    articleSection={articleSection}
+    wordCount={wordCount}
+  />
   <SinglePost post={{ ...post, image: image }} url={url}>
     {post.Content ? <post.Content /> : <Fragment set:html={post.content || ''} />}
   </SinglePost>

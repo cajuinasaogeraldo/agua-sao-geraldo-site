@@ -1,0 +1,99 @@
+---
+import { Schema } from 'astro-seo-schema';
+import { SITE, I18N } from 'astrowind:config';
+
+const BASE_URL = Astro.site?.origin || SITE?.site || 'https://cajuinasaogeraldo.com.br';
+const LANGUAGE = I18N?.language || 'pt-BR';
+
+export interface Props {
+  title: string;
+  description?: string;
+  canonical: string;
+  image?: string;
+  datePublished: string;
+  dateModified?: string;
+  author?: string;
+  keywords?: string[];
+  articleSection?: string;
+  wordCount?: number;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  image,
+  datePublished,
+  dateModified,
+  author = 'Cajuína São Geraldo',
+  keywords = [],
+  articleSection,
+  wordCount,
+} = Astro.props;
+
+const getAbsoluteUrl = (url: string) => {
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+};
+
+const schemaData: Record<string, unknown> = {
+  '@type': 'BlogPosting',
+  '@id': `${canonical}#BlogPosting`,
+  url: canonical,
+  headline: title,
+  name: title,
+  description: description,
+  datePublished: datePublished,
+  dateModified: dateModified || datePublished,
+  inLanguage: LANGUAGE,
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': canonical,
+  },
+  publisher: {
+    '@type': 'Organization',
+    '@id': `${BASE_URL}#Organization`,
+    name: SITE?.name || 'Cajuína São Geraldo',
+    url: BASE_URL,
+  },
+  author: {
+    '@type': 'Organization',
+    '@id': `${BASE_URL}#Organization`,
+    name: author,
+    url: BASE_URL,
+  },
+  isPartOf: {
+    '@type': 'WebSite',
+    '@id': `${BASE_URL}#website`,
+  },
+};
+
+if (image) {
+  const absoluteImage = getAbsoluteUrl(typeof image === 'string' ? image : (image as any).src);
+  schemaData.image = {
+    '@type': 'ImageObject',
+    url: absoluteImage,
+    width: 1200,
+    height: 628,
+  };
+}
+
+if (keywords.length > 0) {
+  schemaData.keywords = keywords;
+}
+
+if (articleSection) {
+  schemaData.articleSection = articleSection;
+}
+
+if (wordCount) {
+  schemaData.wordCount = wordCount;
+}
+---
+
+<Schema
+  item={{
+    '@context': 'https://schema.org',
+    ...schemaData,
+  } as any}
+/>

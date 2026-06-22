@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SOURCE="${1:-/home/psousaj/projects/cajuina-site}"
-DEST="${2:-/home/psousaj/projects/agua-sao-geraldo-site}"
+SOURCE="${1:-../cajuina-site}"
+DEST="${2:-.}"
 
 RSYNC_SOURCE="$SOURCE" RSYNC_DEST="$DEST" \
 rsync -avn --delete --itemize-changes \

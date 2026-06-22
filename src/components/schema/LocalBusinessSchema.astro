@@ -1,0 +1,53 @@
+---
+import { Schema } from 'astro-seo-schema';
+import { SITE } from 'astrowind:config';
+
+const BASE_URL = Astro.site?.origin || SITE?.site || 'https://aguasaogeraldo.com.br';
+const COMPANY_NAME = SITE?.name || 'Água Mineral São Geraldo';
+
+const schemaData = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${BASE_URL}#LocalBusiness`,
+  name: COMPANY_NAME,
+  alternateName: 'Indústria São Geraldo',
+  description:
+    'Indústria de bebidas genuinamente nordestina, produtora do tradicional refrigerante de caju São Geraldo.',
+  url: BASE_URL,
+  logo: `${BASE_URL}/favicon.ico`,
+  image: `${BASE_URL}/favicon.ico`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Av. Padre Cícero, Km 02',
+    addressLocality: 'Juazeiro do Norte',
+    addressRegion: 'CE',
+    postalCode: '63022-115',
+    addressCountry: 'BR',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: '-7.225938',
+    longitude: '-39.329313',
+  },
+  telephone: '4003-6125',
+  email: 'sac@cajuinasaogeraldo.com.br',
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '07:30',
+    closes: '15:30',
+  },
+  priceRange: '$$',
+  foundingDate: '1974',
+  sameAs: [
+    'https://www.instagram.com/cajuinasaogeraldo',
+    'https://www.facebook.com/cajuinasaogeraldo',
+    'https://x.com/saogeraldocaju',
+    'https://www.tiktok.com/@saogeraldocaju',
+    'https://www.linkedin.com/company/cajuinasaogeraldo',
+    'https://www.youtube.com/c/cajuinasaogeraldo',
+  ],
+};
+---
+
+<Schema item={schemaData as any} />

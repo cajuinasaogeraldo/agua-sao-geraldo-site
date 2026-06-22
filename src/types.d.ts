@@ -9,6 +9,11 @@ declare global {
     dataLayer: Record<string, any>[];
     gtag: (...args: any[]) => void;
   }
+  namespace google.maps.places {
+    interface PlaceAutocompleteElement {
+      value: string;
+    }
+  }
 }
 
 export interface News {
