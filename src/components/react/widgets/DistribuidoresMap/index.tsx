@@ -84,7 +84,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
   return (
     <section id="nos-encontre" className="min-h-[521px] w-full px-4 lg:px-12">
       {isMobile && (
-        <h2 className="text-xxs text-agua-secondary-blue scale-95 font-bold uppercase">
+        <h2 className="text-xxs text-caju-heading-primary scale-95 font-bold uppercase">
           Nos encontre perto de você
         </h2>
       )}
@@ -119,7 +119,11 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 
             {/* Mostra marker da localização padrão apenas quando não há busca ativa */}
             {isInitialState && (
-              <DefaultLocationMarker position={defaultPosition} placeId={defaultPosition.placeId} />
+              <DefaultLocationMarker
+                enableGooglePlacesApi={false}
+                position={defaultPosition}
+                placeId={defaultPosition.placeId}
+              />
             )}
           </Map>
         </div>
@@ -129,7 +133,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
           <div className="flex w-full flex-col">
             {/* Title Desktop */}
             {!isMobile && (
-              <h2 className="text-xxs text-agua-secondary-blue scale-95 font-bold uppercase">
+              <h2 className="text-xxs text-caju-heading-primary scale-95 font-bold uppercase">
                 Nos encontre
                 <br />
                 perto de você
@@ -143,7 +147,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 
               {isSearchLoading && (
                 <div className="font-inter flex items-center justify-center gap-2 py-4">
-                  <div className="border-agua-primary-blue h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></div>
+                  <div className="border-caju-heading-primary h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"></div>
                   <span className="text-sm text-gray-600">Buscando distribuidores próximos...</span>
                 </div>
               )}
@@ -171,7 +175,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
                       key={dist.id + dist.lat + dist.nome}
                       onClick={() => handleCardClick(dist)}
                     >
-                      <p className="text-agua-secondary-blue mb-0! text-base! font-bold">
+                      <p className="text-caju-heading-primary mb-0! text-base! font-bold">
                         {dist.nome}
                       </p>
                       <p>{dist.endereco}</p>
@@ -203,7 +207,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 export default function DistribuidoresGmaps({
   distribuidores = [],
   apiKey,
-}: Omit<Props, 'defaultPosition'>) {
+}: Readonly<Omit<Props, 'defaultPosition'>>) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -232,7 +236,7 @@ export default function DistribuidoresGmaps({
   };
 
   return (
-    <div ref={ref} className="min-h-[521px] w-full">
+    <div ref={ref} className="min-h-130.25 w-full">
       {isVisible ? (
         <APIProvider
           language="pt-BR"

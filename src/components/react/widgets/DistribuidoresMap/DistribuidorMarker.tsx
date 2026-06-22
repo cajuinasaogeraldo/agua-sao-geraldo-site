@@ -76,7 +76,7 @@ const DistribuidorMarker: React.FC<DistribuidorMarkerProps> = ({
 
       {showInfoWindow && marker && isSelected && (
         <InfoWindow anchor={marker} onCloseClick={onInfoWindowClose} headerDisabled={false}>
-          {distribuidor.placeId ? (
+          {distribuidor.placeId && distribuidor.placeId.startsWith('ChIJ') ? (
             <PlaceOverview
               place={distribuidor.placeId}
               size="medium"

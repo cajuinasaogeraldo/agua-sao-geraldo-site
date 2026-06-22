@@ -10,7 +10,6 @@ export const contatoFormSchema = z.object({
   acceptance: z.coerce.boolean().refine((val) => val === true, {
     message: ' Vocé precisa aceitar a política',
   }),
-  _origin: z.string().default('Água Mineral São Geraldo'),
 });
 
 export type ContatoFormData = z.infer<typeof contatoFormSchema>;

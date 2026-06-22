@@ -1,24 +1,25 @@
 site:
   name: Água Mineral Natural - São Geraldo
-  site: 'https://aguamineralsaogeraldo.com.br'
-  base: '/'
+  site: "https://aguamineralsaogeraldo.com.br"
+  base: "/"
   trailingSlash: true
 
+  
   googleSiteVerificationId: null
 
 # Default SEO metadata
 metadata:
   title:
-    default: São Geraldo
-    template: '%s - São Geraldo'
-  description: 'Gostaria de conhecer a Fábrica Água Mineral São Geraldo? Agora está mais simples. Solicite agora a sua visita!'
+    default: Água Mineral São Geraldo
+    template: "%s - Água Mineral São Geraldo"
+  description: "Gostaria de conhecer a Fábrica Água Mineral São Geraldo? Agora está mais simples. Solicite agora a sua visita!"
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: São Geraldo
+    site_name: Água Mineral São Geraldo
     images:
-      - url: '@/assets/images/site/logo.webp'
+      - url: "@/assets/images/site/logo.webp"
         width: 1200
         height: 628
     type: website
@@ -34,25 +35,25 @@ apps:
 
     post:
       isEnabled: true
-      permalink: '/%slug%' # Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
+      permalink: "/%slug%" # Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
       robots:
         index: true
 
     list:
       isEnabled: true
-      pathname: 'blog' # Blog main path, you can change this to "articles" (/articles)
+      pathname: "blog" # Blog main path, you can change this to "articles" (/articles)
       robots:
         index: true
 
     category:
       isEnabled: true
-      pathname: 'category' # Category main path /category/some-category, you can change this to "group" (/group/some-category)
+      pathname: "category" # Category main path /category/some-category, you can change this to "group" (/group/some-category)
       robots:
         index: true
 
     tag:
       isEnabled: true
-      pathname: 'tag' # Tag main path /tag/some-tag, you can change this to "topics" (/topics/some-category)
+      pathname: "tag" # Tag main path /tag/some-tag, you can change this to "topics" (/topics/some-category)
       robots:
         index: false
 
@@ -62,7 +63,8 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: 'GTM-PKQ66NGR' # or "G-XXXXXXXXXX"
+      id: "GTM-PKQ66NGR" # or "G-XXXXXXXXXX"
+    partytown: true
 
 ui:
-  theme: 'light:only' # Values: "system" | "light"
+  theme: "light:only" # Values: "system" | "light"

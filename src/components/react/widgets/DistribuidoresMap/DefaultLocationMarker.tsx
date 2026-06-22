@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { AdvancedMarker, InfoWindow, Pin, useAdvancedMarkerRef } from '@vis.gl/react-google-maps';
 import { PlaceOverview } from '@googlemaps/extended-component-library/react';
 
@@ -13,9 +13,14 @@ const PIN_COLORS = {
 interface DefaultLocationMarkerProps {
   position: google.maps.LatLngLiteral;
   placeId: string;
+  enableGooglePlacesApi: boolean;
 }
 
-const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({ position, placeId }) => {
+const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({
+  position,
+  placeId,
+  enableGooglePlacesApi,
+}) => {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const [isHovered, setIsHovered] = useState(false);
   const [showInfoWindow, setShowInfoWindow] = useState(window.innerWidth > 768);
@@ -61,13 +66,13 @@ const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({ position,
         />
       </AdvancedMarker>
 
-      {showInfoWindow && marker && (
+      {enableGooglePlacesApi && showInfoWindow && marker && (
         <InfoWindow anchor={marker} onCloseClick={handleInfoWindowClose} headerDisabled={false}>
           <PlaceOverview
             place={placeId}
             size="medium"
             googleLogoAlreadyDisplayed
-            className="min-w-[300px]"
+            className="min-w-75"
           />
         </InfoWindow>
       )}
@@ -75,4 +80,4 @@ const DefaultLocationMarker: React.FC<DefaultLocationMarkerProps> = ({ position,
   );
 };
 
-export default React.memo(DefaultLocationMarker);
+export default memo(DefaultLocationMarker);

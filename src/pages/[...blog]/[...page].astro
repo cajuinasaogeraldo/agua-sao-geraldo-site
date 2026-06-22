@@ -39,9 +39,11 @@ const postsData = allPosts.map((post) => ({
 }));
 
 const metadata = {
-  title: 'Notícias',
+  title: currentPage === 1 ? 'Notícias' : `Notícias - Página ${currentPage}`,
   description:
-    'Fique por dentro das novidades da Cajuína São Geraldo. Busque e explore nossas notícias, eventos e atualizações.',
+    currentPage === 1
+      ? 'Fique por dentro das novidades da Cajuína São Geraldo. Busque e explore nossas notícias, eventos e atualizações.'
+      : `Notícias da Cajuína São Geraldo - Página ${currentPage}. Fique por dentro das novidades, eventos e atualizações.`,
   robots: {
     index: blogListRobots?.index && currentPage === 1,
     follow: blogListRobots?.follow,
@@ -53,24 +55,21 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <section class="mx-auto w-full px-6 sm:py-24 my-12 md:mt-0!">
+  <section class="mx-auto w-fit px-6 sm:py-24 my-12 md:mt-0!">
     <div class="flex items-center gap-3">
       <div id="back-to-list" class="hidden self-start mt-1.75">
         <ToBlogLink class="m-0! p-0!" buttonClass="m-0!" />
       </div>
-      <Headline class="mb-0!" title="Notícias" />
+      <Headline class="mb-0!" title={currentPage === 1 ? 'Notícias' : `Notícias — Página ${currentPage}`} />
     </div>
-    <WidgetWrapper containerClass="pt-4!" id="noticias-page">
+    <WidgetWrapper containerClass="p-0! pt-4! min-w-full!" id="noticias-page">
       <!-- Status da busca -->
       <p id="search-status" class="text-muted mb-4 text-lg"></p>
-      <p id="no-results" class="py-8 text-center text-lg text-gray-500" style="display: none;">
-        Nenhum resultado encontrado para sua busca.
-      </p>
 
       <!-- Listagem -->
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_minmax(300px,400px)] gap-4 lg:gap-6">
         <!-- Campo de busca (mobile: topo, desktop: sidebar) -->
-        <div class="lg:hidden mb-6">
+        <div class="lg:hidden mb-6 empty:mb-0">
           <form
             name="Formulário de busca de notícias"
             id="search_form"
@@ -83,19 +82,27 @@ const metadata = {
               name="s"
               id="search-input"
               placeholder="Buscar notícias..."
-              class="bg-white border-gray-300 focus:border-agua-primary-blue focus:ring-agua-primary-green/20 flex-1 rounded-lg border px-4 py-3 text-base focus:outline-none focus:ring-2 transition-colors"
+              class="bg-white border-gray-300 focus:border-caju-heading-orange focus:ring-caju-heading-orange/20 flex-1 rounded-lg border px-4 py-3 text-base focus:outline-none focus:ring-2 transition-colors"
               autocomplete="off"
             />
             <button
               type="submit"
-              class="px-6 py-3 mt-0! bg-agua-primary-green font-semibold text-white transition-colors rounded-md whitespace-nowrap hover:bg-agua-secondary-green"
+              class="btn-primary px-6 py-3 mt-0! font-semibold text-white transition-colors"
             >
               Buscar
             </button>
           </form>
         </div>
 
-        <div id="blog-list-container">
+        <div id="blog-list-container" class="min-w-0 min-h-100 flex flex-col">
+          <!-- Mensagem de sem resultados (antes da lista) -->
+          <p
+            id="no-results"
+            class="flex-1 flex items-center justify-center text-lg text-gray-500 opacity-0 transition-opacity duration-100"
+            style="display: none;"
+          >
+            Nenhum resultado encontrado para sua busca.
+          </p>
           <BlogList news={page.data} />
         </div>
 
@@ -115,12 +122,12 @@ const metadata = {
                 name="s"
                 id="search-input-desktop"
                 placeholder="Buscar notícias..."
-                class="bg-white border-gray-300 focus:border-agua-primary-blue focus:ring-agua-primary-green/20 flex-1 rounded-lg border px-4 py-3 text-base focus:outline-none focus:ring-2 transition-colors"
+                class="bg-white border-gray-300 focus:border-caju-heading-orange focus:ring-caju-heading-orange/20 flex-1 rounded-lg border px-4 py-3 text-base focus:outline-none focus:ring-2 transition-colors"
                 autocomplete="off"
               />
               <button
                 type="submit"
-                class="px-6 py-3 mt-0! bg-agua-primary-green font-semibold text-white transition-colors rounded-md whitespace-nowrap hover:bg-agua-secondary-green"
+                class="btn-primary px-6 py-3 mt-0! font-semibold text-white transition-colors whitespace-nowrap"
               >
                 Buscar
               </button>
@@ -192,30 +199,60 @@ const metadata = {
     const searchStatus = document.getElementById('search-status');
     const noResults = document.getElementById('no-results');
     const paginationWrapper = document.getElementById('pagination-wrapper');
+    const originalList = container.querySelector('ul.original-list');
 
     // Esconde paginação
     paginationWrapper.style.display = 'none';
 
     // Sem resultados
     if (filteredPosts.length === 0) {
-      container.innerHTML = '';
-      noResults.style.display = 'block';
+      // Esconde lista original mas mantém no DOM para preservar largura
+      if (originalList)
+        originalList.classList.add('invisible', 'opacity-0', 'transition-opacity', 'duration-200');
+      // Remove lista de busca se existir
+      const searchList = container.querySelector('ul.search-list');
+      if (searchList) searchList.classList.add('opacity-0');
+      setTimeout(() => searchList?.remove(), 300);
+
+      // Mostra mensagem com delay para efeito gradual
+      noResults.style.display = 'flex';
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          noResults.classList.remove('opacity-0');
+          noResults.classList.add('opacity-100');
+        });
+      }, 200);
       searchStatus.textContent = `Buscando por "${query}"`;
       return;
     }
 
     // Com resultados
-    noResults.style.display = 'none';
+    noResults.classList.remove('opacity-100');
+    noResults.classList.add('opacity-0');
+    setTimeout(() => (noResults.style.display = 'none'), 300);
     searchStatus.textContent = `${filteredPosts.length} resultado${filteredPosts.length !== 1 ? 's' : ''} para "${query}"`;
 
+    // Esconde lista original (mas mantém no DOM)
+    if (originalList) {
+      originalList.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+      setTimeout(() => originalList.classList.add('hidden'), 300);
+    }
+
+    // Remove lista de busca anterior se houver
+    const searchList = container.querySelector('ul.search-list');
+    if (searchList) {
+      searchList.classList.add('opacity-0');
+      setTimeout(() => searchList.remove(), 300);
+    }
+
     // Renderiza usando a mesma estrutura do BlogList/ListItem
-    container.innerHTML = `
-      <ul>
+    const listHTML = `
+      <ul class="search-list opacity-0 transition-opacity duration-300">
         ${filteredPosts
           .map(
             (post) => `
           <li class="mb-8 md:mb-10">
-            <article class="border border-gray-200 rounded-lg overflow-hidden transition-all hover:shadow-lg hover:border-agua-primary-blue/30 p-4 md:p-6 bg-white">
+            <article class="border border-gray-200 rounded-lg overflow-hidden transition-all hover:shadow-lg hover:border-caju-heading-orange/30 p-4 md:p-6 bg-white">
               <div class="grid items-center gap-3 ${post.image ? 'md:grid-cols-[minmax(220px,300px)_1fr]' : ''} md:gap-4">
                 ${
                   post.image
@@ -236,7 +273,7 @@ const metadata = {
                   ${
                     post.category
                       ? `
-                    <span class="text-agua-primary-blue text-xs font-medium uppercase mb-1 inline-block">
+                    <span class="text-caju-heading-primary text-xs font-medium uppercase mb-1 inline-block">
                       ${post.category.title}
                     </span>
                   `
@@ -248,7 +285,7 @@ const metadata = {
                     ${post.readingTime ? `<span>• ${post.readingTime} min</span>` : ''}
                   </div>
                   <h2 class="mb-2 text-base font-bold md:text-lg leading-tight!">
-                    <a href="/${post.permalink}/" class="text-agua-primary-green! hover:text-agua-secondary-green! transition-colors line-clamp-2 md:line-clamp-3">
+                    <a href="/${post.permalink}/" class="text-caju-heading-orange! hover:text-caju-warning-hover! transition-colors line-clamp-2 md:line-clamp-3">
                       ${post.title}
                     </a>
                   </h2>
@@ -260,7 +297,7 @@ const metadata = {
                       ${post.tags
                         .map(
                           (tag) =>
-                            `<span class="bg-agua-primary-blue text-white! px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-sm md:text-base font-medium hover:bg-agua-secondary-blue transition-colors cursor-pointer">#${tag.title}</span>`,
+                            `<span class="bg-caju-heading-primary text-white! px-2.5 py-1 md:px-3 md:py-1.5 rounded-full text-sm md:text-base font-medium hover:bg-caju-heading-orange transition-colors cursor-pointer">#${tag.title}</span>`,
                         )
                         .join('')}
                     </div>
@@ -276,10 +313,18 @@ const metadata = {
           .join('')}
       </ul>
     `;
+
+    // Insere a lista antes do elemento no-results
+    noResults.insertAdjacentHTML('beforebegin', listHTML);
+
+    // Fade in da nova lista
+    requestAnimationFrame(() => {
+      const newList = container.querySelector('ul.search-list');
+      if (newList) newList.classList.replace('opacity-0', 'opacity-100');
+    });
   }
 
   // Armazena o HTML original para restauração
-  let originalListHTML = '';
   let originalPaginationHTML = '';
 
   function restoreOriginalList() {
@@ -287,11 +332,29 @@ const metadata = {
     const searchStatus = document.getElementById('search-status');
     const noResults = document.getElementById('no-results');
     const paginationWrapper = document.getElementById('pagination-wrapper');
+    const originalList = container.querySelector('ul.original-list');
 
-    // Restaura HTML original
-    if (originalListHTML) {
-      container.innerHTML = originalListHTML;
+    // Remove lista de busca com fade out se existir
+    const searchList = container.querySelector('ul.search-list');
+    if (searchList) {
+      searchList.classList.add('opacity-0');
+      setTimeout(() => searchList.remove(), 300);
     }
+
+    // Esconde no-results com fade out
+    noResults.classList.remove('opacity-100');
+    noResults.classList.add('opacity-0');
+    setTimeout(() => (noResults.style.display = 'none'), 300);
+
+    // Mostra lista original com fade in
+    if (originalList) {
+      originalList.classList.remove('hidden', 'invisible');
+      requestAnimationFrame(() => {
+        originalList.classList.remove('opacity-0');
+        originalList.classList.add('opacity-100');
+      });
+    }
+
     if (originalPaginationHTML) {
       paginationWrapper.innerHTML = originalPaginationHTML;
     }
@@ -299,7 +362,7 @@ const metadata = {
     // Mostra paginação
     paginationWrapper.style.display = '';
 
-    // Limpa status
+    // Limpa status e esconde no-results
     searchStatus.textContent = '';
     noResults.style.display = 'none';
   }
@@ -337,8 +400,9 @@ const metadata = {
     const paginationWrapper = document.getElementById('pagination-wrapper');
     const backButton = document.getElementById('back-to-list');
 
-    // Armazena HTML original na primeira carga
-    originalListHTML = container.innerHTML;
+    // Marca lista original com classe para identificação
+    const originalList = container.querySelector('ul');
+    if (originalList) originalList.classList.add('original-list');
     originalPaginationHTML = paginationWrapper.innerHTML;
 
     // Sincroniza os dois campos de busca

@@ -11,6 +11,7 @@ import { adaptOpenGraphImages } from '@/utils/images';
 import type { MetaData } from '@/types';
 
 import ldJsonImg from '@/assets/images/site/logo.webp';
+import LocalBusinessSchema from '../schema/LocalBusinessSchema.astro';
 
 const BASE_URL = Astro.site?.origin || SITE?.site || 'https://aguasaogeraldo.com.br';
 const LANGUAGE = I18N?.language || 'pt-BR';
@@ -127,6 +128,31 @@ const schemaGraph: unknown[] = [
       },
     ],
   },
+  {
+    '@type': 'Organization',
+    '@id': `${BASE_URL}#Organization`,
+    name: schemaConfig.siteName,
+    alternateName: 'Indústria São Geraldo',
+    url: BASE_URL,
+    logo: absoluteImageUrl,
+    description: schemaConfig.siteDescription,
+    foundingDate: '1974',
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      telephone: '(88) 2101-7654',
+      email: 'sac@cajuinasaogeraldo.com.br',
+      availableLanguage: ['Portuguese'],
+    },
+    sameAs: [
+      'https://www.instagram.com/cajuinasaogeraldo',
+      'https://www.facebook.com/cajuinasaogeraldo',
+      'https://x.com/saogeraldocaju',
+      'https://www.tiktok.com/@saogeraldocaju',
+      'https://www.linkedin.com/company/cajuinasaogeraldo',
+      'https://www.youtube.com/c/cajuinasaogeraldo',
+    ],
+  },
 ];
 ---
 
@@ -144,4 +170,5 @@ const schemaGraph: unknown[] = [
       '@graph': schemaGraph,
     }}
   />
+  <LocalBusinessSchema />
 </>
