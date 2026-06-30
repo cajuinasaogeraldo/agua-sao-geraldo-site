@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 import Image from './common/Image.astro';
 import logo from '@/assets/images/site/logo.webp';
 import whats from '@/assets/images/site/whats-icon.svg';
+import gptw from '@/assets/images/site/Selo_GPTW.webp';
 
 import type { HTMLAttributes } from 'astro/types';
 import Button from './ui/Button.astro';
@@ -122,12 +123,10 @@ const isExternalHref = (href: unknown): boolean =>
     </div>
 
     <!-- Logo -->
-    <Image
-      class="md:order-first! max-w-[200px] lg:max-w-[388px]! place-self-center"
-      layout="responsive"
-      src={logo}
-      alt="São geraldo"
-    />
+    <div class="grid grid-cols-[auto_auto] place-items-center md:order-first!">
+      <Image layout="constrained" src={logo} alt="São geraldo" />
+      <Image class="w-3/4" layout="contained" src={gptw} alt="Great Place to Work" />
+    </div>
   </div>
 
   <!-- Footnote -->
