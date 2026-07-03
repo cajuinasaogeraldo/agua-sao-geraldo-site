@@ -11,35 +11,6 @@ const analyticsId = ANALYTICS?.vendors?.googleAnalytics.id
     is:inline
     src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.1.0/dist/cookieconsent.umd.js"
     defer></script>
-
-  <script type="text/partytown" is:inline>
-    window.addEventListener('load', () => {
-      CookieConsent.run({
-        guiOptions: {
-          consentModal: {
-            layout: 'box',
-            position: 'bottom left',
-            equalWeightButtons: false,
-            flipButtons: true,
-          },
-          preferencesModal: {
-            layout: 'box',
-            position: 'right',
-            equalWeightButtons: false,
-            flipButtons: true,
-          },
-        },
-        categories: {
-          necessary: { readOnly: true },
-          analytics: {},
-        },
-        language: {
-          default: 'pt-BR',
-          autoDetect: 'browser',
-        },
-      });
-    });
-  </script>
 </ShowIf>
 
 <script is:inline define:vars={{ defaultTheme: UI.theme }}>
@@ -259,7 +230,7 @@ const analyticsId = ANALYTICS?.vendors?.googleAnalytics.id
       });
     },
 
-    /* 
+    /*
       REF: #643;
       We need to remove the delay to fix flickering/delay
       when toggling the theme. Observer only removes them

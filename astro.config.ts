@@ -1,5 +1,5 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
@@ -24,8 +24,17 @@ import react from '@astrojs/react';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
-const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) =>
-  hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
+const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroIntegration)[] = []) => {
+  if (!hasExternalScripts) {
+    return [];
+  }
+
+  if (Array.isArray(items)) {
+    return items.map((item) => item());
+  }
+
+  return [items()];
+};
 
 // https://astro.build/config
 export default defineConfig({
