@@ -130,9 +130,18 @@ const isExternalHref = (href: unknown): boolean =>
   </div>
 
   <!-- Footnote -->
-  <div class="mt-2 flex flex-col items-center justify-center gap-4 lg:mt-0 lg:flex-row">
-    <div class="text-caption font-poppins text-center leading-[140%] text-white lg:w-full">
-      <Fragment set:html={footNote} />
+  <div class="flex flex-col gap-1 w-full">
+    <div class="mt-2 flex flex-col items-center justify-center gap-4 lg:mt-0 lg:flex-row">
+      <div class="text-caption font-poppins text-center leading-[140%] text-white lg:w-full">
+        <Fragment set:html={footNote} />
+      </div>
     </div>
+    <button
+      class="underline text-xs text-white opacity-60 hover:opacity-100 transition-opacity self-start pl-3 md:pl-7"
+      type="button"
+      aria-label="Preferências de privacidade"
+      title="Preferências de privacidade"
+      data-cc="show-preferencesModal">Preferências de privacidade</button
+    >
   </div>
 </footer>

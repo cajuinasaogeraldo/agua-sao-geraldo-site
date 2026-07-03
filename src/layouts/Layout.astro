@@ -74,17 +74,6 @@ const enableAnalytics = !!analyticsId && import.meta.env.PROD;
           });
         </script>
       </div>
-      <div id="portal-container" class="fixed size-full inset-0 z-100">
-        <button
-          slot="portal"
-          class:list={[
-            'underline text-xs text-white',
-            'absolute bottom-0 md:bottom-2  left-5 md:left-8',
-          ]}
-          type="button"
-          data-cc="show-preferencesModal">Mostrar Preferências</button
-        >
-      </div>
     </ShowIf>
     <BasicScripts />
   </body>
