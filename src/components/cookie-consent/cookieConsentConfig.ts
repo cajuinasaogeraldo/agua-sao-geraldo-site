@@ -58,6 +58,11 @@ function updateGtagConsent() {
   };
 
   window.gtag('consent', 'update', consent);
+
+  // Push a custom event to GTM to instantly trigger dependent tags
+  window.dataLayer.push({
+    event: 'cookie_consent_updated',
+  });
 }
 export const config: CookieConsentConfig = {
   root: '#cc-container',
@@ -139,7 +144,7 @@ export const config: CookieConsentConfig = {
     },
   },
   onFirstConsent: function () {
-    window.dataLayer.push({ event: 'client-consent-update' });
+    updateGtagConsent();
   },
   onConsent: () => {
     updateGtagConsent();
