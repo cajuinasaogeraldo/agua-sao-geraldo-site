@@ -12,13 +12,13 @@ const config = {
     description:
       'The Cajuína São Geraldo website uses cookies to improve your experience on the site. If you continue browsing, we understand that you agree to our <strong><a href="/empresa/politica-de-privacidade/">Privacy Policy</a></strong> and the use of cookies.',
     acceptAllBtn: 'Accept all',
-    acceptNecessaryBtn: 'Reject all',
+    acceptNecessaryBtn: 'Essentials only',
     showPreferencesBtn: 'Manage preferences',
   },
   preferencesModal: {
     title: 'Cookie Preferences',
     acceptAllBtn: 'Accept all',
-    acceptNecessaryBtn: 'Reject all',
+    acceptNecessaryBtn: 'Essentials only',
     savePreferencesBtn: 'Save preferences',
     closeIconLabel: 'Close',
     serviceCounterLabel: 'Service|Services',
