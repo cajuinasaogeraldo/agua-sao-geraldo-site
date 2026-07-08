@@ -61,6 +61,27 @@ const config = {
                 'Cookie set by <a target="_blank" rel="noopener noreferrer" href="https://business.safety.google/adscookies/">Google Analytics</a>',
               expiration: 'Session',
             },
+            {
+              name: '_clsk',
+              domain: 'Microsoft Clarity',
+              description:
+                'Cookie set by <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a> for session analysis.',
+              expiration: 'Expires after 1 day',
+            },
+            {
+              name: '_clck',
+              domain: 'Microsoft Clarity',
+              description:
+                'Cookie set by <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a> for user identification.',
+              expiration: 'Expires after 1 year',
+            },
+            {
+              name: 'CLID',
+              domain: 'Microsoft Clarity',
+              description:
+                'Cookie set by <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a> for session identification.',
+              expiration: 'Expires after 1 year',
+            },
           ],
         },
       },
