@@ -12,6 +12,7 @@ import {
   SERVICE_AD_STORAGE,
   SERVICE_AD_USER_DATA,
   SERVICE_ANALYTICS_STORAGE,
+  SERVICE_CLARITY,
   SERVICE_FUNCTIONALITY_STORAGE,
   SERVICE_PERSONALIZATION_STORAGE,
   SERVICE_SECURITY_STORAGE,
@@ -23,6 +24,9 @@ function updateGtagConsent() {
       SERVICE_ANALYTICS_STORAGE,
       CAT_ANALYTICS,
     )
+      ? 'granted'
+      : 'denied',
+    [SERVICE_CLARITY]: CookieConsent.acceptedService(SERVICE_CLARITY, CAT_ANALYTICS)
       ? 'granted'
       : 'denied',
     [SERVICE_AD_STORAGE]: CookieConsent.acceptedService(SERVICE_AD_STORAGE, CAT_ADVERTISEMENT)
@@ -102,14 +106,27 @@ export const config: CookieConsentConfig = {
         [SERVICE_ANALYTICS_STORAGE]: {
           label: 'Habilita armazenamento relacionado a análises, como duração da visita.',
         },
+        [SERVICE_CLARITY]: {
+          label:
+            'Microsoft Clarity — grava sessões e mapas de calor para análise de comportamento do usuário.',
+        },
       },
       autoClear: {
         cookies: [
           {
-            name: /^_ga/, // regex: match all cookies starting with '_ga'
+            name: /^_ga/,
           },
           {
-            name: '_gid', // string: exact cookie name
+            name: '_gid',
+          },
+          {
+            name: '_clsk',
+          },
+          {
+            name: '_clck',
+          },
+          {
+            name: 'CLID',
           },
         ],
       },

@@ -61,6 +61,27 @@ const config = {
                 'Cookie definido pelo <a target="_blank" rel="noopener noreferrer" href="https://business.safety.google/adscookies/">Google Analytics</a>',
               expiration: 'Sessão',
             },
+            {
+              name: '_clsk',
+              domain: 'Microsoft Clarity',
+              description:
+                'Cookie definido pelo <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a> para análise de sessão.',
+              expiration: 'Expira após 1 dia',
+            },
+            {
+              name: '_clck',
+              domain: 'Microsoft Clarity',
+              description:
+                'Cookie definido pelo <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a> para identificação de usuário.',
+              expiration: 'Expira após 1 ano',
+            },
+            {
+              name: 'CLID',
+              domain: 'Microsoft Clarity',
+              description:
+                'Cookie definido pelo <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a> para identificação de sessão.',
+              expiration: 'Expira após 1 ano',
+            },
           ],
         },
       },
