@@ -12,13 +12,13 @@ const config = {
     description:
       'O site da Cajuína São Geraldo utiliza cookies para melhorar sua experiência no site. Se você prosseguir na navegação, entendemos que está de acordo com a nossa <strong><a href="/empresa/politica-de-privacidade/">Política de Privacidade</a></strong> e o uso de cookies.',
     acceptAllBtn: 'Aceitar todos',
-    acceptNecessaryBtn: 'Rejeitar todos',
+    acceptNecessaryBtn: 'Apenas essenciais',
     showPreferencesBtn: 'Gerenciar preferências',
   },
   preferencesModal: {
     title: 'Preferências de Cookies',
     acceptAllBtn: 'Aceitar todos',
-    acceptNecessaryBtn: 'Rejeitar todos',
+    acceptNecessaryBtn: 'Apenas essenciais',
     savePreferencesBtn: 'Salvar preferências',
     closeIconLabel: 'Fechar',
     serviceCounterLabel: 'Serviço|Serviços',
