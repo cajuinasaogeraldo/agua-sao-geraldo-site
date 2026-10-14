@@ -17,6 +17,39 @@ const { measurementId } = Astro.props;
 ---
 
 <ShowIf condition={!!measurementId && import.meta.env.PROD}>
+  <!-- Consent Mode: o padrão precisa ser declarado ANTES do GTM carregar -->
+  <script
+    is:inline
+    define:vars={{
+      SERVICE_AD_STORAGE,
+      SERVICE_AD_USER_DATA,
+      SERVICE_AD_PERSONALIZATION,
+      SERVICE_ANALYTICS_STORAGE,
+      SERVICE_FUNCTIONALITY_STORAGE,
+      SERVICE_PERSONALIZATION_STORAGE,
+      SERVICE_SECURITY_STORAGE,
+    }}
+  >
+    window.dataLayer = window.dataLayer || [];
+
+    window.gtag = function () {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments);
+    };
+
+    window.gtag('consent', 'default', {
+      [SERVICE_AD_STORAGE]: 'denied',
+      [SERVICE_AD_USER_DATA]: 'denied',
+      [SERVICE_AD_PERSONALIZATION]: 'denied',
+      [SERVICE_ANALYTICS_STORAGE]: 'denied',
+      [SERVICE_FUNCTIONALITY_STORAGE]: 'denied',
+      [SERVICE_PERSONALIZATION_STORAGE]: 'denied',
+      [SERVICE_SECURITY_STORAGE]: 'granted',
+      // dá tempo do cookieconsent restaurar a escolha anterior do usuário
+      wait_for_update: 500,
+    });
+  </script>
+
   <!-- Google Tag Manager -->
   <script is:inline define:vars={{ measurementId }}>
     (function (w, d, s, l, i) {
@@ -32,40 +65,4 @@ const { measurementId } = Astro.props;
     })(window, document, 'script', 'dataLayer', measurementId);
   </script>
   <!-- End Google Tag Manager -->
-
-  <script
-    is:inline
-    define:vars={{
-      measurementId,
-      SERVICE_AD_STORAGE,
-      SERVICE_AD_USER_DATA,
-      SERVICE_AD_PERSONALIZATION,
-      SERVICE_ANALYTICS_STORAGE,
-      SERVICE_FUNCTIONALITY_STORAGE,
-      SERVICE_PERSONALIZATION_STORAGE,
-      SERVICE_SECURITY_STORAGE,
-    }}
-    defer
-  >
-    window.dataLayer = window.dataLayer || [];
-
-    window.gtag = function () {
-      // eslint-disable-next-line prefer-rest-params
-      window.dataLayer.push(arguments);
-    };
-
-    window.gtag('js', new Date());
-
-    window.gtag('consent', 'default', {
-      [SERVICE_AD_STORAGE]: 'denied',
-      [SERVICE_AD_USER_DATA]: 'denied',
-      [SERVICE_AD_PERSONALIZATION]: 'denied',
-      [SERVICE_ANALYTICS_STORAGE]: 'denied',
-      [SERVICE_FUNCTIONALITY_STORAGE]: 'denied',
-      [SERVICE_PERSONALIZATION_STORAGE]: 'denied',
-      [SERVICE_SECURITY_STORAGE]: 'granted',
-    });
-
-    window.gtag('config', measurementId);
-  </script>
 </ShowIf>

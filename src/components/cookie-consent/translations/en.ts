@@ -1,112 +1,108 @@
-import {
-  CAT_ADVERTISEMENT,
-  CAT_ANALYTICS,
-  CAT_FUNCTIONALITY,
-  CAT_NECESSARY,
-  CAT_SECURITY,
-} from '../consts';
+import { CAT_ANALYTICS, CAT_NECESSARY } from '../consts';
 
 const config = {
   consentModal: {
     title: 'We use cookies',
     description:
-      'The Cajuína São Geraldo website uses cookies to improve your experience on the site. If you continue browsing, we understand that you agree to our <strong><a href="/empresa/politica-de-privacidade/">Privacy Policy</a></strong> and the use of cookies.',
+      'We use cookies to understand how the Água São Geraldo website is used and to improve your experience, using Google Analytics and Microsoft Clarity (which records sessions and heatmaps). You can accept all, keep only the essentials or choose in Manage preferences. Learn more in our <strong><a href="/empresa/politica-de-privacidade/#cookies">Privacy Policy</a></strong>.',
     acceptAllBtn: 'Accept all',
     acceptNecessaryBtn: 'Essentials only',
     showPreferencesBtn: 'Manage preferences',
   },
   preferencesModal: {
-    title: 'Cookie Preferences',
+    title: 'Cookie preferences',
     acceptAllBtn: 'Accept all',
     acceptNecessaryBtn: 'Essentials only',
     savePreferencesBtn: 'Save preferences',
     closeIconLabel: 'Close',
-    serviceCounterLabel: 'Service|Services',
     sections: [
       {
         title: 'Cookie usage',
         description:
-          'We use cookies to ensure the basic functionalities of the website and to enhance your online experience.',
+          'We use cookies to keep the website working and to measure how it is used. We do not use advertising cookies.',
       },
       {
         title: 'Strictly necessary cookies',
         description:
-          'These cookies are essential for the proper functioning of the website, for example for user authentication.',
+          'They store your cookie choice and keep the basic functions of the site working. They cannot be turned off.',
         linkedCategory: CAT_NECESSARY,
       },
       {
         title: 'Analytics',
         description:
-          'Cookies used for analytics help collect data that allows services to understand how users interact with a particular service. These insights allow services both to improve content and to build better features that improve the user’s experience.',
+          'They measure how visitors use the site (pages visited, visit duration, clicks) through Google Analytics and Microsoft Clarity, which also records sessions and heatmaps. The data is used to improve content and navigation.',
         linkedCategory: CAT_ANALYTICS,
         cookieTable: {
           headers: {
             name: 'Name',
             domain: 'Service',
             description: 'Description',
-            expiration: 'Expiration',
+            expiration: 'Duration',
           },
           body: [
             {
               name: '_ga',
               domain: 'Google Analytics',
               description:
-                'Cookie set by <a target="_blank" rel="noopener noreferrer" href="https://business.safety.google/adscookies/">Google Analytics</a>',
-              expiration: 'Expires after 12 days',
+                'Distinguishes unique users · <a target="_blank" rel="noopener noreferrer" href="https://business.safety.google/adscookies/">Google Analytics</a>',
+              expiration: '2 years',
+            },
+            {
+              name: '_ga_<ID>',
+              domain: 'Google Analytics',
+              description:
+                'Persists session state · <a target="_blank" rel="noopener noreferrer" href="https://business.safety.google/adscookies/">Google Analytics</a>',
+              expiration: '2 years',
             },
             {
               name: '_gid',
               domain: 'Google Analytics',
               description:
-                'Cookie set by <a target="_blank" rel="noopener noreferrer" href="https://business.safety.google/adscookies/">Google Analytics</a>',
-              expiration: 'Session',
-            },
-            {
-              name: '_clsk',
-              domain: 'Microsoft Clarity',
-              description:
-                'Cookie set by <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a> for session analysis.',
-              expiration: 'Expires after 1 day',
+                'Distinguishes unique users · <a target="_blank" rel="noopener noreferrer" href="https://business.safety.google/adscookies/">Google Analytics</a>',
+              expiration: '24 hours',
             },
             {
               name: '_clck',
               domain: 'Microsoft Clarity',
               description:
-                'Cookie set by <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a> for user identification.',
-              expiration: 'Expires after 1 year',
+                'User identification and Clarity preferences · <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a>',
+              expiration: '1 year',
+            },
+            {
+              name: '_clsk',
+              domain: 'Microsoft Clarity',
+              description:
+                'Groups page views into one session · <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a>',
+              expiration: '1 day',
             },
             {
               name: 'CLID',
               domain: 'Microsoft Clarity',
               description:
-                'Cookie set by <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a> for session identification.',
-              expiration: 'Expires after 1 year',
+                'Identifies the first visit of the user · <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a>',
+              expiration: '1 year',
+            },
+            {
+              name: 'MUID',
+              domain: 'Microsoft',
+              description:
+                'Browser identifier used by Microsoft · <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a>',
+              expiration: '1 year',
+            },
+            {
+              name: 'SM',
+              domain: 'Microsoft Clarity',
+              description:
+                'Syncs MUID across Microsoft domains · <a target="_blank" rel="noopener noreferrer" href="https://clarity.microsoft.com/">Microsoft Clarity</a>',
+              expiration: 'Session',
             },
           ],
         },
       },
       {
-        title: 'Advertising',
-        description:
-          'Google uses cookies for advertising, including serving and rendering ads, personalizing ads (depending on your ad settings at <a rel="noopener noreferrer" href="https://g.co/adsettings">g.co/adsettings</a>), limiting the number of times an ad is shown to a user, muting ads you have chosen to stop seeing, and measuring the effectiveness of ads.',
-        linkedCategory: CAT_ADVERTISEMENT,
-      },
-      {
-        title: 'Functionality',
-        description:
-          'Cookies used for functionality allow users to interact with a service or site to access features that are fundamental to that service. Things considered fundamental to the service include preferences like the user’s choice of language, product optimizations that help maintain and improve a service, and maintaining information relating to a user’s session, such as the content of a shopping cart.',
-        linkedCategory: CAT_FUNCTIONALITY,
-      },
-      {
-        title: 'Security',
-        description:
-          'Cookies used for security authenticate users, prevent fraud, and protect users as they interact with a service.',
-        linkedCategory: CAT_SECURITY,
-      },
-      {
         title: 'More information',
         description:
-          'For any queries in relation to the policy on cookies and your choices, please <a rel="noopener noreferrer" href="/fale-conosco/">contact us</a>.',
+          'For questions about cookies and your choices, read the <a href="/empresa/politica-de-privacidade/#cookies">Privacy Policy</a> or <a href="/fale-conosco/">contact us</a>.',
       },
     ],
   },
