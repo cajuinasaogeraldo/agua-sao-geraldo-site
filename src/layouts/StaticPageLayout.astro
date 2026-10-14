@@ -1,0 +1,23 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import WidgetWrapper from '@/components/ui/WidgetWrapper.astro';
+import { twMerge } from 'tailwind-merge';
+
+const { frontmatter } = Astro.props;
+const metadata = { title: frontmatter.title };
+---
+
+<PageLayout metadata={metadata}>
+  <WidgetWrapper>
+    <section
+      class={twMerge(
+        'page-content flex flex-col',
+        'font-inter prose prose-lg prose-headings:tracking-tighter prose-headings:font-bold',
+        'mx-auto my-10 w-full max-w-4xl rounded-2xl px-5 py-5 shadow-xl md:px-7',
+      )}
+    >
+      <h1 class="text-agua-primary-blue my-10! text-center">{frontmatter.title}</h1>
+      <slot />
+    </section>
+  </WidgetWrapper>
+</PageLayout>
