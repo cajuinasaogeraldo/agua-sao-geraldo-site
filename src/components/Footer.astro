@@ -122,10 +122,22 @@ const isExternalHref = (href: unknown): boolean =>
       </div>
     </div>
 
-    <!-- Logo -->
-    <div class="grid grid-cols-[auto_auto] place-items-center md:order-first!">
-      <Image layout="constrained" src={logo} alt="São geraldo" />
-      <Image class="w-3/4" layout="contained" src={gptw} alt="Great Place to Work" />
+    <!-- Logo + selo GPTW: escalam juntos pela altura -->
+    <div
+      class="flex min-w-0 flex-wrap items-center justify-center gap-3 justify-self-center md:order-first! md:gap-4"
+    >
+      <Image
+        class="h-20 w-auto sm:h-24 md:h-16 lg:h-24 xl:h-32"
+        layout="contained"
+        src={logo}
+        alt="São geraldo"
+      />
+      <Image
+        class="h-24 w-auto sm:h-28 md:h-20 lg:h-28 xl:h-40"
+        layout="contained"
+        src={gptw}
+        alt="Great Place to Work"
+      />
     </div>
   </div>
 
