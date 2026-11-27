@@ -53,14 +53,16 @@ html {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0 0 0.5rem 0;
-  @apply text-agua-primary-blue!;
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0 0 0.5rem 0;
+    @apply text-agua-primary-blue;
+  }
 }
 
 #bannerSwiper {
