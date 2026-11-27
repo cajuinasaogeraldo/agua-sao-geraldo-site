@@ -62,7 +62,7 @@ const isExternalHref = (href: unknown): boolean =>
                   <li>
                     <a
                       href={href}
-                      class="text-agua-secondary-green!"
+                      class="text-agua-secondary-green! hover:underline"
                       aria-label={ariaLabel}
                       {...(isExternalHref(href) ? { rel: 'noopener noreferrer' } : {})}
                       {...rest}
@@ -87,12 +87,12 @@ const isExternalHref = (href: unknown): boolean =>
               {
                 socialLinks.map(({ ariaLabel, href, text, icon }) => (
                   <a
-                    class="text-muted bg-agua-primary-green inline-flex items-center rounded-full p-2 text-sm"
+                    class="text-muted bg-agua-primary-green inline-flex items-center rounded-full p-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                     aria-label={ariaLabel}
                     href={href}
                     {...(isExternalHref(href) ? { rel: 'noopener noreferrer' } : {})}
                   >
-                    {icon && <Icon name={icon} class="size-8 text-white" />}
+                    {icon && <Icon name={icon} aria-hidden="true" class="size-8 text-white" />}
                     <Fragment set:html={text} />
                   </a>
                 ))
@@ -103,19 +103,19 @@ const isExternalHref = (href: unknown): boolean =>
             variant="primary"
             href="https://web.whatsapp.com/send?phone=558892527344&text=Oi,%20vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
             rel="noopener noreferrer"
-            aria-label="Entre em contato"
+            aria-label="Entre em contato pelo WhatsApp"
             class="mt-0! rounded-2xl flex max-w-[350px] items-center justify-center gap-2 text-lg"
           >
-            <Image class="size-6" layout="contained" src={whats} alt="São geraldo" />
-            |
+            <Image class="size-6" layout="contained" src={whats} alt="" />
+            <span aria-hidden="true">|</span>
             <span>Entre em Contato</span>
           </Button>
           <a
             href="tel://8821017654"
-            aria-label="Entre em contato"
-            class="flex size-8 h-auto w-fit items-center gap-2 self-center md:self-start"
+            aria-label="Ligar para (88) 2101-7654"
+            class="flex size-8 h-auto w-fit items-center gap-2 self-center md:self-start focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-lg"
           >
-            <Phone fill="#FFF" class="bg-agua-primary-green size-8 rounded-full p-2" />
+            <Phone aria-hidden="true" fill="#FFF" class="bg-agua-primary-green size-8 rounded-full p-2" />
             <span class="text-2xl font-bold!">88 2101.7654</span>
           </a>
         </div>
@@ -130,13 +130,13 @@ const isExternalHref = (href: unknown): boolean =>
         class="h-20 w-auto sm:h-24 md:h-16 lg:h-24 xl:h-32"
         layout="contained"
         src={logo}
-        alt="São geraldo"
+        alt="Água Mineral São Geraldo"
       />
       <Image
         class="h-24 w-auto sm:h-28 md:h-20 lg:h-28 xl:h-40"
         layout="contained"
         src={gptw}
-        alt="Great Place to Work"
+        alt="Selo Great Place to Work"
       />
     </div>
   </div>
@@ -149,7 +149,7 @@ const isExternalHref = (href: unknown): boolean =>
       </div>
     </div>
     <button
-      class="underline text-xs text-white opacity-60 hover:opacity-100 transition-opacity self-start pl-3 md:pl-7"
+      class="underline text-xs text-white opacity-90 hover:opacity-100 transition-opacity self-start pl-3 md:pl-7 py-1"
       type="button"
       aria-label="Preferências de privacidade"
       title="Preferências de privacidade"

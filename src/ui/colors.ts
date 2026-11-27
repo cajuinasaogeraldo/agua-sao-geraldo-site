@@ -31,7 +31,7 @@ export const colors = {
     },
     info: '#632314',
   },
-  font: '#828282',
+  font: '#545454',
   agua: {
     primary: {
       blue: '#004F9F',

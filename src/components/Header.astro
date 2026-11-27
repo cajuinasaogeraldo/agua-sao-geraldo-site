@@ -55,6 +55,25 @@ const shouldUnderline = (href?: string) => {
   // Path exato ou sub-rota
   return current === target || current.startsWith(target + '/');
 };
+const getDropdownToken = (text: string, index: number) => {
+  const normalizedText = text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+  return normalizedText || `item-${index}`;
+};
+
+const getDropdownIds = (text = '', index: number) => {
+  const token = getDropdownToken(text, index);
+
+  return {
+    triggerId: `header-dropdown-trigger-${token}-${index}`,
+    menuId: `header-dropdown-menu-${token}-${index}`,
+  };
+};
 ---
 
 <header
@@ -96,7 +115,11 @@ const shouldUnderline = (href?: string) => {
     <!--  -->
     <div class:list={['flex justify-between']}>
       <!-- Logo clicável que leva pra home -->
-      <a class="flex w-fit items-center" href={getHomePermalink()}>
+      <a
+        class="flex w-fit items-center rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        href={getHomePermalink()}
+        aria-label="Água Mineral São Geraldo — Página inicial"
+      >
         <Logo />
       </a>
 
@@ -107,73 +130,96 @@ const shouldUnderline = (href?: string) => {
     </div>
 
     <!-- SEÇÃO 2: Menu de Navegação (centro) - Escondido no mobile -->
-    <nav class="hidden w-auto gap-3 md:flex" aria-label="Navegação Principal">
+    <nav id="main-navigation" class="hidden w-auto gap-3 md:flex" aria-label="Navegação Principal">
       <!-- Lista de itens do menu -->
       <ul
         class="flex w-full flex-col text-xl font-medium tracking-[0.01rem] md:w-auto md:flex-row md:justify-center md:self-center md:text-[0.9375rem]"
       >
         {
-          links.map(({ text, href, links }) => (
-            <li class={links?.length ? 'dropdown' : ''}>
-              {/* Se o link tem sub-links, cria um dropdown */}
-              {links?.length ? (
-                <>
-                  {/* Botão do dropdown */}
-                  <button
-                    type="button"
-                    class="hover:text-link flex items-center px-4 py-3 whitespace-nowrap text-white!"
-                  >
-                    {text}{' '}
-                    <Icon
-                      name="tabler:chevron-down"
-                      class="ml-0.5 hidden h-3.5 w-3.5 md:inline rtl:mr-0.5 rtl:ml-0"
-                    />
-                  </button>
+          links.map(({ text, href, links: subLinks }, index) => {
+            const { triggerId, menuId } = getDropdownIds(text, index);
+            return (
+              <li
+                class={subLinks?.length ? 'dropdown relative' : ''}
+                {...(subLinks?.length ? { 'data-aw-dropdown': true } : {})}
+              >
+                {/* Se o link tem sub-links, cria um dropdown */}
+                {subLinks?.length ? (
+                  <>
+                    {/* Botão do dropdown */}
+                    <button
+                      id={triggerId}
+                      type="button"
+                      aria-controls={menuId}
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      data-aw-dropdown-trigger
+                      class="hover:text-link flex items-center px-4 py-3 whitespace-nowrap text-white! rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    >
+                      {text}{' '}
+                      <Icon
+                        name="tabler:chevron-down"
+                        aria-hidden="true"
+                        data-aw-dropdown-icon
+                        class="ml-0.5 hidden h-3.5 w-3.5 md:inline rtl:mr-0.5 rtl:ml-0"
+                      />
+                    </button>
 
-                  {/* Submenu que aparece ao clicar/hover */}
-                  <ul class="dropdown-menu rounded pl-4 font-medium drop-shadow-xl md:absolute md:hidden md:min-w-[200px] md:bg-white/90 md:pl-0 md:backdrop-blur-md">
-                    {links.map(({ text: text2, href: href2 }) => (
-                      <li>
-                        <a
-                          class:list={[
-                            'hover:text-link whitespace-no-wrap block px-5 py-2 text-white! first:rounded-t last:rounded-b',
-                            {
-                              'text-agua-primary-green': href2 === currentPath,
-                            },
-                          ]}
-                          href={href2}
-                        >
-                          {text2}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                /* Se não tem sub-links, cria um link simples */
-                <a
-                  href={href}
-                  class:list={[
-                    // base
-                    'flex items-center px-4 py-3 whitespace-nowrap hover:text-link',
-                    // cor baseada na página + link
-                    {
-                      'text-agua-primary-green!': isHome && shouldUnderline(href || ''),
-                      'text-white!': isHome && !shouldUnderline(href || ''),
-                      'text-agua-primary-blue!': !isHome,
-                    },
-                    // estado ativo (apenas underline)
-                    {
-                      'underline! underline-offset-8! decoration-2! decoration-agua-primary-green!':
-                        shouldUnderline(href || ''),
-                    },
-                  ]}
-                >
-                  {text}
-                </a>
-              )}
-            </li>
-          ))
+                    {/* Submenu que aparece ao clicar/hover */}
+                    <ul
+                      id={menuId}
+                      aria-hidden="true"
+                      aria-labelledby={triggerId}
+                      data-aw-dropdown-menu
+                      class="dropdown-menu rounded pl-4 font-medium drop-shadow-xl md:absolute md:hidden md:min-w-[200px] md:bg-white/95 md:pl-0 md:backdrop-blur-md"
+                    >
+                      {subLinks.map(({ text: text2, href: href2 }) => (
+                        <li>
+                          <a
+                            class:list={[
+                              'hover:text-link whitespace-no-wrap block px-5 py-2 text-white! md:text-agua-primary-blue! first:rounded-t last:rounded-b focus-visible:outline-2 focus-visible:outline-offset-2',
+                              {
+                                'text-agua-primary-green! font-bold': href2 === currentPath,
+                              },
+                            ]}
+                            href={href2}
+                            aria-current={href2 === currentPath ? 'page' : undefined}
+                          >
+                            {text2}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  /* Se não tem sub-links, cria um link simples */
+                  <a
+                    href={href}
+                    aria-current={shouldUnderline(href || '') ? 'page' : undefined}
+                    class:list={[
+                      // base
+                      'flex items-center px-4 py-3 whitespace-nowrap hover:text-link rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2',
+                      // cor baseada na página + link
+                      {
+                        'text-agua-primary-green! focus-visible:outline-white':
+                          isHome && shouldUnderline(href || ''),
+                        'text-white! focus-visible:outline-white':
+                          isHome && !shouldUnderline(href || ''),
+                        'text-agua-primary-blue! focus-visible:outline-agua-primary-blue': !isHome,
+                      },
+                      // estado ativo (apenas underline)
+                      {
+                        'underline! underline-offset-8! decoration-2! decoration-agua-primary-green!':
+                          shouldUnderline(href || ''),
+                      },
+                    ]}
+                  >
+                    {text}
+                  </a>
+                )}
+              </li>
+            );
+          })
         }
       </ul>
       <!-- Ações -->

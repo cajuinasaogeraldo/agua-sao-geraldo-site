@@ -30,8 +30,17 @@ export default function AboutPhotoGallery({ images }: { images: ImageBannerType[
           >
             {images.map((image, index) => (
               <SwiperSlide
-                className="cursor-pointer"
+                className="cursor-pointer rounded-[28px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-agua-primary-blue"
+                role="button"
+                tabIndex={0}
+                aria-label={`Ampliar foto ${index + 1}`}
                 onClick={() => setImageSelected(index)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setImageSelected(index);
+                  }
+                }}
                 key={image.data.image + index}
               >
                 <ImageOptimized

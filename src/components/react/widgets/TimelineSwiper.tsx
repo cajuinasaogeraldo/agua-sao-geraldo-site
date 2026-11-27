@@ -42,10 +42,10 @@ export default function TimelineSwiper({ steps, className }: Props) {
 
               {/* conteúdo */}
               <div className="mr-2">
-                <h5 className="lg:text-agua-primary-blue text-agua-primary-green mb-2 max-w-[400px] text-sm font-extrabold! uppercase lg:text-4xl">
+                <h3 className="lg:text-agua-primary-blue text-agua-primary-green mb-2 max-w-[400px] text-sm font-extrabold! uppercase lg:text-4xl">
                   {item.title}
-                </h5>
-                <p className="font-poppins lg:text-font text-left text-[9px] text-white lg:text-[24px]">
+                </h3>
+                <p className="font-poppins lg:text-font text-left text-xs text-white lg:text-[24px]">
                   {item.content}
                 </p>
               </div>

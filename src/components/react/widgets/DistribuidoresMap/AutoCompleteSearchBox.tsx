@@ -66,6 +66,7 @@ export const AutoCompleteSearchBox = ({ onPlaceSelect, onReset }: Props) => {
     <div className="relative w-full flex">
       <gmp-place-autocomplete
         ref={ref}
+        aria-label="Buscar endereço ou cidade para encontrar distribuidores"
         includedRegionCodes={['br']}
         className="w-full rounded-lg border border-black bg-white text-black scheme-light shadow-sm focus:ring-[1px] focus:ring-blue-400/90"
         ongmp-select={(ev: any) => {
@@ -75,18 +76,21 @@ export const AutoCompleteSearchBox = ({ onPlaceSelect, onReset }: Props) => {
           void handlePlaceSelect(ev.place);
         }}
       />
-      <X
+      <button
+        type="button"
         onClick={handleReset}
-        color="#000"
-        size={30}
+        aria-label="Limpar busca"
+        disabled={disableClearButton}
         className={clsx(
-          'absolute right-2 top-1/2 -translate-y-1/2 border border-black rounded-xl p-1',
-          'bg-white hover:shadow-[0_0_0_7px_theme(colors.zinc.200)] transition-shadow cursor-pointer',
+          'absolute right-2 top-1/2 -translate-y-1/2 flex size-8 items-center justify-center border border-black rounded-xl p-1',
+          'bg-white hover:shadow-[0_0_0_7px_theme(colors.zinc.200)] transition-shadow cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-agua-primary-blue',
           {
             'pointer-events-none hidden': disableClearButton,
           },
         )}
-      />
+      >
+        <X aria-hidden="true" color="#000" size={20} />
+      </button>
     </div>
   );
 };

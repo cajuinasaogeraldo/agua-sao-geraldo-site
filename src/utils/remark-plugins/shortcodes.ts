@@ -1,10 +1,8 @@
 import path from 'path';
 import { visit, SKIP } from 'unist-util-visit';
-import {
-  createMarkdownProcessor,
-  type RemarkPlugin,
-  type MarkdownProcessor,
-} from '@astrojs/markdown-remark';
+import { createMarkdownProcessor, type RemarkPlugin } from '@astrojs/markdown-remark';
+
+type MarkdownProcessorInstance = Awaited<ReturnType<typeof createMarkdownProcessor>>;
 
 interface ShortcodeMatch {
   type: 'opening' | 'closing';
@@ -30,9 +28,9 @@ interface ResolvedReplacement extends ShortcodeReplacement {
   processed: string;
 }
 
-let markdownProcessorPromise: Promise<MarkdownProcessor> | null = null;
+let markdownProcessorPromise: Promise<MarkdownProcessorInstance> | null = null;
 
-async function getMarkdownProcessor(): Promise<MarkdownProcessor> {
+async function getMarkdownProcessor(): Promise<MarkdownProcessorInstance> {
   if (!markdownProcessorPromise) {
     markdownProcessorPromise = createMarkdownProcessor();
   }

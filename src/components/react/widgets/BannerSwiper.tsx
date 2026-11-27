@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import { A11y, Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import { useState, useEffect } from 'react';
 import ImageOptimized from '@/components/react/common/ImageOptimized';
 import type { BannerData, BannerSwiperProps } from '../types';
@@ -23,7 +23,7 @@ export default function BannerSwiper({ banners }: BannerSwiperProps) {
     <div id="bannerSwiper" className="relative h-[341px] w-full overflow-hidden md:h-[700px]">
       <Swiper
         className="size-full"
-        modules={[Navigation, Pagination, Autoplay, EffectFade]}
+        modules={[Navigation, Pagination, Autoplay, EffectFade, A11y]}
         effect="fade"
         fadeEffect={{ crossFade: true }}
         speed={700}
@@ -52,8 +52,16 @@ export default function BannerSwiper({ banners }: BannerSwiperProps) {
         ))}
 
         {/* NAV BUTTONS */}
-        <div className="swiper-button-prev py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
-        <div className="swiper-button-next py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 md:right-5 max-md:size-[34px] max-md:right-2.5"></div>
+        <button
+          type="button"
+          aria-label="Banner anterior"
+          className="swiper-button-prev py-3 text-agua-primary-blue! absolute left-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/80 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white active:scale-95 md:left-5 max-md:size-[36px] max-md:left-2.5"
+        ></button>
+        <button
+          type="button"
+          aria-label="Próximo banner"
+          className="swiper-button-next py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/80 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white active:scale-95 md:right-5 max-md:size-[36px] max-md:right-2.5"
+        ></button>
       </Swiper>
     </div>
   );
