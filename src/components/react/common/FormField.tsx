@@ -98,7 +98,11 @@ export function FormField<TFormData extends Record<string, any>>({
             {...register(name)}
             className="text-agua-primary-blue focus:ring-agua-primary-blue/40 focus-visible:outline-agua-primary-blue mt-0.5 h-5 w-5 shrink-0 rounded border-gray-500 focus:ring-2 focus-visible:outline-2 focus-visible:outline-offset-2"
           />
-          {label && <span className="text-agua-primary-blue text-base leading-snug select-none">{label}</span>}
+          {label && (
+            <span className="text-agua-primary-blue text-base leading-snug select-none">
+              {label}
+            </span>
+          )}
         </label>
         {errorMessage && (
           <p {...errorProps} className="font-inter mt-1 text-sm font-medium text-red-700">
@@ -164,7 +168,10 @@ export function FormField<TFormData extends Record<string, any>>({
         ) : type === 'file' ? (
           <>
             {!hideLabel && label && (
-              <label htmlFor={id} className="text-agua-primary-blue mb-2 block text-base font-semibold">
+              <label
+                htmlFor={id}
+                className="text-agua-primary-blue mb-2 block text-base font-semibold"
+              >
                 {label}
                 {required && (
                   <span aria-hidden="true" className="text-red-600">
@@ -200,7 +207,10 @@ export function FormField<TFormData extends Record<string, any>>({
         ) : type === 'date' ? (
           <>
             {!hideLabel && label && (
-              <label htmlFor={id} className="text-agua-primary-blue mb-2 block text-base font-semibold">
+              <label
+                htmlFor={id}
+                className="text-agua-primary-blue mb-2 block text-base font-semibold"
+              >
                 {label}
                 {required && (
                   <span aria-hidden="true" className="text-red-600">
@@ -220,7 +230,10 @@ export function FormField<TFormData extends Record<string, any>>({
         ) : type === 'time' ? (
           <>
             {!hideLabel && label && (
-              <label htmlFor={id} className="text-agua-primary-blue mb-2 block text-base font-semibold">
+              <label
+                htmlFor={id}
+                className="text-agua-primary-blue mb-2 block text-base font-semibold"
+              >
                 {label}
                 {required && (
                   <span aria-hidden="true" className="text-red-600">
