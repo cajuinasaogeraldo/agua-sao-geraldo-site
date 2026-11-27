@@ -71,10 +71,12 @@ const imageId = showGallery ? `img-gallery-${Math.random().toString(36).slice(2,
         referrerpolicy="no-referrer"
         class:list={[
           image.attributes.class,
-          showGallery && 'cursor-pointer hover:opacity-90 transition-opacity',
+          showGallery &&
+            'cursor-pointer hover:opacity-90 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-agua-primary-blue',
         ]}
         role={showGallery ? 'button' : undefined}
         tabindex={showGallery ? 0 : undefined}
+        aria-label={showGallery ? `Ampliar imagem: ${props.alt}` : undefined}
         {...image.attributes}
       />
 

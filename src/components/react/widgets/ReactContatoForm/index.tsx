@@ -74,7 +74,7 @@ function Form({ onSubmitSuccess, apiUrl }: Readonly<Props>) {
               register={register}
               errors={errors}
               name="email"
-              type="text"
+              type="email"
               label="Email"
               placeholder="Digite aqui o seu email"
               required
@@ -83,7 +83,7 @@ function Form({ onSubmitSuccess, apiUrl }: Readonly<Props>) {
               register={register}
               errors={errors}
               name="whatsapp"
-              type="text"
+              type="tel"
               label="WhatsApp"
               placeholder="Digite aqui o seu whatsapp"
               required
@@ -125,15 +125,16 @@ function Form({ onSubmitSuccess, apiUrl }: Readonly<Props>) {
               label={
                 <>
                   Declaro que li e aceito a{' '}
-                  <span
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => setIsPrivacyModalOpen(true)}
-                    onKeyDown={(e) => e.key === 'Enter' && setIsPrivacyModalOpen(true)}
-                    className="text-caju-heading-primary hover:text-caju-secondary-orange cursor-pointer font-semibold underline"
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsPrivacyModalOpen(true);
+                    }}
+                    className="text-agua-primary-blue hover:text-caju-secondary-orange cursor-pointer font-semibold underline"
                   >
                     política de privacidade e proteção de dados
-                  </span>
+                  </button>
                   .
                 </>
               }
@@ -150,13 +151,17 @@ function Form({ onSubmitSuccess, apiUrl }: Readonly<Props>) {
                 action={AllowedFormIds.CONTATO_FORM}
                 id="CONTATO_FORM"
               />
-              {recaptchaError && <span className="text-[#d32f2f]/70">{recaptchaError}</span>}
+              {recaptchaError && (
+                <span role="alert" className="text-sm font-medium text-red-700">
+                  {recaptchaError}
+                </span>
+              )}
             </div>
             {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn-primary w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
+              className="btn-primary focus-visible:outline-agua-primary-blue w-full rounded-lg px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-105 focus:ring-4 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:max-w-80 md:px-8 md:py-4 md:text-lg"
             >
               {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
             </button>

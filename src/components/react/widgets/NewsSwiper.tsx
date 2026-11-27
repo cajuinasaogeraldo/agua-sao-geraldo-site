@@ -11,7 +11,7 @@ interface NewsSwiperProps {
   arrowPrev: string;
 }
 
-export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperProps) {
+export default function NewsSwiper({ news }: NewsSwiperProps) {
   if (!news || news.length === 0) return null;
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const isMobile = window.innerWidth <= 768;
@@ -29,12 +29,18 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
   };
 
   return (
-    <div className="relative w-full px-2" onMouseEnter={handlePause} onMouseLeave={handleResume}>
+    <div
+      className="relative w-full px-8 md:px-12"
+      onMouseEnter={handlePause}
+      onMouseLeave={handleResume}
+      onFocusCapture={handlePause}
+      onBlurCapture={handleResume}
+    >
       <Swiper
         onSwiper={setSwiperInstance}
         modules={[Navigation, Autoplay]}
         slidesPerView={2}
-        spaceBetween={20}
+        spaceBetween={14}
         autoplay={{
           delay: 3500,
           disableOnInteraction: false,
@@ -46,15 +52,15 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
         breakpoints={{
           320: {
             slidesPerView: 2,
-            spaceBetween: 20,
+            spaceBetween: 14,
           },
           768: {
             slidesPerView: 3,
-            spaceBetween: 20,
+            spaceBetween: 18,
           },
           1024: {
             slidesPerView: 4,
-            spaceBetween: 25,
+            spaceBetween: 18,
           },
         }}
         className="mx-auto h-fit w-full max-w-[350px] pb-4 md:max-h-[520px] md:max-w-[700px] lg:max-w-[1350px]"
@@ -67,7 +73,7 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
             className="bg-white p-3 md:p-5 rounded-xl"
           >
             {post.image && (
-              <a className="cursor-pointer" href={post.permalink}>
+              <a className="cursor-pointer" href={post.permalink} tabIndex={-1} aria-hidden="true">
                 <ImageOptimized
                   src={post.image}
                   alt={post.title!}
@@ -92,7 +98,8 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
 
               <a
                 href={post.permalink}
-                className="btn-primary mx-1 inline-block h-fit w-fit rounded text-sm text-white transition-all duration-300 "
+                aria-label={post.title ? `Leia mais sobre ${post.title}` : 'Leia mais'}
+                className="btn-primary mx-1 inline-block h-fit w-fit rounded text-sm text-white transition-all duration-300"
               >
                 Leia Mais
               </a>
@@ -103,33 +110,15 @@ export default function NewsSwiper({ news, arrowNext, arrowPrev }: NewsSwiperPro
 
       {/* Navigation Buttons */}
       <button
-        className="news-prev-btn absolute top-1/2 -left-3 -translate-y-1/2 md:-left-2 lg:-left-5"
-        aria-label="Anterior"
-      >
-        <ImageOptimized
-          src={arrowPrev}
-          alt="Notícia Anterior"
-          width={40}
-          height={40}
-          layout="fixed"
-          loading="lazy"
-          className="size-5! transition-transform duration-300 hover:scale-110 md:size-7!"
-        />
-      </button>
+        type="button"
+        className="news-prev-btn swiper-button-prev py-3 text-agua-primary-blue! absolute top-1/2! -left-2! z-10 flex size-[42px] -translate-y-1/2! cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 max-md:size-[34px] md:-left-2!"
+        aria-label="Notícia anterior"
+      ></button>
       <button
-        className="news-next-btn absolute top-1/2 -right-3 -translate-y-1/2 md:-right-2 lg:-right-5"
-        aria-label="Próximo"
-      >
-        <ImageOptimized
-          src={arrowNext}
-          alt="Próxima Notícia"
-          width={40}
-          height={40}
-          layout="fixed"
-          loading="lazy"
-          className="size-5! transition-transform duration-300 hover:scale-110 md:size-7!"
-        />
-      </button>
+        type="button"
+        className="news-next-btn swiper-button-next py-3 text-agua-primary-blue! absolute top-1/2! -right-2! z-10 flex size-[42px] -translate-y-1/2! cursor-pointer items-center justify-center rounded-full bg-white/70 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-110 hover:bg-white/90 active:scale-95 max-md:size-[34px] md:-right-2!"
+        aria-label="Próxima notícia"
+      ></button>
     </div>
   );
 }

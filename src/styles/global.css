@@ -68,10 +68,11 @@ h6 {
    BANNER SWIPER - Overrides de biblioteca
    ======================================== */
 
-  /* Bullets - base (branco translúcido) */
+  /* Bullets - base (branco translúcido com alvo mínimo >= 24x24px via área de toque) */
   .swiper-pagination-bullet {
     width: 12px;
     height: 12px;
+    margin: 6px !important;
     background: rgba(255, 255, 255, 0.5);
     opacity: 1;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

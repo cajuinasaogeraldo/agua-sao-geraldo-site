@@ -199,7 +199,7 @@ small {
   @apply button bg-agua-primary-green hover:bg-agua-primary-green text-white;
 }
 
-/* Botão amarelo */
+/* Botão azul */
 @utility btn-secondary {
   @apply button bg-agua-primary-blue text-white;
 }
@@ -210,6 +210,11 @@ small {
 
 @utility btn-action {
   @apply button text-agua-primary-green! border-agua-primary-green border bg-transparent;
+}
+
+:focus-visible {
+  outline: 2px solid #004f9f;
+  outline-offset: 2px;
 }
 
 @utility bg-page {

@@ -19,13 +19,24 @@ const { metadata } = Astro.props;
 ---
 
 <Layout metadata={metadata}>
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-9999 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2.5 focus:text-sm focus:font-bold focus:text-agua-primary-blue focus:shadow-lg focus:outline-2 focus:outline-offset-2 focus:outline-agua-primary-blue"
+  >
+    Pular para o conteúdo principal
+  </a>
   <slot name="header">
     <Header isFixed={isHome} {...headerData} />
   </slot>
   <main
-    class:list={{
-      'pt-16 lg:pt-20': !isHome,
-    }}
+    id="main-content"
+    tabindex="-1"
+    class:list={[
+      'focus:outline-none',
+      {
+        'pt-16 lg:pt-20': !isHome,
+      },
+    ]}
   >
     <slot />
     <ToastProvider client:load />

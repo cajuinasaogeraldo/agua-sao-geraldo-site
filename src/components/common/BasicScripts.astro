@@ -18,8 +18,41 @@ import { UI } from 'astrowind:config';
     }
   }
 
+  function getDropdownElements(dropdown) {
+    return {
+      trigger: dropdown?.querySelector('[data-aw-dropdown-trigger]'),
+      menu: dropdown?.querySelector('[data-aw-dropdown-menu]'),
+    };
+  }
+
+  function setDropdownState(dropdown, expanded) {
+    const { trigger, menu } = getDropdownElements(dropdown);
+
+    if (!dropdown || !trigger || !menu) {
+      return;
+    }
+
+    dropdown.dataset.open = expanded ? 'true' : 'false';
+    trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+    menu.classList.toggle('hidden', !expanded);
+  }
+
+  function closeAllDropdowns(exception) {
+    document.querySelectorAll('[data-aw-dropdown]').forEach((dropdown) => {
+      if (exception && dropdown === exception) {
+        return;
+      }
+
+      setDropdownState(dropdown, false);
+    });
+  }
+
   function closeMenu() {
-    document.querySelector('[data-aw-toggle-menu]')?.classList.remove('expanded');
+    closeAllDropdowns();
+    const toggleBtn = document.querySelector('[data-aw-toggle-menu]');
+    toggleBtn?.classList.remove('expanded');
+    toggleBtn?.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('overflow-hidden');
     const header = document.getElementById('header');
     if (header) {
@@ -32,10 +65,17 @@ import { UI } from 'astrowind:config';
     let lastKnownScrollPosition = window.scrollY;
     let ticking = true;
 
-    attachEvent('#header nav', 'click', closeMenu);
+    const screenSize = window.matchMedia('(max-width: 767px)');
+
+    attachEvent('#header nav a[href]', 'click', function () {
+      if (screenSize.matches) {
+        closeMenu();
+      }
+    });
 
     attachEvent('[data-aw-toggle-menu]', 'click', function (_, elem) {
-      elem.classList.toggle('expanded');
+      const isExpanded = elem.classList.toggle('expanded');
+      elem.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
       document.body.classList.toggle('overflow-hidden');
       const header = document.getElementById('header');
       if (header) {
@@ -44,6 +84,10 @@ import { UI } from 'astrowind:config';
         header.classList.toggle('bg-page');
       }
       document.querySelector('#header nav')?.classList.toggle('hidden');
+
+      if (!isExpanded) {
+        closeAllDropdowns();
+      }
     });
 
     attachEvent('[data-aw-toggle-color-scheme]', 'click', function () {
@@ -91,7 +135,100 @@ import { UI } from 'astrowind:config';
       newlink.click();
     });
 
-    const screenSize = window.matchMedia('(max-width: 767px)');
+    document.querySelectorAll('[data-aw-dropdown]').forEach((dropdown) => {
+      if (dropdown.dataset.awDropdownBound === 'true') {
+        return;
+      }
+
+      dropdown.dataset.awDropdownBound = 'true';
+
+      const { trigger } = getDropdownElements(dropdown);
+
+      if (!trigger) {
+        return;
+      }
+
+      dropdown.addEventListener('mouseenter', () => {
+        if (screenSize.matches) {
+          return;
+        }
+
+        closeAllDropdowns(dropdown);
+        setDropdownState(dropdown, true);
+      });
+
+      dropdown.addEventListener('mouseleave', () => {
+        if (screenSize.matches) {
+          return;
+        }
+
+        setDropdownState(dropdown, false);
+      });
+
+      dropdown.addEventListener('focusin', () => {
+        if (screenSize.matches) {
+          return;
+        }
+
+        closeAllDropdowns(dropdown);
+        setDropdownState(dropdown, true);
+      });
+
+      dropdown.addEventListener('focusout', (event) => {
+        if (screenSize.matches || dropdown.contains(event.relatedTarget)) {
+          return;
+        }
+
+        setDropdownState(dropdown, false);
+      });
+
+      trigger.addEventListener('click', (event) => {
+        if (!screenSize.matches) {
+          return;
+        }
+
+        event.preventDefault();
+
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+        closeAllDropdowns(isExpanded ? undefined : dropdown);
+        setDropdownState(dropdown, !isExpanded);
+      });
+    });
+
+    if (!window.awDropdownEventsBound) {
+      document.addEventListener('click', (event) => {
+        if (event.target instanceof Element && event.target.closest('[data-aw-dropdown]')) {
+          return;
+        }
+
+        closeAllDropdowns();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') {
+          return;
+        }
+
+        const expandedDropdown = document.querySelector('[data-aw-dropdown][data-open="true"]');
+
+        if (expandedDropdown) {
+          const { trigger } = getDropdownElements(expandedDropdown);
+          closeAllDropdowns();
+          trigger?.focus();
+          return;
+        }
+
+        const toggleBtn = document.querySelector('[data-aw-toggle-menu].expanded');
+        if (toggleBtn instanceof HTMLElement) {
+          closeMenu();
+          toggleBtn.focus();
+        }
+      });
+
+      window.awDropdownEventsBound = true;
+    }
+
     screenSize.addEventListener('change', closeMenu);
 
     function applyHeaderStylesOnScroll() {
