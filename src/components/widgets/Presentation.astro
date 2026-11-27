@@ -78,7 +78,7 @@ function isImageProps(image: unknown): image is ImageMetadata & { fullSize?: boo
           (title || tagline) && (
             <h1
               class:list={[
-                'leading-tighter font-heading intersect-once intersect-quarter motion-safe:md:intersect:animate-fade mb-4 text-5xl font-bold tracking-tighter md:text-6xl motion-safe:md:opacity-0',
+                'font-poppins intersect-once intersect-quarter motion-safe:md:intersect:animate-fade mb-4 text-5xl font-normal leading-tight tracking-normal md:text-6xl motion-safe:md:opacity-0',
                 'hidden lg:block',
               ]}
               set:html={title || tagline}
@@ -89,7 +89,7 @@ function isImageProps(image: unknown): image is ImageMetadata & { fullSize?: boo
           {
             subtitle && (
               <p
-                class="text-lead font-poppins mb-6 text-justify lg:text-[30px]"
+                class="text-lead font-poppins mb-6 text-justify leading-relaxed! tracking-normal! lg:text-[30px]"
                 set:html={subtitle}
               />
             )

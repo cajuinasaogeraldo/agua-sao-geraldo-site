@@ -55,12 +55,12 @@ export default function BannerSwiper({ banners }: BannerSwiperProps) {
         <button
           type="button"
           aria-label="Banner anterior"
-          className="swiper-button-prev py-3 text-agua-primary-blue! absolute left-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/80 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white active:scale-95 md:left-5 max-md:size-[36px] max-md:left-2.5"
+          className="swiper-button-prev py-3 text-agua-primary-blue! absolute left-3! md:left-5! lg:left-6! top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/80 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white active:scale-95 max-md:size-[36px]"
         ></button>
         <button
           type="button"
           aria-label="Próximo banner"
-          className="swiper-button-next py-3 text-agua-primary-blue! absolute right-5 top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/80 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white active:scale-95 md:right-5 max-md:size-[36px] max-md:right-2.5"
+          className="swiper-button-next py-3 text-agua-primary-blue! absolute right-3! md:right-5! lg:right-6! top-1/2 z-10 flex size-[46px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/80 shadow-[0_4px_12px_rgba(0,0,0,0.25)] backdrop-blur-md transition-transform duration-300 ease-out hover:scale-110 hover:bg-white active:scale-95 max-md:size-[36px]"
         ></button>
       </Swiper>
     </div>

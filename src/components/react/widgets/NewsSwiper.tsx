@@ -30,7 +30,7 @@ export default function NewsSwiper({ news }: NewsSwiperProps) {
 
   return (
     <div
-      className="relative w-full px-8 md:px-12"
+      className="relative w-full px-10 md:px-12"
       onMouseEnter={handlePause}
       onMouseLeave={handleResume}
       onFocusCapture={handlePause}
@@ -92,7 +92,7 @@ export default function NewsSwiper({ news }: NewsSwiperProps) {
                 {post.title}
               </p>
 
-              <p className="font-inter line-clamp-2 h-14 md:h-20 px-1 text-sm">
+              <p className="font-inter line-clamp-3 h-[4.5rem] md:h-[5.25rem] mb-3 px-1 text-sm">
                 {post.excerpt || post.content}
               </p>
 

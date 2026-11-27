@@ -37,15 +37,16 @@ const isExternalHref = (href: unknown): boolean =>
 <footer
   id="footer"
   class:list={[
-    'relative flex min-h-[500px] w-full flex-col items-center justify-evenly gap-2 lg:gap-6',
-    'px-4 py-7 md:px-7',
+    'relative flex min-h-[500px] w-full flex-col items-center justify-center',
+    'px-4 py-8 md:px-6 md:py-10',
     'bg-agua-primary-blue',
   ]}
 >
-  <!-- Links, Sociais e Logo -->
-  <div class="grid grid-cols-1 md:grid-cols-[minmax(0,30%)_2fr] items-start gap-4">
-    <!-- Links e Sociais -->
-    <div class="h-full max-w-3xl flex flex-col md:flex-row gap-4">
+  <div class="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-8 px-4 md:px-16">
+    <!-- Links, Sociais e Logo -->
+    <div class="flex w-full flex-col items-center justify-between gap-8 md:flex-row lg:gap-12">
+      <!-- Links e Sociais -->
+      <div class="h-full w-full md:w-fit flex flex-col md:flex-row gap-4">
       <!-- Links -->
       <div
         class="order-2 grid items-start justify-center gap-1! lg:gap-4! pl-3 md:order-1! md:grid-cols-2"
@@ -122,38 +123,39 @@ const isExternalHref = (href: unknown): boolean =>
       </div>
     </div>
 
-    <!-- Logo + selo GPTW: escalam juntos pela altura -->
-    <div
-      class="flex min-w-0 flex-wrap items-center justify-center gap-3 justify-self-center md:order-first! md:gap-4"
-    >
-      <Image
-        class="h-20 w-auto sm:h-24 md:h-16 lg:h-24 xl:h-32"
-        layout="contained"
-        src={logo}
-        alt="Água Mineral São Geraldo"
-      />
-      <Image
-        class="h-24 w-auto sm:h-28 md:h-20 lg:h-28 xl:h-40"
-        layout="contained"
-        src={gptw}
-        alt="Selo Great Place to Work"
-      />
-    </div>
-  </div>
-
-  <!-- Footnote -->
-  <div class="flex flex-col gap-1 w-full">
-    <div class="mt-2 flex flex-col items-center justify-center gap-4 lg:mt-0 lg:flex-row">
-      <div class="text-caption font-poppins text-center leading-[140%] text-white lg:w-full">
-        <Fragment set:html={footNote} />
+      <!-- Logo + selo GPTW: escalam juntos pela altura -->
+      <div
+        class="flex min-w-0 shrink-0 flex-wrap items-center justify-center gap-3 md:order-first! md:gap-4"
+      >
+        <Image
+          class="h-20 w-auto sm:h-24 md:h-16 lg:h-24 xl:h-32"
+          layout="contained"
+          src={logo}
+          alt="Água Mineral São Geraldo"
+        />
+        <Image
+          class="h-24 w-auto sm:h-28 md:h-20 lg:h-28 xl:h-40"
+          layout="contained"
+          src={gptw}
+          alt="Selo Great Place to Work"
+        />
       </div>
     </div>
-    <button
-      class="underline text-xs text-white opacity-90 hover:opacity-100 transition-opacity self-start pl-3 md:pl-7 py-1"
-      type="button"
-      aria-label="Preferências de privacidade"
-      title="Preferências de privacidade"
-      data-cc="show-preferencesModal">Preferências de privacidade</button
-    >
+
+    <!-- Footnote -->
+    <div class="flex flex-col gap-2 w-full">
+      <div class="mt-2 flex flex-col items-center justify-center gap-4 lg:mt-0 lg:flex-row">
+        <div class="text-caption font-poppins text-center leading-[140%] text-white lg:w-full">
+          <Fragment set:html={footNote} />
+        </div>
+      </div>
+      <button
+        class="underline text-xs text-white opacity-90 hover:opacity-100 transition-opacity self-center md:self-start py-1"
+        type="button"
+        aria-label="Preferências de privacidade"
+        title="Preferências de privacidade"
+        data-cc="show-preferencesModal">Preferências de privacidade</button
+      >
+    </div>
   </div>
 </footer>

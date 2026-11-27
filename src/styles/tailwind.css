@@ -82,7 +82,7 @@
 /* Headings - Hierarquia semântica */
 h1 {
   @apply text-2xl font-extrabold sm:text-3xl md:text-4xl lg:text-5xl;
-  @apply -tracking-[2%];
+  @apply leading-[125%] tracking-normal;
 }
 
 h2 {

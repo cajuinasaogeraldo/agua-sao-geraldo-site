@@ -45,7 +45,7 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(news.permalink, 'news') : 
           </span>
         )
       }
-      <div class="text-muted text-xs flex items-center gap-2 mb-1.5">
+      <div class="text-muted text-sm flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
         <time datetime={String(news.publishDate)}>{getFormattedDate(news.publishDate)}</time>
         {news.author && <span>• {news.author.replaceAll('-', ' ')}</span>}
         {news.readingTime && <span>• {news.readingTime} min</span>}
