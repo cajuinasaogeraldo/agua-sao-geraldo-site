@@ -7,15 +7,15 @@ const COMPANY_NAME = SITE?.name || 'Água Mineral São Geraldo';
 
 const schemaData = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  '@id': `${BASE_URL}#LocalBusiness`,
+  '@type': 'Organization',
+  '@id': `${BASE_URL}#Organization-site`,
   name: COMPANY_NAME,
   alternateName: 'Indústria São Geraldo',
   description:
     'Indústria de bebidas genuinamente nordestina, produtora do tradicional refrigerante de caju São Geraldo.',
   url: BASE_URL,
-  logo: `${BASE_URL}/favicon.ico`,
-  image: `${BASE_URL}/favicon.ico`,
+  logo: `${BASE_URL}/web-app-manifest-512x512.png`,
+  image: `${BASE_URL}/web-app-manifest-512x512.png`,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Av. Padre Cícero, Km 02',
@@ -24,20 +24,8 @@ const schemaData = {
     postalCode: '63022-115',
     addressCountry: 'BR',
   },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: '-7.225938',
-    longitude: '-39.329313',
-  },
   telephone: '4003-6125',
   email: 'sac@cajuinasaogeraldo.com.br',
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-    opens: '07:30',
-    closes: '15:30',
-  },
-  priceRange: '$$',
   foundingDate: '1974',
   sameAs: [
     'https://www.instagram.com/cajuinasaogeraldo',
