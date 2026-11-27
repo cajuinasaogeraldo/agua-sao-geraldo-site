@@ -132,7 +132,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
             </div>
           </div>
           {/* Termos */}
-          <div className="font-inter ml-2">
+          <div className="font-inter">
             <FormField
               register={register}
               errors={errors}
@@ -158,7 +158,7 @@ function Form({ onSubmitSuccess, apiUrl }: Props) {
             />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-start gap-4 md:flex-row p-4 md:px-6 md:py-8">
+        <div className="flex flex-col items-center justify-start gap-4 md:flex-row">
           {/* reCAPTCHA */}
           <div className="flex flex-col gap-1">
             <GoogleReCaptchaCheckbox
