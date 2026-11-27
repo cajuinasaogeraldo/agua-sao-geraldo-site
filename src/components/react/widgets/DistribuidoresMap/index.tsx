@@ -197,11 +197,7 @@ function Gmaps({ distribuidores, defaultPosition }: Omit<Props, 'apiKey'>) {
 
             {/* Buttons */}
             <div className="[&_button]:font-inter! [&_a]:font-inter! flex gap-3 self-start [&_button]:h-[45px] [&_a]:h-[45px] [&_button]:text-xs [&_a]:text-xs [&_button]:font-medium [&_a]:font-medium [&_button]:lg:h-[65px] [&_a]:lg:h-[65px] [&_button]:lg:text-xl [&_a]:lg:text-xl">
-              <button
-                type="button"
-                onClick={handleUseCurrentLocation}
-                className="btn-primary px-6"
-              >
+              <button type="button" onClick={handleUseCurrentLocation} className="btn-primary px-6">
                 VER MAIS
               </button>
               <a

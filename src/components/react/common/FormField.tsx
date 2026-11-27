@@ -164,10 +164,7 @@ export function FormField<TFormData extends Record<string, any>>({
         ) : type === 'file' ? (
           <>
             {!hideLabel && label && (
-              <label
-                htmlFor={id}
-                className="text-agua-primary-blue mb-2 block text-sm font-medium"
-              >
+              <label htmlFor={id} className="text-agua-primary-blue mb-2 block text-sm font-medium">
                 {label}
                 {required && (
                   <span aria-hidden="true" className="text-red-600">
@@ -203,10 +200,7 @@ export function FormField<TFormData extends Record<string, any>>({
         ) : type === 'date' ? (
           <>
             {!hideLabel && label && (
-              <label
-                htmlFor={id}
-                className="text-agua-primary-blue mb-2 block text-sm font-medium"
-              >
+              <label htmlFor={id} className="text-agua-primary-blue mb-2 block text-sm font-medium">
                 {label}
                 {required && (
                   <span aria-hidden="true" className="text-red-600">
@@ -226,10 +220,7 @@ export function FormField<TFormData extends Record<string, any>>({
         ) : type === 'time' ? (
           <>
             {!hideLabel && label && (
-              <label
-                htmlFor={id}
-                className="text-agua-primary-blue mb-2 block text-sm font-medium"
-              >
+              <label htmlFor={id} className="text-agua-primary-blue mb-2 block text-sm font-medium">
                 {label}
                 {required && (
                   <span aria-hidden="true" className="text-red-600">
